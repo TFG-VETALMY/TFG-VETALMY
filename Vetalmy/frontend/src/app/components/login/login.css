@@ -1,0 +1,133 @@
+/* Contenedor del login */
+.contenedor-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #F8F7F2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tarjeta del login */
+.tarjeta-login {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(72, 57, 46, 0.1);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #CBC7B7;
+}
+
+/* Logo */
+.logo {
+    width: 60px;
+    height: 60px;
+}
+
+/* Cabecera del login */
+.header-login {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Los H1 del header del login */
+.header-login h1 {
+    color: #48392E;
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+/* Las p del header del login */
+.header-login p {
+    color: #A18675;
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+/* El logo y el título del login */
+.titulo-login {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Cada formulario (el label + el input) */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* La etiqueta */
+label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: #353636;
+    font-weight: 600;
+}
+
+/* El input */
+input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #CBC7B7;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #F8F7F2;
+    color: #353636;
+    transition: all 0.3s ease;
+}
+
+/* El input cuando está seleccionado */
+input:focus {
+    outline: none;
+    border-color: #B06E39;
+    background-color: white;
+}
+
+/* Cuando da error el input */
+input.error {
+    border-color: #dc3545;
+}
+
+/* El mensaje de error */
+.error-message {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+}
+
+/* El a para registrarse cuando está sin visitar y visitado */
+.registro a,
+.registro a:visited {
+    color: #564437;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+/* Botón de entrar */
+.btn-login {
+    width: 100%;
+    padding: 1rem;
+    background-color: #564437;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+/* Botón de entrar cuando se hace hover */
+.btn-login:hover:not(:disabled) {
+    background-color: #48392E;
+}
+
+/* Botón de entrar cuando está desactivado */
+.btn-login:disabled {
+    background-color: #CBC7B7;
+    cursor: not-allowed;
+}
