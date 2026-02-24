@@ -9,10 +9,10 @@ export class Enfermedad {
     id: number;
 
     @Column({ type: 'date', default: () => 'CURRENT_DATE' })
-    fecha_diagnostico: string;
+    fecha_diagnostico: Date;
 
     @Column({ type: 'date', nullable: true })
-    fecha_alta: string; // Puede ser null si aún está enfermo
+    fecha_alta: Date; // Puede ser null si aún está enfermo
 
     @Column('text', { nullable: true })
     observaciones: string; // Ej: "Inflamación severa en oído izquierdo"

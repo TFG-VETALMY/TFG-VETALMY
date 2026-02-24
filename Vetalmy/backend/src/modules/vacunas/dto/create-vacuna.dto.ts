@@ -1,4 +1,5 @@
-import { IsInt, IsString, IsOptional, IsDateString } from 'class-validator';
+import { IsInt, IsString, IsOptional, IsDate } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateVacunaDto {
     @IsString()
@@ -15,6 +16,7 @@ export class CreateVacunaDto {
     @IsInt()
     historialId: number;
 
-    @IsDateString()
-    fecha_aplicacion: string;
+    @IsDate()
+    @Type(() => Date)
+    fecha_aplicacion: Date;
 }

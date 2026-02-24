@@ -1,6 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateCitaDto } from './create-cita.dto';
-import { IsNumber, IsString, IsOptional } from 'class-validator';
+import { IsNumber, IsString, IsOptional, IsDate } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UpdateCitaDto extends PartialType(CreateCitaDto) {
     @IsNumber()

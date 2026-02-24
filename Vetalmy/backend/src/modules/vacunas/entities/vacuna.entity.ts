@@ -16,7 +16,7 @@ export class Vacuna {
     periodicidad: string;
 
     @Column({ type: 'date', default: () => 'CURRENT_DATE' })
-    fecha_aplicacion: string;
+    fecha_aplicacion: Date;
 
 
     @ManyToOne(() => Historial, (historial) => historial.vacuna, { onDelete: 'CASCADE' })

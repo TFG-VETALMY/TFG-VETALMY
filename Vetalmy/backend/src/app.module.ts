@@ -25,7 +25,7 @@ import { Chat } from './modules/chat/entities/chat.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
+      port: 5435,
       username: 'admin',
       password: 'admin',
       database: 'vet_db',
