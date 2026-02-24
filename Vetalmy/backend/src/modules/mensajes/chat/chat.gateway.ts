@@ -7,9 +7,7 @@ import { CreateMensajeDto } from '../dto/create-mensaje.dto';
 export class ChatGateway {
   @WebSocketServer()
   server: Server;
-
   constructor(private readonly mensajesService: MensajesService) { }
-
   handleConnection(client: Socket) {
     console.log('Cliente conectado:', client.id);
   }
@@ -19,11 +17,8 @@ export class ChatGateway {
 
   @SubscribeMessage('enviar-mensaje')
   async handleMessage(@MessageBody() createMensajeDto: CreateMensajeDto) {
-
     const mensajeGuardado = await this.mensajesService.create(createMensajeDto);
-
     this.server.emit('nuevo-mensaje', mensajeGuardado);
-
     return mensajeGuardado;
   }
 }

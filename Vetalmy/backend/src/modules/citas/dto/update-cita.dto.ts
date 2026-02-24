@@ -4,22 +4,26 @@ import { IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class UpdateCitaDto extends PartialType(CreateCitaDto) {
     @IsNumber()
-    id: number; // El id de la cita que se va a actualizar
+    @IsOptional()
+    id?: number;
 
     @IsString()
     @IsOptional()
     tipo?: string;
 
     @IsString()
-    motivo: string;
+    @IsOptional()
+    motivo?: string;
 
     @IsNumber()
-    mascotaId: number;
+    @IsOptional()
+    mascotaId?: number;
 
     @IsNumber()
-    clienteId: number;
+    @IsOptional()
+    clienteId?: number;
 
     @IsNumber()
-    veterinarioId: number;
-
+    @IsOptional()
+    veterinarioId?: number;
 }

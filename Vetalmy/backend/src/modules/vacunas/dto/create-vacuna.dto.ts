@@ -14,4 +14,7 @@ export class CreateVacunaDto {
 
     @IsInt()
     historialId: number;
+
+    @IsDateString()
+    fecha_aplicacion: string;
 }

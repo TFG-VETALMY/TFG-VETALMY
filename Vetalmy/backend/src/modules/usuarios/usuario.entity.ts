@@ -25,7 +25,8 @@ export class Usuario {
     contrasenia: string;
 
     @Column()
-    rol: string;
+    @IsOptional()
+    rol?: string;
 
     @OneToMany(() => Mascota, (mascota) => mascota.usuario)
     mascotas: Mascota[];

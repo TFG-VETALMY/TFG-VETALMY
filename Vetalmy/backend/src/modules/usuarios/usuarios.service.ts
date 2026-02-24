@@ -77,4 +77,21 @@ export class UsuariosService {
         console.log(error);
         throw new InternalServerErrorException('Error al crear usuario (revisar logs)');
     }
+
+
+    async updateRol(id: number, rol: string) {
+        const usuario = await this.findOne(id);
+        usuario.rol = rol;
+        await this.usuariosRepository.save(usuario);
+        delete (usuario as any).contrasenia;
+        return usuario;
+    }
+
+    async updateContrasenia(id: number, contrasenia: string) {
+        const usuario = await this.findOne(id);
+        usuario.contrasenia = bcrypt.hashSync(contrasenia, 10);
+        await this.usuariosRepository.save(usuario);
+        delete (usuario as any).contrasenia;
+        return usuario;
+    }
 }

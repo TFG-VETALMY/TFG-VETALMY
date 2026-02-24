@@ -1,0 +1,148 @@
+﻿­ƒÜÇ Starting API Verification Script...
+
+--- 1. USUARIOS ---
+
+­ƒö╣ [POST] /usuarios
+   Status: 201
+   Ô£à Success: {"id":19,"nombre":"Pepe","apellido1":"Test","apellido2":"Apellido2","email":"pepe1770929608557@test....
+
+­ƒö╣ [POST] /usuarios
+   Status: 201
+   Ô£à Success: {"id":20,"nombre":"Ana","apellido1":"Test","apellido2":"Apellido2","email":"ana1770929608557@test.co...
+
+­ƒö╣ [GET] /usuarios
+   Status: 200
+   Ô£à Success: [{"id":3,"nombre":"Carlos","apellido1":"Ramos","apellido2":"Admin","email":"admin@vetalmy.com","rol"...
+
+--- 2. MASCOTAS ---
+
+­ƒö╣ [POST] /mascotas
+   Status: 201
+   Ô£à Success: {"id":6,"nombre":"Firulais","animal":"Perro","raza":"Pastor Aleman","edad":5,"peso":30,"usuarioId":1...
+
+­ƒö╣ [GET] /mascotas
+   Status: 200
+   Ô£à Success: [{"id":2,"nombre":"Firulais","animal":"Perro","raza":"Labrador","edad":3,"peso":"25.50","usuario":{"...
+
+­ƒö╣ [GET] /mascotas/6
+   Status: 200
+   Ô£à Success: {"id":6,"nombre":"Firulais","animal":"Perro","raza":"Pastor Aleman","edad":5,"peso":"30.00","usuario...
+
+­ƒö╣ [PATCH] /mascotas/6
+   Status: 200
+   Ô£à Success: {"generatedMaps":[],"raw":[],"affected":1}...
+
+­ƒö╣ [GET] /mascotas/6
+   Status: 200
+   Ô£à Success: {"id":6,"nombre":"Firulais Updated","animal":"Perro","raza":"Pastor Aleman","edad":5,"peso":"32.00",...
+
+--- 3. HISTORIAL ---
+
+­ƒö╣ [POST] /historial
+   Status: 201
+   Ô£à Success: {"id":5,"observaciones":"Historial inicial","fecha_creacion":"2026-02-12T19:53:28.913Z","mascotaId":...
+
+­ƒö╣ [GET] /historial
+   Status: 200
+   Ô£à Success: [{"id":1,"observaciones":"Carpeta m├®dica inicial","fecha_creacion":"2026-02-10T20:09:12.923Z","masco...
+
+­ƒö╣ [GET] /historial/5
+   Status: 200
+   Ô£à Success: {"id":5,"observaciones":"Historial inicial","fecha_creacion":"2026-02-12T19:53:28.913Z","mascota":{"...
+
+­ƒö╣ [PATCH] /historial/5
+   Status: 200
+   Ô£à Success: {"generatedMaps":[],"raw":[],"affected":1}...
+
+--- 4. VACUNAS ---
+
+­ƒö╣ [POST] /vacunas
+   Status: 201
+   Ô£à Success: {"id":1,"nombre":"Rabia","descripci├│n":null,"periodicidad":null,"fecha_aplicacion":"2026-02-12","his...
+
+­ƒö╣ [GET] /vacunas
+   Status: 200
+   Ô£à Success: [{"id":1,"nombre":"Rabia","descripci├│n":null,"periodicidad":null,"fecha_aplicacion":"2026-02-12","hi...
+
+­ƒö╣ [GET] /vacunas/1
+   Status: 200
+   Ô£à Success: {"id":1,"nombre":"Rabia","descripci├│n":null,"periodicidad":null,"fecha_aplicacion":"2026-02-12","his...
+
+­ƒö╣ [PATCH] /vacunas/1
+   Status: 200
+   Ô£à Success: {"generatedMaps":[],"raw":[],"affected":1}...
+
+­ƒö╣ [DELETE] /vacunas/1
+   Status: 200
+   Ô£à Success: {"raw":[],"affected":1}...
+
+--- 5. ENFERMEDADES ---
+
+­ƒö╣ [POST] /enfermedades
+   Status: 201
+   Ô£à Success: {"id":5,"fecha_diagnostico":"2026-02-12","fecha_alta":"2026-02-12T20:53:28.963Z","observaciones":"Ot...
+
+­ƒö╣ [GET] /enfermedades
+   Status: 200
+   Ô£à Success: [{"id":1,"fecha_diagnostico":"2026-02-10","fecha_alta":null,"observaciones":"Otitis canina leve","hi...
+
+­ƒö╣ [GET] /enfermedades/5
+   Status: 200
+   Ô£à Success: {"id":5,"fecha_diagnostico":"2026-02-12","fecha_alta":"2026-02-12","observaciones":"Otitis leve","hi...
+
+­ƒö╣ [PATCH] /enfermedades/5
+   Status: 200
+   Ô£à Success: {"generatedMaps":[],"raw":[],"affected":1}...
+
+­ƒö╣ [DELETE] /enfermedades/5
+   Status: 200
+   Ô£à Success: {"raw":[],"affected":1}...
+
+--- 6. CITAS ---
+
+­ƒö╣ [POST] /citas
+   Status: 201
+   Ô£à Success: {"id":6,"fecha":"2026-02-12T20:53:28.980Z","tipo":null,"motivo":"Revisi├│n anual","mascotaId":6,"clie...
+
+­ƒö╣ [GET] /citas
+   Status: 200
+   Ô£à Success: [{"id":2,"fecha":"2024-12-25T12:00:00.000Z","tipo":"Urgencia","motivo":"Prueba final WebSocket","mas...
+
+­ƒö╣ [GET] /citas/6
+   Status: 200
+   Ô£à Success: {"id":6,"fecha":"2026-02-12T20:53:28.980Z","tipo":null,"motivo":"Revisi├│n anual","mascota":{"id":6,"...
+
+­ƒö╣ [PATCH] /citas/6
+   Status: 200
+   Ô£à Success: {"generatedMaps":[],"raw":[],"affected":1}...
+
+­ƒö╣ [DELETE] /citas/6
+   Status: 200
+   Ô£à Success: {"raw":[],"affected":1}...
+
+--- 7. CHAT & MENSAJES ---
+
+­ƒö╣ [POST] /chat
+   Status: 201
+   Ô£à Success: {"id":5,"estado":"Abierto","fecha_creacion":"2026-02-12T19:53:28.998Z","clienteId":19,"veterinarioId...
+
+­ƒö╣ [GET] /chat
+   Status: 200
+   Ô£à Success: [{"id":5,"estado":"Abierto","fecha_creacion":"2026-02-12T19:53:28.998Z","cliente":{"id":19,"nombre":...
+
+­ƒö╣ [POST] /mensajes
+   Status: 201
+   Ô£à Success: {"id":14,"mensaje":"Hola doctor, tengo una consulta.","fecha":"2026-02-12T19:53:29.009Z","leido":fal...
+
+­ƒö╣ [GET] /mensajes
+   Status: 200
+   Ô£à Success: [{"id":1,"mensaje":"┬íAyuda Dra. Ana! Mi perro est├í bailando bachata y no para.","fecha":"2026-02-10T...
+
+--- 8. LIMPIEZA FINAL ---
+
+­ƒö╣ [DELETE] /mascotas/6
+   Status: 200
+   Ô£à Success: {"raw":[],"affected":1}...
+ÔÜá´©Å Nota: Usuarios no borrados (falta endpoint DELETE /usuarios/:id)
+
+Ô£à Script Finalizado.
