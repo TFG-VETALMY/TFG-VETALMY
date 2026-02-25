@@ -1,0 +1,19 @@
+<nav class="menu">
+    <a routerLink="/inicio" class="menu-logo">
+        <img src="imgs/Vetalmy-logo.png" alt="Logo" class="logo-img">
+        <span class="logo-texto">VETALMY</span>
+    </a>
+
+    <ul class="menu-links">
+        <li><a routerLink="/inicio" routerLinkActive="active">Mi cuenta</a></li>
+        <li><a routerLink="/consejos" routerLinkActive="active">Consejos</a></li>
+        <li><a routerLink="/mascotas" routerLinkActive="active">Mis mascotas</a></li>
+        <li><a routerLink="/citas" routerLinkActive="active">Citas</a></li>
+        <li><a routerLink="/chat" routerLinkActive="active">Chat</a></li>
+        <li><a routerLink="/nosotros" routerLinkActive="active">Sobre nosotros</a></li>
+    </ul>
+
+    <div class="menu-acciones">
+        <button class="btn-logout" (click)="logout()">Cerrar sesión</button>
+    </div>
+</nav>

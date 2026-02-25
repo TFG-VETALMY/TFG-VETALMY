@@ -1,0 +1,41 @@
+/* --- VARIABLES --- */
+:root {
+    /* Colores Principales */
+    --marron: #564437;
+    --marron-oscuro: #48392E;
+    --marron-claro: #A18675;
+    --marroncito: #6E625B;
+    --arena: #A89F8E;
+
+    /* Colores de Acento y UI */
+    --marron-acento: #B06E39;
+    --blanco: #F8F7F2;
+    --beige: #CBC7B7;
+    --gris: #353636;
+    --rojo-error: #dc3545;
+    --blanco-total: #ffffff;
+
+    /* Tamaños */
+    --fs-normal: 1rem;
+    --fs-peque: 0.85rem;
+    --fs-grande: 1.1rem;
+    --fs-h1: 2rem;
+}
+
+
+/* --- CSS COMÚN --- */
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    scrollbar-color: var(--marroncito) var(--blanco);
+    cursor: url("/imgs/Cursor/huella-naranja3.png"), pointer;
+}
+
+body::selection {
+    background: var(--arena);
+    color: var(--blanco-total)
+}

@@ -1,0 +1,22 @@
+<div class="container-carrusel">
+    <p-carousel [value]="consejos" [numVisible]="3" [numScroll]="1" [circular]="true"
+        [responsiveOptions]="responsiveOptions">
+        <ng-template let-consejo pTemplate="item">
+            <div class="tarjeta-consejo" (click)="mostrarDetalle(consejo)">
+                <div class="contenedor-img">
+                    <img [src]="'imgs/Web/' + consejo.imagen" [alt]="consejo.titulo" class="img-consejo" />
+                </div>
+                <div class="titulo-consejo">{{ consejo.titulo }}</div>
+                <p class="click-info">Haz clic para leer más</p>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>
+
+<p-dialog header="{{ consejoSeleccionado?.titulo }}" [(visible)]="displayDialog" [modal]="true"
+    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+
+    <div class="dialog-content" *ngIf="consejoSeleccionado">
+        <p class="detalle-texto">{{ consejoSeleccionado.detalle }}</p>
+    </div>
+</p-dialog>

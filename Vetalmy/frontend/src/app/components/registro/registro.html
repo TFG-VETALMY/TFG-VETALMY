@@ -1,0 +1,68 @@
+<div class="contenedor-login">
+    <div class="tarjeta-login">
+        <div class="header-login">
+            <div class="titulo-login">
+                <img class="logo" src="imgs/Vetalmy-logo.png" alt="Logo">
+                <h1>VETALMY</h1>
+            </div>
+            <p>Crea tu cuenta veterinaria</p>
+        </div>
+
+        <form [formGroup]="registroForm" (ngSubmit)="onRegister()">
+
+            <div class="form-group">
+                <p-floatLabel variant="on">
+                    <input pInputText id="nombre" formControlName="nombre"
+                        [class.error]="nombreControl?.invalid && nombreControl?.touched" />
+                    <label for="nombre">Nombre Completo</label>
+                </p-floatLabel>
+                <div class="error-message" *ngIf="nombreControl?.invalid && nombreControl?.touched">
+                    <small>El nombre es obligatorio.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p-floatLabel variant="on">
+                    <input pInputText type="email" id="email" formControlName="email"
+                        [class.error]="emailControl?.invalid && emailControl?.touched" />
+                    <label for="email">Correo Electrónico</label>
+                </p-floatLabel>
+                <div class="error-message" *ngIf="emailControl?.invalid && emailControl?.touched">
+                    <small *ngIf="emailControl?.errors?.['required']">El email es obligatorio.</small>
+                    <small *ngIf="emailControl?.errors?.['email']">Formato de email inválido.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p-floatLabel variant="on">
+                    <input pInputText type="password" id="password" formControlName="password"
+                        [class.error]="passwordControl?.invalid && passwordControl?.touched">
+                    <label for="password">Contraseña</label>
+                </p-floatLabel>
+                <div class="error-message" *ngIf="passwordControl?.invalid && passwordControl?.touched">
+                    <small>Mínimo 6 caracteres.</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p-floatLabel variant="on">
+                    <input pInputText type="password" id="confirmPassword" formControlName="confirmPassword"
+                        [class.error]="registroForm.errors?.['mismatch'] && confirmControl?.touched">
+                    <label for="confirmPassword">Repetir Contraseña</label>
+                </p-floatLabel>
+                <div class="error-message" *ngIf="registroForm.errors?.['mismatch'] && confirmControl?.touched">
+                    <small>Las contraseñas no coinciden.</small>
+                </div>
+            </div>
+
+            <div class="registro">
+                <p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+            </div>
+
+            <button type="submit" [disabled]="registroForm.invalid" class="btn-principal">
+                Crear cuenta
+            </button>
+
+        </form>
+    </div>
+</div>
