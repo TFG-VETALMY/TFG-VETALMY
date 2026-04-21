@@ -1,0 +1,156 @@
+/* Reutilizamos el contenedor principal */
+.contenedor-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Cambiado a min-height por si el form es largo */
+    padding: 2rem 0;
+    /* Espacio extra para móviles */
+    background-color: var(--blanco);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tarjeta del registro (basada en la de login) */
+.tarjeta-login {
+    background: var(--blanco-total);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--gris);
+    width: 90%;
+    max-width: 450px;
+    border: 1px solid var(--beige);
+}
+
+/* Cabecera y Título */
+.header-login {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* El título del login */
+.titulo-login {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* El logo de la web */
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+/* El h1 de la clase header-login */
+.header-login h1 {
+    color: var(--marron-oscuro);
+    margin: 0;
+    font-size: var(--fs-h1);
+    font-weight: 800;
+}
+
+/* El p de la clase header-login */
+.header-login p {
+    color: var(--marron-claro);
+    font-size: var(--fs-normal);
+    margin-top: 5px;
+}
+
+/* Grupos del formulario */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+/* Estilos de PrimeNG FloatLabel */
+:host ::ng-deep .p-floatlabel label {
+    left: 0.8rem;
+    color: var(--gris);
+}
+
+/* Los inputs */
+input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--beige);
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: var(--blanco);
+    color: #353636;
+    transition: all 0.3s ease;
+}
+
+/* Los inputs cuando se hacen focus */
+input:focus {
+    outline: none;
+    border-color: var(--marron-acento);
+    background-color: var(--blanco-total);
+}
+
+/* Los inputs cuando se hace hover */
+input:hover {
+    border-color: var(--marron-claro) !important;
+}
+
+/* Errores */
+input.error {
+    border-color: var(--rojo-error);
+}
+
+/* La clase error-message */
+.error-message {
+    color: var(--rojo-error);
+    font-size: var(--fs-normal);
+    margin-top: 0.3rem;
+    margin-left: 0.5rem;
+}
+
+/* Enlace para volver al login */
+.registro {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: var(--fs-peque);
+}
+
+/* El enlace de la clase registro normal y cuando se ha visitado */
+.registro a,
+.registro a:visited {
+    color: var(--marron);
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+/* Botón del login */
+.btn-principal {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--marron);
+    color: var(--blanco-total);
+    border: none;
+    border-radius: 10px;
+    font-size: var(--fs-grande);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1.5rem;
+}
+
+/* Botón del login cuando se hace hover y no está deshabilitado */
+.btn-principal:hover:not(:disabled) {
+    background-color: var(--marron-oscuro);
+    transform: translateY(-1px);
+}
+
+/* Botón del login cuando está deshabilitado */
+.btn-principal:disabled {
+    background-color: var(--beige);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Los floatlabels cuando se hace focus y cuando están rellenos */
+:host ::ng-deep .p-floatlabel input:focus~label,
+:host ::ng-deep .p-floatlabel input.p-filled~label {
+    font-size: var(--fs-peque);
+    font-weight: 600;
+}

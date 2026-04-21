@@ -1,0 +1,360 @@
+/* Variables de color basadas en la imagen */
+:root {
+    --primary-color: #9e4723;
+    /* Tono terracota/óxido */
+    --bg-light: #fcfbfa;
+    /* Fondo crema muy claro */
+    --bg-peach: #fae8dd;
+    /* Fondo melocotón/rosado pastel */
+    --text-dark: #2d2d2d;
+    --text-gray: #666666;
+    --white: #ffffff;
+    --font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Reseteo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    line-height: 1.6;
+}
+
+/* --- NAVEGACIÓN --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    background-color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    margin: 0 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #7d371b;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    height: 80vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    color: var(--white);
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.badge {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.3rem 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 1rem;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* --- NUESTRA HISTORIA --- */
+.story-section {
+    display: flex;
+    padding: 6rem 10%;
+    gap: 4rem;
+    align-items: center;
+}
+
+.story-text {
+    flex: 1;
+}
+
+.story-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.story-text h2 span {
+    color: var(--primary-color);
+}
+
+.story-text p {
+    margin-bottom: 1.5rem;
+    color: var(--text-gray);
+}
+
+.story-text p:first-of-type {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.story-image {
+    flex: 1;
+    position: relative;
+}
+
+.story-image img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.image-caption {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+/* --- MISIÓN Y VISIÓN --- */
+.mission-vision-section {
+    background-color: var(--bg-peach);
+    padding: 6rem 10%;
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.card {
+    flex: 1;
+    max-width: 500px;
+    padding: 3rem;
+    border-radius: 12px;
+}
+
+.mission-card {
+    background-color: var(--white);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.vision-card {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.card .icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.mission-card p {
+    color: var(--text-gray);
+    margin-bottom: 2rem;
+}
+
+.vision-card p {
+    opacity: 0.9;
+}
+
+.tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tags span {
+    background-color: var(--bg-peach);
+    color: var(--primary-color);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 20px;
+}
+
+.vision-card .tags span {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--white);
+}
+
+/* --- EXPERTOS --- */
+.experts-section {
+    padding: 6rem 10%;
+    background-color: var(--white);
+}
+
+.experts-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 4rem auto;
+}
+
+.experts-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.experts-header p {
+    color: var(--text-gray);
+}
+
+.experts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.expert-card {
+    background-color: var(--bg-light);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.expert-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    filter: grayscale(100%);
+    /* Efecto blanco y negro como en la foto */
+    transition: filter 0.3s;
+}
+
+.expert-card:hover img {
+    filter: grayscale(0%);
+}
+
+.expert-info {
+    padding: 1.5rem;
+}
+
+.expert-info h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+}
+
+.role {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.expert-info .tags {
+    justify-content: center;
+}
+
+.expert-info .tags span {
+    background-color: var(--white);
+    border: 1px solid #eee;
+    color: var(--text-gray);
+}
+
+/* --- FOOTER --- */
+.footer {
+    background-color: var(--bg-light);
+    padding: 3rem 10% 1rem;
+    border-top: 1px solid #eaeaea;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: var(--text-gray);
+    margin-left: 1.5rem;
+    font-size: 0.85rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #eaeaea;
+    padding-top: 1rem;
+}
+
+.footer-bottom p {
+    color: var(--text-gray);
+    font-size: 0.75rem;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 900px) {
+
+    .story-section,
+    .mission-vision-section {
+        flex-direction: column;
+    }
+
+    .nav-links {
+        display: none;
+        /* En un proyecto real aquí iría un menú hamburguesa */
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+}

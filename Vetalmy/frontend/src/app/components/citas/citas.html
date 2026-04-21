@@ -1,0 +1,78 @@
+<div class="inner-content citas-page">
+
+    <header class="citas-header">
+        <div class="header-text">
+            <h1>Mis Citas</h1>
+            <p>Gestiona y consulta las citas programadas para tus mascotas.</p>
+        </div>
+        <button class="btn-primario">
+            <i class="pi pi-plus"></i> Nueva Cita
+        </button>
+    </header>
+
+    <div class="citas-layout">
+
+        <section class="calendario-section card">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+        </section>
+
+        <section class="lista-citas-section">
+            <h3 class="lista-titulo">
+                <i class="pi pi-list"></i> Próximas Citas
+            </h3>
+
+            <div class="cita-card card">
+                <div class="cita-header">
+                    <div class="mascota-info">
+                        <div class="icono-huella">🐾</div>
+                        <div class="mascota-nombres">
+                            <h4>Max (Golden Retriever)</h4>
+                            <span>Chequeo General</span>
+                        </div>
+                    </div>
+                    <span class="badge confirmada">CONFIRMADA</span>
+                </div>
+
+                <div class="cita-detalles">
+                    <p><i class="pi pi-user"></i> Dr. Ricardo Méndez</p>
+                    <p><i class="pi pi-calendar"></i> Miércoles, 5 de Junio</p>
+                    <p><i class="pi pi-clock"></i> 10:30 AM</p>
+                </div>
+
+                <div class="cita-acciones">
+                    <button class="btn-secundario">Modificar</button>
+                    <button class="btn-peligro">Cancelar</button>
+                </div>
+            </div>
+
+            <div class="cita-card card">
+                <div class="cita-header">
+                    <div class="mascota-info">
+                        <div class="icono-huella">🐾</div>
+                        <div class="mascota-nombres">
+                            <h4>Luna (Gato Persa)</h4>
+                            <span>Vacunación Anual</span>
+                        </div>
+                    </div>
+                    <span class="badge pendiente">PENDIENTE</span>
+                </div>
+
+                <div class="cita-detalles">
+                    <p><i class="pi pi-user"></i> Dra. Elena Martínez</p>
+                    <p><i class="pi pi-calendar"></i> Viernes, 21 de Junio</p>
+                    <p><i class="pi pi-clock"></i> 04:15 PM</p>
+                </div>
+
+                <div class="cita-acciones">
+                    <button class="btn-secundario">Modificar</button>
+                    <button class="btn-peligro">Cancelar</button>
+                </div>
+            </div>
+
+            <div class="historial-link">
+                <a href="#">Ver historial de citas pasadas <i class="pi pi-history"></i></a>
+            </div>
+
+        </section>
+    </div>
+</div>

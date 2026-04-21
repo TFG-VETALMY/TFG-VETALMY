@@ -4,19 +4,19 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #F8F7F2;
+    background-color: var(--blanco);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Tarjeta del login */
 .tarjeta-login {
-    background: white;
+    background: var(--blanco-total);
     padding: 2.5rem;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(72, 57, 46, 0.1);
+    box-shadow: 0 10px 30px var(--gris);
     width: 100%;
-    max-width: 400px;
-    border: 1px solid #CBC7B7;
+    max-width: 450px;
+    border: 1px solid var(--beige);
 }
 
 /* Logo */
@@ -33,7 +33,7 @@
 
 /* Los H1 del header del login */
 .header-login h1 {
-    color: #48392E;
+    color: var(--marron-oscuro);
     margin: 0;
     font-size: 2.2rem;
     font-weight: 800;
@@ -41,7 +41,7 @@
 
 /* Las p del header del login */
 .header-login p {
-    color: #A18675;
+    color: var(--marron-claro);
     font-size: 1rem;
     margin-top: 5px;
 }
@@ -63,7 +63,7 @@
 label {
     display: block;
     margin-bottom: 0.6rem;
-    color: #353636;
+    color: var(--gris);
     font-weight: 600;
 }
 
@@ -71,10 +71,10 @@ label {
 input {
     width: 100%;
     padding: 0.8rem;
-    border: 2px solid #CBC7B7;
+    border: 2px solid var(--beige);
     border-radius: 10px;
     box-sizing: border-box;
-    background-color: #F8F7F2;
+    background-color: var(--blanco);
     color: #353636;
     transition: all 0.3s ease;
 }
@@ -82,39 +82,51 @@ input {
 /* El input cuando está seleccionado */
 input:focus {
     outline: none;
-    border-color: #B06E39;
-    background-color: white;
+    border-color: var(--marron-acento);
+    background-color: var(--blanco);
+}
+
+/* El input cuando se le hace hover */
+input:hover {
+    border-color: var(--marron-claro) !important;
 }
 
 /* Cuando da error el input */
 input.error {
-    border-color: #dc3545;
+    border-color: var(--rojo-error);
 }
 
 /* El mensaje de error */
 .error-message {
-    color: #dc3545;
-    font-size: 0.85rem;
+    color: var(--rojo-error);
+    font-size: var(--fs-normal);
     margin-top: 0.4rem;
+}
+
+/* El enlace para registrarse */
+.registro {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: var(--fs-peque);
 }
 
 /* El a para registrarse cuando está sin visitar y visitado */
 .registro a,
 .registro a:visited {
-    color: #564437;
+    color: var(--marron);
     text-decoration: none;
     font-weight: bolder;
 }
 
 /* Botón de entrar */
-.btn-login {
+.btn-principal {
     width: 100%;
     padding: 1rem;
-    background-color: #564437;
-    color: white;
+    background-color: var(--marron);
+    color: var(--blanco);
     border: none;
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: var(--fs-grande);
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -122,12 +134,12 @@ input.error {
 }
 
 /* Botón de entrar cuando se hace hover */
-.btn-login:hover:not(:disabled) {
-    background-color: #48392E;
+.btn-principal:hover:not(:disabled) {
+    background-color: var(--marron-oscuro);
 }
 
 /* Botón de entrar cuando está desactivado */
-.btn-login:disabled {
-    background-color: #CBC7B7;
+.btn-principal:disabled {
+    background-color: var(--beige);
     cursor: not-allowed;
 }

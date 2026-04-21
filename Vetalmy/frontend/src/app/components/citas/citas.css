@@ -1,0 +1,367 @@
+/* Página de las citas */
+.citas-page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Cabecera */
+.citas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Los H1 del la clase citas-header */
+.citas-header h1 {
+    color: var(--marron);
+    margin: 0 0 0.25rem 0;
+}
+
+/* Los p del la clase citas-header */
+.citas-header p {
+    color: var(--marroncito);
+    margin: 0;
+}
+
+/* Botón Nueva Cita */
+.btn-primario {
+    background-color: var(--marron-acento);
+    color: var(--blanco-total);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+/* Botón Nueva Cita en Hover */
+.btn-primario:hover {
+    background-color: var(--marron-oscuro);
+}
+
+/* Layout de dos columnas */
+.citas-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Estilo general de las tarjetas  */
+.card {
+    background-color: var(--blanco-total);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--beige);
+}
+
+/* --- COLUMNA DERECHA: LISTA DE CITAS --- */
+.lista-citas-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Título de la lista */
+.lista-titulo {
+    color: var(--marron-oscuro);
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cita-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.cita-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.mascota-info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.icono-huella {
+    background-color: var(--blanco);
+    padding: 0.75rem;
+    border-radius: 12px;
+    font-size: 1.5rem;
+}
+
+.mascota-nombres h4 {
+    margin: 0 0 0.2rem 0;
+    color: var(--marron-oscuro);
+}
+
+.mascota-nombres span {
+    color: var(--arena);
+    font-size: var(--fs-peque);
+}
+
+/* Etiquetas de estado */
+.badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.confirmada {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.pendiente {
+    background-color: #fef08a;
+    color: #854d0e;
+}
+
+/* Detalles de fecha y médico */
+.cita-detalles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    color: var(--marroncito);
+    font-size: var(--fs-peque);
+}
+
+.cita-detalles p {
+    margin: 0;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Botones de acción */
+.cita-acciones {
+    display: flex;
+    gap: 1rem;
+}
+
+.cita-acciones button {
+    flex: 1;
+    padding: 0.6rem;
+    border-radius: 8px;
+    font-weight: bold;
+    border: 1px solid var(--beige);
+    background: transparent;
+    color: var(--marron-logo);
+}
+
+.cita-acciones .btn-peligro {
+    color: var(--rojo-error);
+    border-color: #fca5a5;
+}
+
+.historial-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.historial-link a {
+    color: var(--marron-acento);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* --- AJUSTES VISUALES PARA FULLCALENDAR --- */
+:host ::ng-deep .fc {
+    font-family: 'Rubik', sans-serif;
+    color: var(--marron-oscuro);
+}
+
+:host ::ng-deep .fc-theme-standard .fc-scrollgrid {
+    border: 1px solid var(--beige) !important;
+    border-collapse: collapse !important;
+}
+
+:host ::ng-deep .fc-theme-standard td,
+:host ::ng-deep .fc-theme-standard th {
+    border: 1px solid var(--beige) !important;
+}
+
+:host ::ng-deep .fc-theme-standard .fc-scrollgrid-section-header>th {
+    border-top: 0 !important;
+    border-left: 0 !important;
+}
+
+:host ::ng-deep .fc .fc-button-primary {
+    background-color: var(--blanco) !important;
+    color: var(--marron) !important;
+    border: 1px solid var(--beige) !important;
+}
+
+:host ::ng-deep .fc .fc-button-primary:hover {
+    background-color: var(--beige) !important;
+}
+
+:host ::ng-deep .fc-col-header-cell {
+    border-bottom: 2px solid var(--marron-claro) !important;
+    padding-bottom: 8px !important;
+    background-color: var(--blanco) !important;
+    vertical-align: middle !important;
+    height: 30px;
+    padding: 0 !important;
+}
+
+:host ::ng-deep .fc-col-header-cell-cushion {
+    display: inline-block !important;
+    padding: 8px 0 !important;
+    vertical-align: middle !important;
+}
+
+:host ::ng-deep .fc-col-header-cell-cushion {
+    color: var(--marron-oscuro);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+/* --- RESALTAR EL DÍA ACTUAL --- */
+
+:host ::ng-deep .fc-day-today {
+    background-color: #f5f1e6 !important;
+    border-color: var(--arena) !important;
+}
+
+:host ::ng-deep .fc-day-today .fc-daygrid-day-number {
+    color: var(--marron-acento);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+:host ::ng-deep .fc-day-today .fc-daygrid-event {
+    border-left: 3px solid var(--marron-acento) !important;
+    background-color: white !important;
+    color: var(--marron-oscuro) !important;
+}
+
+/* Responsive: Una sola columna en móviles */
+@media (max-width: 1024px) {
+    .citas-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- AJUSTES ESPECÍFICOS PARA MÓVIL (< 768px) --- */
+@media screen and (max-width: 768px) {
+
+    /* 1. Ajustes generales de la página y las tarjetas */
+    .citas-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .btn-primario {
+        width: 100%;
+        /* El botón ocupa todo el ancho en móvil */
+        justify-content: center;
+    }
+
+    .card {
+        padding: 1rem;
+        /* Reducimos el padding para darle más espacio al calendario */
+    }
+
+    /* 2. Arreglar la cabecera de FullCalendar (Botones y Título) */
+    :host ::ng-deep .fc .fc-toolbar {
+        flex-direction: column;
+        /* Apila los botones y el título verticalmente */
+        gap: 1rem;
+    }
+
+    :host ::ng-deep .fc .fc-toolbar-chunk {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        /* Permite que los botones bajen de línea si no caben */
+        width: 100%;
+    }
+
+    /* Reducir el tamaño del título del mes */
+    :host ::ng-deep .fc .fc-toolbar-title {
+        font-size: 1.4rem !important;
+        text-align: center;
+    }
+
+    /* Hacer los botones un poco más compactos */
+    :host ::ng-deep .fc .fc-button {
+        padding: 0.4em 0.6em !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* 3. Ajustes de la cuadrícula del calendario */
+    /* Reducir el texto de los días de la semana (LUN, MAR...) */
+    :host ::ng-deep .fc-col-header-cell-cushion {
+        font-size: 0.7rem !important;
+        padding: 4px 0 !important;
+    }
+
+    /* Reducir el tamaño de los números de los días */
+    :host ::ng-deep .fc-daygrid-day-number {
+        font-size: 0.85rem !important;
+        padding: 4px !important;
+    }
+
+    /* Reducir la altura mínima de las celdas para que el calendario no sea tan alto en móvil */
+    :host ::ng-deep .fc-theme-standard .fc-scrollgrid-sync-table td {
+        height: 60px !important;
+    }
+
+}
+
+/* --- ESTILO DE PUNTO PARA MÓVIL --- */
+@media (max-width: 768px) {
+
+    /* 1. Ocultamos el texto de la cita y cualquier punto extra de FullCalendar */
+    :host ::ng-deep .fc-event-title,
+    :host ::ng-deep .fc-daygrid-event-dot {
+        display: none !important;
+    }
+
+    /* 2. Transformamos el bloque de la cita en tu punto personalizado */
+    :host ::ng-deep .fc-daygrid-event {
+        width: 10px !important;
+        /* Un poquito más grandes para que se vean bien */
+        height: 10px !important;
+        min-height: 10px !important;
+        border-radius: 50% !important;
+        background-color: var(--marron-acento) !important;
+        /* Tu color corporativo */
+        border: none !important;
+        margin: 0 !important;
+        /* Quitamos márgenes para que el flex del padre los controle */
+        box-shadow: none !important;
+    }
+
+    /* 3. Alineamos los puntos horizontalmente en el centro de la celda */
+    :host ::ng-deep .fc-daygrid-day-events {
+        display: flex !important;
+        flex-direction: row !important;
+        /* Citas una al lado de otra */
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 4px !important;
+        /* Espacio entre puntitos */
+        margin-top: 5px !important;
+        min-height: 15px !important;
+    }
+
+    /* 4. Quitamos el fondo gris que a veces sale al pulsar */
+    :host ::ng-deep .fc-daygrid-event:hover {
+        background-color: var(--marron-oscuro) !important;
+    }
+}
