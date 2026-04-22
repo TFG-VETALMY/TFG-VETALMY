@@ -1,1 +1,123 @@
-/* You can add global styles to this file, and also import other style files */
+/* Fuentes para la letra */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Quicksand:wght@400;700&family=Rubik:wght@400;700&display=swap');
+
+/* --- VARIABLES --- */
+:root {
+    /* Colores Principales */
+    --marron: #564437;
+    --marron-oscuro: #48392E;
+    --marron-claro: #A18675;
+    --marroncito: #6E625B;
+    --arena: #A89F8E;
+    --marron-logo: #564A43;
+
+    /* Colores de Acento y UI */
+    --marron-acento: #B06E39;
+    --blanco: #F8F7F2;
+    --beige: #CBC7B7;
+    --gris: #353636;
+    --rojo-error: #dc3545;
+    --blanco-total: #ffffff;
+
+    /* Tamaños */
+    --fs-normal: 1rem;
+    --fs-peque: 0.85rem;
+    --fs-grande: 1.1rem;
+    --fs-h1: 2rem;
+}
+
+
+/* --- CSS COMÚN --- */
+/* El html y body */
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    scrollbar-color: var(--marroncito) var(--blanco);
+    cursor: url("/imgs/Cursor/Cursor1-1.png") 0 0, auto;
+}
+
+/* El cursor naranja */
+*,
+html,
+body {
+    cursor: url("/imgs/Cursor/Arrow1.png") 0 0, auto !important;
+}
+
+/* El cursor beige para cuando pulsamos */
+html:active,
+body:active,
+*:active {
+    cursor: url("/imgs/Cursor/Arrow2.png") 0 0, auto !important;
+}
+
+/* Cursor naranja para elementos interactivos */
+a,
+button,
+[role="button"] {
+    cursor: url("/imgs/Cursor/Arrow1.png") 0 0, auto !important;
+}
+
+/* Cursor beige para elementos interactivos pulsados */
+a:active,
+button:active {
+    cursor: url("/imgs/Cursor/Arrow2.png") 0 0, auto !important;
+}
+
+/* La selección de texto de color arena */
+body::selection {
+    background: var(--arena);
+    color: var(--blanco-total)
+}
+
+
+
+/* El + es para seleccionar el primer hermano de app-menu. El * es el nombre del hermano */
+app-menu+* {
+    padding-top: 70px;
+}
+
+.p-carousel-indicator-active .p-carousel-indicator-button {
+    background-color: var(--marron-logo) !important;
+}
+
+.p-carousel-indicator-button {
+    background-color: var(--beige) !important;
+}
+
+
+/* Fuente por defecto para toda la web */
+* {
+    font-family: 'Rubik', sans-serif;
+}
+
+h1,
+.logo-vetalmy {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 700;
+}
+
+.titulo-consejo {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+}
+
+/* Para el Full Calendar */
+.fc {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column;
+}
+
+.fc-view-harness {
+    width: 100% !important;
+}
+
+.inner-content {
+    padding: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}

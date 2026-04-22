@@ -1,0 +1,145 @@
+/* Contenedor del login */
+.contenedor-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--blanco);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tarjeta del login */
+.tarjeta-login {
+    background: var(--blanco-total);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--gris);
+    width: 100%;
+    max-width: 450px;
+    border: 1px solid var(--beige);
+}
+
+/* Logo */
+.logo {
+    width: 60px;
+    height: 60px;
+}
+
+/* Cabecera del login */
+.header-login {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Los H1 del header del login */
+.header-login h1 {
+    color: var(--marron-oscuro);
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+/* Las p del header del login */
+.header-login p {
+    color: var(--marron-claro);
+    font-size: 1rem;
+    margin-top: 5px;
+}
+
+/* El logo y el título del login */
+.titulo-login {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Cada formulario (el label + el input) */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* La etiqueta */
+label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: var(--gris);
+    font-weight: 600;
+}
+
+/* El input */
+input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--beige);
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: var(--blanco);
+    color: #353636;
+    transition: all 0.3s ease;
+}
+
+/* El input cuando está seleccionado */
+input:focus {
+    outline: none;
+    border-color: var(--marron-acento);
+    background-color: var(--blanco);
+}
+
+/* El input cuando se le hace hover */
+input:hover {
+    border-color: var(--marron-claro) !important;
+}
+
+/* Cuando da error el input */
+input.error {
+    border-color: var(--rojo-error);
+}
+
+/* El mensaje de error */
+.error-message {
+    color: var(--rojo-error);
+    font-size: var(--fs-normal);
+    margin-top: 0.4rem;
+}
+
+/* El enlace para registrarse */
+.registro {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: var(--fs-peque);
+}
+
+/* El a para registrarse cuando está sin visitar y visitado */
+.registro a,
+.registro a:visited {
+    color: var(--marron);
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+/* Botón de entrar */
+.btn-principal {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--marron);
+    color: var(--blanco);
+    border: none;
+    border-radius: 10px;
+    font-size: var(--fs-grande);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+/* Botón de entrar cuando se hace hover */
+.btn-principal:hover:not(:disabled) {
+    background-color: var(--marron-oscuro);
+}
+
+/* Botón de entrar cuando está desactivado */
+.btn-principal:disabled {
+    background-color: var(--beige);
+    cursor: not-allowed;
+}

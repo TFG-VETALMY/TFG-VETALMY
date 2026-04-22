@@ -1,0 +1,137 @@
+/* --- ESTILOS BASE --- */
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: var(--blanco-total);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+}
+
+.menu-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.logo-img {
+    height: 40px;
+}
+
+.logo-texto {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--marron);
+}
+
+/* --- ESTADOS DE NAVEGACIÓN --- */
+
+/* 1. PC: Se ve todo en línea */
+.menu-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.menu-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+}
+
+.menu-links a {
+    text-decoration: none;
+    color: var(--arena);
+    font-size: var(--fs-normal);
+    transition: color 0.3s;
+    font-weight: bold;
+}
+
+.menu-links a:hover,
+.menu-links a.active {
+    color: var(--marron);
+}
+
+.btn-logout {
+    background-color: var(--beige);
+    color: var(--blanco-total);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* 2. HAMBURGUESA: Oculta por defecto en PC */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--marron);
+    border-radius: 2px;
+}
+
+/* --- MEDIA QUERIES (Gestión Responsive) --- */
+
+@media screen and (max-width: 1140px) {
+
+    /* Mostramos el botón hamburguesa a la derecha */
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* OCULTAMOS el menú de navegación completamente */
+    .menu-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background-color: var(--blanco-total);
+        padding: 2rem;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        gap: 1.5rem;
+    }
+
+    /* Solo cuando le añadas la clase "active" (con Angular/JS) se verá en móvil */
+    .menu-nav.active {
+        display: flex !important;
+    }
+
+    .menu-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 0;
+        /* Aseguramos que no tenga padding residual del ul */
+    }
+
+    .menu-acciones {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-logout {
+        width: 100%;
+        max-width: 200px;
+    }
+}
