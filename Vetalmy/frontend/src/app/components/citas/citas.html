@@ -5,9 +5,52 @@
             <h1>Mis Citas</h1>
             <p>Gestiona y consulta las citas programadas para tus mascotas.</p>
         </div>
-        <button class="btn-primario">
-            <i class="pi pi-plus"></i> Nueva Cita
-        </button>
+
+        <div class="btnDialog">
+            <div class="btn-primario">
+                <p-button (click)="showDialog()" label="Nueva cita" />
+            </div>
+
+            <p-dialog header="Nueva cita" styleClass="dialogHeader" [modal]="true" [(visible)]="visible"
+                [focusOnShow]="false" [style]="{ width: '40rem' }" [breakpoints]="{ '768px': '95vw' }">
+
+                <div class="formulario-cita">
+                    <label for="fecha">Fecha</label>
+                    <p-datepicker [(ngModel)]="fechaCitaNueva" [iconDisplay]="'input'" [showIcon]="true"
+                        [minDate]="fechaActual" dateFormat="dd/mm/yy" (onSelect)="onFechaChange()" inputId="fecha"
+                        styleClass="w-full" class="w-full" />
+
+                    <label for="hora">Hora</label>
+                    <p-select [options]="horasFiltradas" [(ngModel)]="horaSeleccionada" placeholder="Seleccione hora"
+                        appendTo="body" class="w-full" styleClass="w-full">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="flex align-items-center gap-2" *ngIf="horaSeleccionada">
+                                <i class="pi pi-clock"></i>
+                                <div>{{ horaSeleccionada }}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-hora pTemplate="item">
+                            <div class="flex align-items-center gap-2">
+                                <i class="pi pi-clock" style="font-size: 0.8rem; color: var(--marroncito)"></i>
+                                <span>{{ hora }}</span>
+                            </div>
+                        </ng-template>
+                    </p-select>
+
+                    <label for="tipo">Tipo</label>
+                    <p-select [options]="tipos" [(ngModel)]="tipoSeleccionado" optionLabel="name"
+                        placeholder="Seleccione un tipo" appendTo="body" class="w-full" styleClass="w-full" />
+
+                    <label for="motivo" class="etiqueta-arriba">Motivo</label>
+                    <textarea pTextarea id="motivo" [(ngModel)]="value" rows="5" class="w-full descripcion"
+                        placeholder="Indique aquí el motivo de su cita." style="resize: none"></textarea>
+                    <div class="dialog-acciones">
+                        <p-button label="Cancelar" severity="secondary" (click)="visible = false" />
+                        <p-button label="Guardar" styleClass="btn-guardar" (click)="visible = false" />
+                    </div>
+                </div>
+            </p-dialog>
+        </div>
     </header>
 
     <div class="citas-layout">
