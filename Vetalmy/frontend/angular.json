@@ -55,6 +55,11 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "prebundle": {
+              "exclude": ["primeng"]
+            }
+          },
           "configurations": {
             "production": {
               "buildTarget": "frontend:build:production"

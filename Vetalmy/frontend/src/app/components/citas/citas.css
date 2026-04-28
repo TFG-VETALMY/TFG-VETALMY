@@ -14,7 +14,7 @@
 
 /* Los H1 del la clase citas-header */
 .citas-header h1 {
-    color: var(--marron);
+    color: var(--marron-oscuro);
     margin: 0 0 0.25rem 0;
 }
 
@@ -25,22 +25,120 @@
 }
 
 /* Botón Nueva Cita */
-.btn-primario {
-    background-color: var(--marron-acento);
-    color: var(--blanco-total);
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: background-color 0.2s;
+.btn-primario ::ng-deep .p-button {
+    background-color: var(--marron-acento) !important;
+    border-color: var(--marron-acento) !important;
+    color: var(--blanco-total) !important;
+    border-radius: 8px !important;
 }
 
-/* Botón Nueva Cita en Hover */
-.btn-primario:hover {
-    background-color: var(--marron-oscuro);
+/* Para el hover, lo mismo */
+.btn-primario ::ng-deep .p-button:hover {
+    background-color: var(--marron-oscuro) !important;
+    border-color: var(--marron-oscuro) !important;
+}
+
+/* --- LAYOUT DEL DIÁLOGO --- */
+.formulario-cita {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1.5rem 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.formulario-cita label {
+    color: var(--marron);
+    font-weight: 600;
+}
+
+.formulario-cita .etiqueta-arriba {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+}
+
+.descripcion {
+    padding: 8px;
+}
+
+.formulario-cita ::ng-deep .p-datepicker,
+.formulario-cita ::ng-deep .p-select,
+.formulario-cita ::ng-deep .p-inputtext,
+.formulario-cita ::ng-deep .p-textarea {
+    width: 100% !important;
+}
+
+::ng-deep .p-datepicker-day.p-datepicker-day-selected {
+    background-color: var(--marron-claro) !important;
+    color: var(--blanco) !important;
+    border-color: var(--marron-claro) !important;
+}
+
+::ng-deep .dialogHeader {
+    color: var(--marron-acento) !important;
+}
+
+::ng-deep .p-inputtext:enabled:focus,
+::ng-deep .p-select:not(.p-disabled).p-focus,
+::ng-deep .p-datepicker:not(.p-disabled).p-focus {
+    border-color: var(--marron-acento) !important;
+}
+
+::ng-deep .p-select-option.p-select-option-selected,
+::ng-deep .p-select-option.p-highlight {
+    background-color: var(--beige) !important;
+    color: var(--marron-oscuro) !important;
+}
+
+/* Botones */
+.dialog-acciones {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Botón Guardar */
+::ng-deep .btn-guardar {
+    background-color: var(--marron-acento) !important;
+    border-color: var(--marron-acento) !important;
+    color: white !important;
+}
+
+::ng-deep .btn-guardar:hover {
+    background-color: var(--marron) !important;
+    border-color: var(--marron) !important;
+}
+
+/* --- ADAPTACIÓN A MÓVIL (Menos de 768px) --- */
+@media screen and (max-width: 768px) {
+    .formulario-cita {
+        /* En móvil pasamos a una sola columna: etiqueta arriba, input abajo */
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .formulario-cita label {
+        margin-top: 0.5rem;
+        /* Separación entre el input anterior y la nueva etiqueta */
+    }
+
+    .formulario-cita .etiqueta-arriba {
+        margin-top: 0.5rem;
+    }
+
+    /* En móvil, los botones quedan mejor uno encima de otro, Guardar arriba y Cancelar abajo */
+    .dialog-acciones {
+        flex-direction: column-reverse;
+        margin-top: 1.5rem;
+    }
+
+    .dialog-acciones ::ng-deep p-button,
+    .dialog-acciones ::ng-deep .p-button {
+        width: 100%;
+        /* Botones de lado a lado para tocarlos fácil con el dedo */
+    }
 }
 
 /* Layout de dos columnas */
@@ -256,10 +354,9 @@
     }
 }
 
-/* --- AJUSTES ESPECÍFICOS PARA MÓVIL (< 768px) --- */
+/* --- AJUSTES ESPECÍFICOS PARA MÓVIL --- */
 @media screen and (max-width: 768px) {
 
-    /* 1. Ajustes generales de la página y las tarjetas */
     .citas-header {
         flex-direction: column;
         gap: 1rem;
@@ -267,19 +364,16 @@
 
     .btn-primario {
         width: 100%;
-        /* El botón ocupa todo el ancho en móvil */
         justify-content: center;
     }
 
     .card {
         padding: 1rem;
-        /* Reducimos el padding para darle más espacio al calendario */
     }
 
-    /* 2. Arreglar la cabecera de FullCalendar (Botones y Título) */
+    /* Para la cabecera del Fullcalendar */
     :host ::ng-deep .fc .fc-toolbar {
         flex-direction: column;
-        /* Apila los botones y el título verticalmente */
         gap: 1rem;
     }
 
@@ -287,11 +381,10 @@
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        /* Permite que los botones bajen de línea si no caben */
         width: 100%;
     }
 
-    /* Reducir el tamaño del título del mes */
+    /* Para reducir el tamaño del título del mes */
     :host ::ng-deep .fc .fc-toolbar-title {
         font-size: 1.4rem !important;
         text-align: center;
@@ -303,8 +396,7 @@
         font-size: 0.85rem !important;
     }
 
-    /* 3. Ajustes de la cuadrícula del calendario */
-    /* Reducir el texto de los días de la semana (LUN, MAR...) */
+    /* Reducir el texto de los días de la semana */
     :host ::ng-deep .fc-col-header-cell-cushion {
         font-size: 0.7rem !important;
         padding: 4px 0 !important;
@@ -326,41 +418,34 @@
 /* --- ESTILO DE PUNTO PARA MÓVIL --- */
 @media (max-width: 768px) {
 
-    /* 1. Ocultamos el texto de la cita y cualquier punto extra de FullCalendar */
     :host ::ng-deep .fc-event-title,
     :host ::ng-deep .fc-daygrid-event-dot {
         display: none !important;
     }
 
-    /* 2. Transformamos el bloque de la cita en tu punto personalizado */
+    /* Cambiamos la cita por un punto */
     :host ::ng-deep .fc-daygrid-event {
         width: 10px !important;
-        /* Un poquito más grandes para que se vean bien */
         height: 10px !important;
         min-height: 10px !important;
         border-radius: 50% !important;
         background-color: var(--marron-acento) !important;
-        /* Tu color corporativo */
         border: none !important;
         margin: 0 !important;
-        /* Quitamos márgenes para que el flex del padre los controle */
         box-shadow: none !important;
     }
 
-    /* 3. Alineamos los puntos horizontalmente en el centro de la celda */
+    /* Los puntos alineados horizontalmente en el centro de la celda */
     :host ::ng-deep .fc-daygrid-day-events {
         display: flex !important;
         flex-direction: row !important;
-        /* Citas una al lado de otra */
         justify-content: center !important;
         flex-wrap: wrap !important;
         gap: 4px !important;
-        /* Espacio entre puntitos */
         margin-top: 5px !important;
         min-height: 15px !important;
     }
 
-    /* 4. Quitamos el fondo gris que a veces sale al pulsar */
     :host ::ng-deep .fc-daygrid-event:hover {
         background-color: var(--marron-oscuro) !important;
     }
