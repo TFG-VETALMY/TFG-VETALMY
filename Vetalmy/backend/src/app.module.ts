@@ -25,13 +25,17 @@ import { AuthModule } from './auth/auth.module';
 
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5435,
-      username: 'admin',
-      password: 'admin',
-      database: 'vet_db',
+
+      url: process.env.DATABASE_URL,
+      host: process.env.DATABASE_URL ? undefined : 'localhost',
+      port: process.env.DATABASE_URL ? undefined : 5435,
+      username: process.env.DATABASE_URL ? undefined : 'admin',
+      password: process.env.DATABASE_URL ? undefined : 'admin',
+      database: process.env.DATABASE_URL ? undefined : 'vet_db',
       entities: [Usuario, Mascota, Cita, Historial, Vacuna, Enfermedad, Mensaje, Chat],
       synchronize: true,
+
+      ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
     }),
 
 
