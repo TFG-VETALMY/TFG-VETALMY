@@ -14,6 +14,7 @@ import { UsuariosService } from '../modules/usuarios/usuarios.service';
 
 @Module({
   imports: [
+    UsuariosModule,
     PassportModule,
     JwtModule.register({
       secret: 'PALABRA_SECRETA_GALACTICA',
