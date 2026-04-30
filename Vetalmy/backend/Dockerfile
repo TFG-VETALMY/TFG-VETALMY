@@ -1,10 +1,9 @@
 # Stage 1: Build con Maven
-FROM maven:3.8.5-openjdk-17 AS build
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
 COPY . .
-RUN mvn clean package -DskipTests
-
-# Stage 2: Ejecución
-FROM openjdk:17-jdk-slim
-COPY --from=build /target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "start:prod"]
