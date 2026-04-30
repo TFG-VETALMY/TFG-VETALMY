@@ -1,25 +1,30 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateCitaDto } from './create-cita.dto';
-import { IsNumber, IsString, IsOptional } from 'class-validator';
+import { IsNumber, IsString, IsOptional, IsDate } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UpdateCitaDto extends PartialType(CreateCitaDto) {
     @IsNumber()
-    id: number; // El id de la cita que se va a actualizar
+    @IsOptional()
+    id?: number;
 
     @IsString()
     @IsOptional()
     tipo?: string;
 
     @IsString()
-    motivo: string;
+    @IsOptional()
+    motivo?: string;
 
     @IsNumber()
-    mascotaId: number;
+    @IsOptional()
+    mascotaId?: number;
 
     @IsNumber()
-    clienteId: number;
+    @IsOptional()
+    clienteId?: number;
 
     @IsNumber()
-    veterinarioId: number;
-
+    @IsOptional()
+    veterinarioId?: number;
 }

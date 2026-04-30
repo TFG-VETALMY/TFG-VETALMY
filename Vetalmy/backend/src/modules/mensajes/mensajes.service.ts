@@ -12,7 +12,11 @@ export class MensajesService {
   ) { }
 
   async create(createMensajeDto: CreateMensajeDto) {
-    const mensaje = this.mensajeRepository.create(createMensajeDto);
+    const mensaje = this.mensajeRepository.create({
+      mensaje: createMensajeDto.mensaje,
+      chatId: createMensajeDto.chatId,
+      usuarioId: createMensajeDto.usuarioId
+    });
     return await this.mensajeRepository.save(mensaje);
   }
 

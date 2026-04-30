@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { MensajesService } from './mensajes.service';
 import { CreateMensajeDto } from './dto/create-mensaje.dto';
+
+@UseGuards(JwtAuthGuard)
 
 @Controller('mensajes')
 export class MensajesController {

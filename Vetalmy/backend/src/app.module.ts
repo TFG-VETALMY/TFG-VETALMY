@@ -18,6 +18,7 @@ import { Enfermedad } from './modules/enfermedades/entities/enfermedade.entity';
 import { MensajesModule } from './modules/mensajes/mensajes.module';
 import { Mensaje } from './modules/mensajes/entities/mensaje.entity';
 import { Chat } from './modules/chat/entities/chat.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { Chat } from './modules/chat/entities/chat.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
+      port: 5435,
       username: 'admin',
       password: 'admin',
       database: 'vet_db',
@@ -42,6 +43,7 @@ import { Chat } from './modules/chat/entities/chat.entity';
     VacunasModule,
     EnfermedadesModule,
     MensajesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

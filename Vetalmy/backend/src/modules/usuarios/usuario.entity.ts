@@ -14,7 +14,7 @@ export class Usuario {
     @Column()
     apellido1: string;
 
-    @Column()
+    @Column({ nullable: true })
     @IsOptional()
     apellido2: string;
 
@@ -25,7 +25,8 @@ export class Usuario {
     contrasenia: string;
 
     @Column()
-    rol: string;
+    @IsOptional()
+    rol?: string;
 
     @OneToMany(() => Mascota, (mascota) => mascota.usuario)
     mascotas: Mascota[];

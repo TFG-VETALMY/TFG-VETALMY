@@ -1,8 +1,10 @@
-import { IsString, IsInt, IsDateString, IsOptional } from 'class-validator';
+import { IsString, IsInt, IsDate, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateCitaDto {
-    @IsDateString()
-    fecha: string;
+    @IsDate()
+    @Type(() => Date)
+    fecha: Date;
 
     @IsString()
     @IsOptional()
