@@ -25,8 +25,10 @@ export class Usuario {
     @Column({ name: 'contraseña' })
     contrasenia: string;
 
-    @Column()
-    @IsOptional()
+   @Column({
+    type: 'text',
+    default: 'user'
+    })
     rol?: string;
 
     @OneToMany(() => Mascota, (mascota) => mascota.usuario)
