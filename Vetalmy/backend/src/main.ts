@@ -15,7 +15,7 @@ app.setGlobalPrefix('api');
     transform: true,
   }));
   app.enableCors({
-    origin: '*',
+    origin: 'https://tfg-vetalmy.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
   await app.listen(3000);
