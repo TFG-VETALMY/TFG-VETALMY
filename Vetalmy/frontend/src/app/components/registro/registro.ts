@@ -53,7 +53,7 @@ export class RegistroComponent {
     if (this.registroForm.valid) {
       // Extraemos solo los campos que el backend espera (nombre, email, password)
       const { nombre, email, password } = this.registroForm.value;
-      const datosRegistro = { nombre, email, password };
+      const datosRegistro = { nombre, email, contrasenia: password };
 
       console.log('Enviando datos a la base de datos de Vetalmy...', datosRegistro);
 
