@@ -14,7 +14,7 @@ export class Usuario {
     @Column()
     apellido1: string;
 
-    @Column()
+    @Column({ nullable: true })
     @IsOptional()
     apellido2: string;
 

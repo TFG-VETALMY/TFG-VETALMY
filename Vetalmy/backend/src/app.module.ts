@@ -18,19 +18,24 @@ import { Enfermedad } from './modules/enfermedades/entities/enfermedade.entity';
 import { MensajesModule } from './modules/mensajes/mensajes.module';
 import { Mensaje } from './modules/mensajes/entities/mensaje.entity';
 import { Chat } from './modules/chat/entities/chat.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
 
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'admin',
-      password: 'admin',
-      database: 'vet_db',
+
+      url: process.env.DATABASE_URL,
+      host: process.env.DATABASE_URL ? undefined : 'localhost',
+      port: process.env.DATABASE_URL ? undefined : 5435,
+      username: process.env.DATABASE_URL ? undefined : 'admin',
+      password: process.env.DATABASE_URL ? undefined : 'admin',
+      database: process.env.DATABASE_URL ? undefined : 'vet_db',
       entities: [Usuario, Mascota, Cita, Historial, Vacuna, Enfermedad, Mensaje, Chat],
       synchronize: true,
+
+      ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
     }),
 
 
@@ -42,6 +47,7 @@ import { Chat } from './modules/chat/entities/chat.entity';
     VacunasModule,
     EnfermedadesModule,
     MensajesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

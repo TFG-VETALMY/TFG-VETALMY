@@ -94,4 +94,13 @@ export class UsuariosService {
         delete (usuario as any).contrasenia;
         return usuario;
     }
+
+
+    async findByEmail(email: string): Promise<Usuario | null> {
+        return this.usuariosRepository.findOneBy({ email });
+    }
+
+
+
+
 }

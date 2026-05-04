@@ -1,6 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateVacunaDto } from './create-vacuna.dto';
-import { IsString, IsOptional, IsDateString } from 'class-validator';
+import { IsString, IsOptional, IsDate } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class UpdateVacunaDto extends PartialType(CreateVacunaDto) {
     @IsString()
@@ -14,6 +15,8 @@ export class UpdateVacunaDto extends PartialType(CreateVacunaDto) {
     @IsOptional()
     periodicidad?: string;
 
-    @IsDateString()
-    fecha_aplicacion: string;
+    @IsDate()
+    @Type(() => Date)
+    @IsOptional()
+    fecha_aplicacion?: Date;
 }
