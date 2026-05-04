@@ -10,8 +10,9 @@ export class Usuario {
 
     @Column()
     nombre: string;
-
-    @Column()
+    
+    @Column({ nullable: true })
+    @IsOptional()
     apellido1: string;
 
     @Column({ nullable: true })
