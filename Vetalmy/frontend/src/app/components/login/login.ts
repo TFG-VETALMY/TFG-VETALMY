@@ -6,6 +6,7 @@ import { RouterLink } from "@angular/router";
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http'; // Importante
 
 @Component({
   selector: 'app-login',
@@ -16,36 +17,41 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  value: string | undefined;
 
-  // El formBuilder para crear el formulario
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router,
+    private http: HttpClient // Inyectamos HttpClient
+  ) {
     this.loginForm = this.fb.group({
-      // Campo email: empieza vacío, es obligatorio y debe tener formato de email
       email: ['', [Validators.required, Validators.email]],
-      // Campo contraseña: empieza vacío, es obligatorio y mínimo 6 caracteres
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  // Se ejecutará cuando el usuario pulse "Entrar"
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log('¡Éxito!', this.loginForm.value);
-      this.router.navigate(['/inicio']);
+
+      this.http.post<any>('/api/auth/login', this.loginForm.value).subscribe({
+        next: (res) => {
+          console.log('Login correcto', res);
+          
+        
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('user_role', res.user.rol); 
+          
+          this.router.navigate(['/inicio']);
+        },
+        error: (err) => {
+          console.error('Error en el login', err);
+          alert('Credenciales galácticas incorrectas');
+        }
+      });
     } else {
-      console.log('El formulario tiene errores.');
-      // Si el usuario le da a "Entrar" sin rellenar nada, sale un mensaje de error
       this.loginForm.markAllAsTouched();
     }
   }
 
-  // Getters
-  get emailControl() {
-    return this.loginForm.get('email');
-  }
-
-  get passwordControl() {
-    return this.loginForm.get('password');
-  }
+  get emailControl() { return this.loginForm.get('email'); }
+  get passwordControl() { return this.loginForm.get('password'); }
 }
