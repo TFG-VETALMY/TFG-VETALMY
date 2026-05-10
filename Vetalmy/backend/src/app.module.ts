@@ -28,7 +28,7 @@ import { AuthModule } from './auth/auth.module';
 
       url: process.env.DATABASE_URL,
       host: process.env.DATABASE_URL ? undefined : 'localhost',
-      port: process.env.DATABASE_URL ? undefined : 5435,
+      port: process.env.DATABASE_URL ? undefined : 5436,
       username: process.env.DATABASE_URL ? undefined : 'admin',
       password: process.env.DATABASE_URL ? undefined : 'admin',
       database: process.env.DATABASE_URL ? undefined : 'vet_db',
