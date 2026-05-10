@@ -19,7 +19,7 @@ export class LoginComponent {
   loginForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private router: Router,
     private http: HttpClient // Inyectamos HttpClient
   ) {
@@ -32,14 +32,15 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
 
-      this.http.post<any>('/api/auth/login', this.loginForm.value).subscribe({
+      this.http.post<any>('/auth/login', this.loginForm.value).subscribe({
         next: (res) => {
           console.log('Login correcto', res);
-          
-        
+
+
           localStorage.setItem('token', res.token);
-          localStorage.setItem('user_role', res.user.rol); 
-          
+          localStorage.setItem('user_role', res.user.rol);
+          localStorage.setItem('user_id', res.user.id);
+
           this.router.navigate(['/inicio']);
         },
         error: (err) => {

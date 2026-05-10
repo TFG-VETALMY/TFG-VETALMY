@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; // Importante para conectar con el backend
-import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-registro',
@@ -56,14 +56,13 @@ export class RegistroComponent {
       const { nombre, email, password } = this.registroForm.value;
       const datosRegistro = { nombre, email, contrasenia: password };
 
-      const url = `${environment.apiUrl}/auth/register`;
+      const url = '/auth/register';
       console.log('Enviando datos a la base de datos de Vetalmy...', url, datosRegistro);
 
-      // Llamada al backend a través del proxy de Vercel
+      // Llamada al backend a través del interceptor
       this.http.post(url, datosRegistro).subscribe({
         next: (res) => {
           console.log('¡Usuario registrado con éxito!', res);
-          // Si el registro es correcto, lo mandamos al login
           this.router.navigate(['/login']);
         },
         error: (err) => {

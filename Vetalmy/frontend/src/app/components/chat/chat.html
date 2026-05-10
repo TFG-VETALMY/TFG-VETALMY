@@ -1,3 +1,87 @@
 <div class="inner-content">
-    <p>Chat works!</p>
+  <div class="chat-container whatsapp-layout">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3>{{ rol === 'veterinario' ? 'Consultas' : 'Veterinarios' }}</h3>
+        <span class="badge" [ngClass]="rol === 'veterinario' ? 'vet-badge' : 'user-badge'">
+          {{ rol === 'veterinario' ? 'Veterinario' : 'Cliente' }}
+        </span>
+      </div>
+
+      <div class="contacts-list">
+        <ng-container *ngIf="rol !== 'veterinario'">
+          <div *ngIf="veterinarios.length === 0" class="empty-list">
+            <p>No hay veterinarios disponibles.</p>
+          </div>
+          <div *ngFor="let vet of veterinarios" class="contact-card"
+            [ngClass]="{'active': contactoActual === vet.nombre}" (click)="iniciarChatConVeterinario(vet)">
+            <div class="avatar"><i class="pi pi-user"></i></div>
+            <div class="contact-info">
+              <h4>{{ vet.nombre }}</h4>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="rol === 'veterinario'">
+          <div *ngIf="chatsActivos.length === 0" class="empty-list">
+            <p>No tienes consultas activas.</p>
+          </div>
+          <div *ngFor="let chat of chatsActivos" class="contact-card" [ngClass]="{'active': chatId === chat.id}"
+            (click)="abrirChatExistente(chat)">
+            <div class="avatar"><i class="pi pi-user"></i></div>
+            <div class="contact-info">
+              <h4>{{ chat.cliente?.nombre || 'Cliente' }}</h4>
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: CHAT ACTIVO -->
+    <div class="chat-area">
+
+      <!-- PANTALLA VACÍA -->
+      <div *ngIf="chatId === 0" class="empty-state-welcome">
+        <div class="empty-content">
+          <i class="pi pi-comments" style="font-size: 4rem; color: var(--beige); margin-bottom: 1rem;"></i>
+          <h2>Vetalmy Connect</h2>
+          <p>Selecciona una conversación de la izquierda para empezar a hablar.</p>
+        </div>
+      </div>
+
+      <!-- CHAT ABIERTO -->
+      <ng-container *ngIf="chatId !== 0">
+        <div class="chat-header">
+          <div class="header-info">
+            <h3>{{ contactoActual }}</h3>
+          </div>
+        </div>
+
+        <!-- Lista de mensajes -->
+        <div class="chat-messages" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+          <div *ngIf="mensajes.length === 0" class="empty-chat">
+            <p>¡Envía el primer mensaje para empezar la consulta!</p>
+          </div>
+
+          <!-- Mensajes -->
+          <div *ngFor="let msg of mensajes" class="message-wrapper"
+            [ngClass]="{'mine': msg.usuarioId === userId, 'theirs': msg.usuarioId !== userId}">
+            <div class="message-bubble">
+              <p class="text">{{ msg.mensaje }}</p>
+              <span class="time">{{ msg.fecha_creacion | date:'shortTime' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input de mensajes -->
+        <div class="chat-input-area">
+          <input type="text" [(ngModel)]="nuevoMensaje" (keyup.enter)="enviarMensaje()"
+            placeholder="Escribe un mensaje..." class="chat-input" />
+          <button (click)="enviarMensaje()" class="send-btn" [disabled]="!nuevoMensaje.trim()">
+            <i class="pi pi-send"></i> <span class="btn-text">Enviar</span>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 </div>
