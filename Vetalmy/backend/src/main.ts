@@ -6,16 +6,17 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-app.setGlobalPrefix('api');
+  app.setGlobalPrefix('api');
 
-  
+
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
     transform: true,
   }));
   app.enableCors({
-    origin: 'https://tfg-vetalmy.vercel.app',
+    origin: ['http://localhost:4200', 'https://tfg-vetalmy.vercel.app'],
+    credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
   await app.listen(3000);
