@@ -1,0 +1,151 @@
+/* El hero */
+.servicios-hero {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+}
+
+.hero-atencion {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--marron-acento);
+}
+
+.hero-titulo {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 3rem;
+    color: var(--marron-oscuro);
+    margin: 0.5rem 0 1rem;
+}
+
+.hero-subtitulo {
+    color: var(--marroncito);
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* El grid de los servicios */
+.servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    padding: 2rem 4rem 5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Ajustes para tablets y móviles */
+@media (max-width: 1024px) {
+    .servicios-grid {
+        padding: 2rem;
+        gap: 2rem;
+    }
+}
+
+/* En móviles solo una columna */
+@media (max-width: 800px) {
+    .servicios-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem 1.5rem 3rem;
+    }
+
+    .hero-titulo {
+        font-size: 2.2rem;
+    }
+}
+
+/* Las cards de los servicios */
+.servicios-grid > div {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+:host ::ng-deep .servicios-card {
+    width: 100%;
+    border: 1.5px solid var(--beige);
+    border-radius: 16px; 
+    box-shadow: none;
+    transition: all 0.3s ease;
+    height: 100%;
+    background-color: var(--blanquecino);
+}
+
+/* Animación al hacer hover en la card */
+:host ::ng-deep .servicios-card:hover {
+    box-shadow: 0 10px 25px rgba(86, 68, 55, 0.12);
+    transform: translateY(-5px);
+}
+
+/* Padding interno de la card */
+:host ::ng-deep .servicios-card .p-card-body {
+    padding: 2.5rem !important;
+}
+
+:host ::ng-deep .servicios-card .p-card-content {
+    padding: 0;
+}
+
+/* Icono en el header */
+:host ::ng-deep .servicios-card .p-card-header {
+    padding: 2.5rem 2.5rem 0;
+}
+
+:host ::ng-deep .servicios-card .p-card-header i {
+    font-size: 2.5rem;
+    color: var(--marron-claro);
+    background: #f0ece7;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+/* Títulos y Subtítulos dentro de la card */
+:host ::ng-deep .servicios-card .p-card-title {
+    font-size: 1.8rem !important;
+    font-weight: 700;
+    color: var(--marron-oscuro);
+    margin-bottom: 0.5rem;
+}
+
+:host ::ng-deep .servicios-card .p-card-subtitle {
+    font-size: 1rem !important;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--marron-claro);
+}
+
+/* Descripción de la card */
+.card-desc {
+    font-size: 1.15rem;
+    color: var(--marroncito);
+    line-height: 1.7;
+    margin: 1.5rem 0;
+}
+
+/* Lista */
+.card-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.card-bullets li {
+    font-size: 1.1rem;
+    color: var(--gris);
+    padding-left: 2rem;
+    position: relative;
+}
+
+.card-bullets li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--marron-acento);
+    font-weight: 900;
+    font-size: 1.2rem;
+}

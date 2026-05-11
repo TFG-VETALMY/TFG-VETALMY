@@ -1,3 +1,63 @@
 <div class="inner-content">
-    <p>mis-mascotas works!</p>
+
+    <!-- CABECERA -->
+    <div class="page-header">
+        <div class="header-text">
+            <h1>Mis Mascotas</h1>
+            <p class="subtitulo">Administra el historial y perfiles de tus mejores amigos.</p>
+        </div>
+        <button pButton label="+ Registrar nueva" class="btn-nueva"></button>
+    </div>
+
+    <!-- GRID DE MASCOTAS -->
+    <div class="mascotas-grid">
+
+        <!-- Card por cada mascota -->
+        <div class="mascota-card" *ngFor="let mascota of mascotas">
+            <!-- Menú de tres puntos -->
+            <div class="card-menu" (click)="menuOpciones.toggle($event)">
+                <i class="pi pi-ellipsis-v"></i>
+            </div>
+            <p-menu #menuOpciones [model]="opcionesMenu" [popup]="true"></p-menu>
+
+            <!-- Foto -->
+            <div class="card-foto-wrapper">
+                <img [src]="mascota.foto" [alt]="mascota.nombre" class="card-foto" />
+            </div>
+
+            <!-- Info -->
+            <div class="card-info">
+                <h2 class="card-nombre">{{ mascota.nombre }}</h2>
+                <span class="card-raza">{{ mascota.raza | uppercase }}</span>
+                <span class="card-edad">{{ mascota.edad }} año{{ mascota.edad !== 1 ? 's' : '' }} de edad</span>
+            </div>
+
+            <!-- Botones -->
+            <div class="card-acciones">
+                <button pButton label="Historial" class="btn-historial" (click)="verHistorial(mascota)"></button>
+                <button pButton label="Ver Perfil" class="btn-perfil" (click)="verPerfil(mascota)"></button>
+            </div>
+        </div>
+
+        <!-- Card "Añadir nueva mascota" -->
+        <div class="mascota-card card-añadir" (click)="registrarNueva()">
+            <div class="añadir-icono">
+                <i class="pi pi-plus-circle"></i>
+            </div>
+            <h2 class="añadir-titulo">Añadir nueva mascota</h2>
+            <p class="añadir-desc">Registra a un nuevo integrante de la familia</p>
+        </div>
+
+    </div>
+
+    <!-- RECORDATORIO CITAS -->
+    <div class="recordatorio" *ngIf="recordatorio">
+        <div class="recordatorio-icono">
+            <i class="pi pi-shield"></i>
+        </div>
+        <div class="recordatorio-texto">
+            <strong>Recordatorio de Vacunación</strong>
+            <span>{{ recordatorio }}</span>
+        </div>
+    </div>
 </div>

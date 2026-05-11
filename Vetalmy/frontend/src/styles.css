@@ -18,6 +18,7 @@
     --gris: #353636;
     --rojo-error: #dc3545;
     --blanco-total: #ffffff;
+    --blanquecino: #fffcf7;
 
     /* Tamaños */
     --fs-normal: 1rem;
@@ -40,25 +41,25 @@ body {
     cursor: url("/imgs/Cursor/Cursor1-1.png") 0 0, auto;
 }
 
-/* El cursor naranja */
-*,
+/* El cursor para cuando pasamos sobre algo clicable (Links, botones, etc.) */
 html,
 body {
     cursor: url("/imgs/Cursor/Arrow1.png") 0 0, auto !important;
 }
 
-/* El cursor beige para cuando pulsamos */
+/* Cursor al hacer hover*/
+a:hover, 
+button:hover, 
+.clicable:hover, 
+[role="button"]:hover {
+    cursor: url("/imgs/Cursor/Arrow3.png") 0 0, auto !important;
+}
+
+/* Cursor al hacer click */
 html:active,
 body:active,
 *:active {
     cursor: url("/imgs/Cursor/Arrow2.png") 0 0, auto !important;
-}
-
-/* Cursor naranja para elementos interactivos */
-a,
-button,
-[role="button"] {
-    cursor: url("/imgs/Cursor/Arrow1.png") 0 0, auto !important;
 }
 
 /* Cursor beige para elementos interactivos pulsados */
@@ -73,8 +74,6 @@ body::selection {
     color: var(--blanco-total)
 }
 
-
-
 /* El + es para seleccionar el primer hermano de app-menu. El * es el nombre del hermano */
 app-menu+* {
     padding-top: 70px;
@@ -87,7 +86,6 @@ app-menu+* {
 .p-carousel-indicator-button {
     background-color: var(--beige) !important;
 }
-
 
 /* Fuente por defecto para toda la web */
 * {

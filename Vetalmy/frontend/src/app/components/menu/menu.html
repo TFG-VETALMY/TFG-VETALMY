@@ -13,6 +13,7 @@
     <div class="menu-nav" [class.active]="isMenuOpen">
         <ul class="menu-links">
             <li><a routerLink="/inicio" routerLinkActive="active" (click)="isMenuOpen = false">Inicio</a></li>
+<<<<<<< Updated upstream
             <li><a routerLink="/mi-cuenta" routerLinkActive="active" (click)="isMenuOpen = false">Mi cuenta</a></li>
             <li><a routerLink="/consejos" routerLinkActive="active" (click)="isMenuOpen = false">Consejos</a></li>
             <li><a routerLink="/mis-mascotas" routerLinkActive="active" (click)="isMenuOpen = false">Mis mascotas</a>
@@ -21,6 +22,18 @@
             <li><a routerLink="/chat" routerLinkActive="active" (click)="isMenuOpen = false">Chat</a></li>
             <li><a routerLink="/sobre-nosotros" routerLinkActive="active" (click)="isMenuOpen = false">Sobre
                     nosotros</a></li>
+=======
+            <li><a routerLink="/servicios" routerLinkActive="active" (click)="isMenuOpen = false">Servicios</a></li>
+            <li><a routerLink="/consejos" routerLinkActive="active" (click)="isMenuOpen = false">Consejos</a></li>
+            <li><a routerLink="/sobre-nosotros" routerLinkActive="active" (click)="isMenuOpen = false">Sobre nosotros</a></li>
+            
+            <!-- Solo para usuarios logueados -->
+            <li *ngIf="isLoggedIn"><a routerLink="/mi-cuenta" routerLinkActive="active" (click)="isMenuOpen = false">Mi cuenta</a></li>
+            <li *ngIf="isLoggedIn"><a routerLink="/mis-mascotas" routerLinkActive="active" (click)="isMenuOpen = false">Mis mascotas</a></li>
+            <li *ngIf="isLoggedIn"><a routerLink="/citas" routerLinkActive="active" (click)="isMenuOpen = false">Citas</a></li>
+            <li *ngIf="isLoggedIn"><a routerLink="/chat" routerLinkActive="active" (click)="isMenuOpen = false">Chat</a></li>
+            <li *ngIf="!isLoggedIn"><a routerLink="/login" routerLinkActive="active" (click)="isMenuOpen = false">Iniciar sesión</a></li>
+>>>>>>> Stashed changes
         </ul>
 
         <div class="menu-acciones">

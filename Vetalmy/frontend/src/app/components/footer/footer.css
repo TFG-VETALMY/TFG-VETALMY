@@ -1,20 +1,113 @@
-:host {
-    display: block;
+.footer {
+    background-color: #362a21;
+    color: var(--blanco);
+    padding: 0;
     margin-top: auto;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--marron-logo);
+    border-top: 6px solid var(--marron-claro);
 }
 
-h4,
-a,
-i,
-p,
-span {
-    color: white;
+.footer-contenido {
+    display: block;
+    text-align: center;
+    gap: 4rem;
+    margin-bottom: 3rem;
+    align-items: start;
 }
 
-a:hover {
-    color: #fc9003;
+/* Marca y Slogan */
+.footer-marca {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-nombre {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--blanco-total);
+    line-height: 1;
+}
+
+.footer-slogan {
+    font-family: 'Quicksand', sans-serif;
+    font-size: var(--fs-grande);
+    font-weight: 400;
+    color: var(--beige);
+    letter-spacing: 1px;
+}
+
+/* Sección de Contacto */
+.footer-contacto {
+    text-align: center;
+}
+
+.footer-contacto h4 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--marron-claro);
+    text-transform: uppercase;
+}
+
+.footer-contacto p {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+    font-size: var(--fs-normal);
+    line-height: 1.6;
+    justify-content: center;
+}
+
+.footer-contacto i {
+    color: var(--marron-claro);
+    font-size: 1.2rem;
+}
+
+/* Parte Inferior */
+.footer-inferior {
+    border-top: 1px solid rgba(203, 199, 183, 0.2);
+    padding-top: 1rem;
+    text-align: center;
+    font-size: var(--fs-normal);
+}
+
+.footer-inferior p {
+    color: var(--beige);
+    opacity: 0.8;
+}
+
+.footer-inferior a {
+    color: var(--blanco-total);
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.footer-inferior a:hover {
+    color: var(--marron-claro);
+    border-bottom: 1px solid var(--marron-claro);
+}
+
+/* Responsive  */
+@media (max-width: 992px) {
+    .footer-contenido {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 3rem;
+    }
+    
+    .footer-contacto p {
+        justify-content: center;
+    }
+    
+    .footer-nombre {
+        font-size: 2rem;
+    }
 }
