@@ -1,10 +1,80 @@
-<div class="banner-cita">
-    <h1>Reserva tu cita</h1>
+<!-- HERO SECTION -->
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">El mejor cuidado para tu mejor amigo</h1>
+        <p class="hero-subtitle">Clínica veterinaria integral: prevención, urgencias y bienestar animal. Profesionales apasionados que tratan a tu mascota como a la nuestra.</p>
+        <div class="hero-buttons">
+            <a routerLink="/citas" class="btn btn-primary">Reserva tu cita</a>
+            <a routerLink="/sobre-nosotros" class="btn btn-secondary">Conócenos</a>
+        </div>
+    </div>
 </div>
 
-<div class="inner-content">
-    <div class="carusel-consejos">
-        <h2>Consejos</h2>
+<!-- SERVICES SECTION -->
+<div class="services-section">
+    <div class="section-header">
+        <h2>Nuestros Servicios</h2>
+        <p>Todo lo que tu mascota necesita en un solo lugar.</p>
+    </div>
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="service-icon"><i class="pi pi-heart"></i></div>
+            <h3>Consultas Generales</h3>
+            <p>Revisiones periódicas y diagnósticos precisos para prevenir y tratar enfermedades.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="pi pi-bolt"></i></div>
+            <h3>Urgencias 24/7</h3>
+            <p>Atención médica inmediata a cualquier hora del día. Siempre listos para emergencias.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="pi pi-star"></i></div>
+            <h3>Cirugía Avanzada</h3>
+            <p>Quirófanos equipados con tecnología de última generación y anestesia segura.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon"><i class="pi pi-apple"></i></div>
+            <h3>Nutrición y Cuidados</h3>
+            <p>Planes de alimentación personalizados y servicios de peluquería para su bienestar total.</p>
+        </div>
+    </div>
+</div>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+    <div class="info-item">
+        <h2>+15</h2>
+        <p>Años de experiencia</p>
+    </div>
+    <div class="info-item">
+        <h2>+5000</h2>
+        <p>Mascotas felices</p>
+    </div>
+    <div class="info-item">
+        <h2>24h</h2>
+        <p>Disponibilidad</p>
+    </div>
+    <div class="info-item">
+        <h2>100%</h2>
+        <p>Compromiso y amor</p>
+    </div>
+</div>
+
+<!-- CAROUSEL SECTION -->
+<div class="carousel-section">
+    <div class="section-header">
+        <h2>Vetalmy Blog & Consejos</h2>
+        <p>Aprende las mejores prácticas para mantener a tu peludo rebosante de salud y energía.</p>
+    </div>
+    <div class="carousel-container">
         <app-consejos-carrusel></app-consejos-carrusel>
     </div>
+</div>
+
+<!-- CTA BOTTOM -->
+<div class="cta-bottom">
+    <h2>¿Aún no formas parte de la familia Vetalmy?</h2>
+    <p>Regístrate en nuestro portal y accede a todo el historial clínico, citas y recetas de tus mascotas al instante.</p>
+    <a routerLink="/login" class="btn btn-primary-dark">Únete ahora</a>
 </div>

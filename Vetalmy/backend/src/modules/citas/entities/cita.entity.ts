@@ -13,6 +13,9 @@ export class Cita {
     @Column({ nullable: true })
     tipo: string;
 
+    @Column({ default: 'PROGRAMADA' })
+    estado: string;
+
     @Column('text', { nullable: true })
     motivo: string;
 

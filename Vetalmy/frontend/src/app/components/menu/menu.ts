@@ -21,7 +21,6 @@ export class Menu {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
-
   @HostListener('document:click', ['$event'])
   clickOut(event: MouseEvent) {
     if (this.isMenuOpen && !this.eRef.nativeElement.contains(event.target)) {

@@ -22,14 +22,15 @@ export class CitasService {
 
   async findAll() {
     return await this.citasRepository.find({
-      relations: ['mascota', 'cliente'],
+      relations: ['mascota', 'cliente', 'veterinario'],
     });
   }
 
   async findOne(id: number) {
     return await this.citasRepository.findOne({
       where: { id },
-      relations: ['mascota', 'cliente'],
+      // 
+      relations: ['mascota', 'cliente', 'veterinario'],
     });
   }
 

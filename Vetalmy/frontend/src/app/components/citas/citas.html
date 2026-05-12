@@ -11,7 +11,7 @@
                 <p-button (click)="showDialog()" label="Nueva cita" />
             </div>
 
-            <p-dialog header="Nueva cita" styleClass="dialogHeader" [modal]="true" [(visible)]="visible"
+            <p-dialog [header]="citaEditandoId ? 'Modificar Cita' : 'Nueva Cita'" styleClass="dialogHeader" [modal]="true" [(visible)]="visible"
                 [focusOnShow]="false" [style]="{ width: '40rem' }" [breakpoints]="{ '768px': '95vw' }">
 
                 <div class="formulario-cita">
@@ -41,12 +41,20 @@
                     <p-select [options]="tipos" [(ngModel)]="tipoSeleccionado" optionLabel="name"
                         placeholder="Seleccione un tipo" appendTo="body" class="w-full" styleClass="w-full" />
 
+                    <label for="mascota">Mascota</label>
+                    <p-select [options]="mascotas" [(ngModel)]="mascotaSeleccionada" optionLabel="displayLabel"
+                        placeholder="Seleccione una mascota" appendTo="body" class="w-full" styleClass="w-full" />
+
+                    <label for="veterinario">Veterinario</label>
+                    <p-select [options]="veterinarios" [(ngModel)]="veterinarioSeleccionado" optionLabel="nombre"
+                        placeholder="Seleccione un veterinario" appendTo="body" class="w-full" styleClass="w-full" [showClear]="true" />
+
                     <label for="motivo" class="etiqueta-arriba">Motivo</label>
                     <textarea pTextarea id="motivo" [(ngModel)]="value" rows="5" class="w-full descripcion"
                         placeholder="Indique aquí el motivo de su cita." style="resize: none"></textarea>
                     <div class="dialog-acciones">
-                        <p-button label="Cancelar" severity="secondary" (click)="visible = false" />
-                        <p-button label="Guardar" styleClass="btn-guardar" (click)="visible = false" />
+                        <p-button label="Cancelar" severity="secondary" (click)="cerrarDialogo()" />
+                        <p-button label="Guardar" styleClass="btn-guardar" (click)="guardarCita()" />
                     </div>
                 </div>
             </p-dialog>
@@ -64,51 +72,40 @@
                 <i class="pi pi-list"></i> Próximas Citas
             </h3>
 
-            <div class="cita-card card">
-                <div class="cita-header">
-                    <div class="mascota-info">
-                        <div class="icono-huella">🐾</div>
-                        <div class="mascota-nombres">
-                            <h4>Max (Golden Retriever)</h4>
-                            <span>Chequeo General</span>
-                        </div>
-                    </div>
-                    <span class="badge confirmada">CONFIRMADA</span>
-                </div>
-
-                <div class="cita-detalles">
-                    <p><i class="pi pi-user"></i> Dr. Ricardo Méndez</p>
-                    <p><i class="pi pi-calendar"></i> Miércoles, 5 de Junio</p>
-                    <p><i class="pi pi-clock"></i> 10:30 AM</p>
-                </div>
-
-                <div class="cita-acciones">
-                    <button class="btn-secundario">Modificar</button>
-                    <button class="btn-peligro">Cancelar</button>
-                </div>
+            <div *ngIf="proximasCitas.length === 0" class="cita-card card" style="text-align: center; padding: 2rem;">
+                <p>No tienes próximas citas programadas.</p>
             </div>
 
-            <div class="cita-card card">
+            <div *ngFor="let cita of proximasCitas" class="cita-card card">
                 <div class="cita-header">
                     <div class="mascota-info">
                         <div class="icono-huella">🐾</div>
                         <div class="mascota-nombres">
-                            <h4>Luna (Gato Persa)</h4>
-                            <span>Vacunación Anual</span>
+                            <h4>{{ cita.mascota?.nombre || 'Mascota' }}</h4>
+                            <span>{{ cita.tipo || 'Cita Médica' }}</span>
                         </div>
                     </div>
-                    <span class="badge pendiente">PENDIENTE</span>
+                    <span class="badge confirmada">PROGRAMADA</span>
                 </div>
 
                 <div class="cita-detalles">
-                    <p><i class="pi pi-user"></i> Dra. Elena Martínez</p>
-                    <p><i class="pi pi-calendar"></i> Viernes, 21 de Junio</p>
-                    <p><i class="pi pi-clock"></i> 04:15 PM</p>
+                    <ng-container *ngIf="userRole !== 'veterinario'">
+                        <p *ngIf="cita.veterinario"><i class="pi pi-user"></i> Dr(a). {{ cita.veterinario.nombre }} {{ cita.veterinario.apellido1 }}</p>
+                        <p *ngIf="!cita.veterinario"><i class="pi pi-user"></i> Veterinario sin asignar</p>
+                    </ng-container>
+
+                    <ng-container *ngIf="userRole === 'veterinario'">
+                        <p *ngIf="cita.cliente"><i class="pi pi-user"></i> Cliente: {{ cita.cliente.nombre }} {{ cita.cliente.apellido1 }}</p>
+                    </ng-container>
+
+                    <p><i class="pi pi-calendar"></i> {{ cita.fecha | date:'fullDate' }}</p>
+                    <p><i class="pi pi-clock"></i> {{ cita.fecha | date:'shortTime' }}</p>
                 </div>
 
                 <div class="cita-acciones">
-                    <button class="btn-secundario">Modificar</button>
-                    <button class="btn-peligro">Cancelar</button>
+                    <button class="btn-secundario" (click)="modificarCita(cita)">Modificar</button>
+                    <button *ngIf="userRole === 'veterinario'" class="btn-primario" style="background-color: #4ade80; border: none; color: #1f2937;" (click)="completarCita(cita.id)">Completar</button>
+                    <button class="btn-peligro" (click)="cancelarCita(cita.id)">Cancelar</button>
                 </div>
             </div>
 

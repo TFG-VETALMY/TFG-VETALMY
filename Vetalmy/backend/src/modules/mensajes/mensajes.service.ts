@@ -17,7 +17,11 @@ export class MensajesService {
       chatId: createMensajeDto.chatId,
       usuarioId: createMensajeDto.usuarioId
     });
-    return await this.mensajeRepository.save(mensaje);
+    const saved = await this.mensajeRepository.save(mensaje);
+    return await this.mensajeRepository.findOne({
+      where: { id: saved.id },
+      relations: ['usuario']
+    });
   }
 
   async findAll() {

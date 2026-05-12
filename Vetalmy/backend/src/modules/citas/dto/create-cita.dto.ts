@@ -18,4 +18,12 @@ export class CreateCitaDto {
 
     @IsInt()
     clienteId: number;
+
+    @IsInt()
+    @IsOptional()
+    veterinarioId?: number;
+
+    @IsString()
+    @IsOptional()
+    estado?: string;
 }

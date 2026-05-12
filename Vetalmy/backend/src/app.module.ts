@@ -27,7 +27,7 @@ import { AuthModule } from './auth/auth.module';
       type: 'postgres',
 
       url: process.env.DATABASE_URL,
-      host: process.env.DATABASE_URL ? undefined : 'localhost',
+      host: process.env.DATABASE_URL ? undefined : '127.0.0.1',
       port: process.env.DATABASE_URL ? undefined : 5436,
       username: process.env.DATABASE_URL ? undefined : 'admin',
       password: process.env.DATABASE_URL ? undefined : 'admin',

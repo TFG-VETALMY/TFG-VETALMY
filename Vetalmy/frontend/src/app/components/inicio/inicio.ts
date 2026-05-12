@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { ConsejosCarruselComponent } from '../consejos-carrusel/consejos-carrusel';
 
 @Component({
   selector: 'app-inicio',
-  imports: [ConsejosCarruselComponent],
+  standalone: true,
+  imports: [ConsejosCarruselComponent, RouterLink],
   templateUrl: './inicio.html',
   styleUrl: './inicio.css',
 })

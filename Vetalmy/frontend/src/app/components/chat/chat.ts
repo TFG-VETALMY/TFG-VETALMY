@@ -45,6 +45,7 @@ export class Chat implements OnInit, OnDestroy {
       console.error('Error de conexión WebSocket:', error);
     });
 
+    // cada que recibe un mensaje lo mete a la lista de mensajes 
     this.socket.on('nuevo-mensaje', (mensaje) => {
       this.ngZone.run(() => {
         if (mensaje.chatId === this.chatId || mensaje.chat?.id === this.chatId) {
@@ -58,6 +59,7 @@ export class Chat implements OnInit, OnDestroy {
           this.cargarMisChats();
         }
 
+        // escuchador de cambios en la vista
         this.cdr.detectChanges();
       });
     });
@@ -70,6 +72,7 @@ export class Chat implements OnInit, OnDestroy {
   }
 
   cargarVeterinarios() {
+    //aqui se usa get para obtener todos los usuarios y se filtra por rol veterinario
     this.http.get<any[]>('/usuarios').subscribe({
       next: (usuarios) => {
         this.veterinarios = usuarios.filter(u => u.rol === 'veterinario');
@@ -79,6 +82,7 @@ export class Chat implements OnInit, OnDestroy {
   }
 
   cargarMisChats() {
+    //aqui se usa get para obtener todos los chats y se filtra por el id del veterinario
     this.http.get<any[]>('/chat').subscribe({
       next: (chats) => {
         this.chatsActivos = chats.filter(c =>
@@ -91,9 +95,11 @@ export class Chat implements OnInit, OnDestroy {
   }
 
   iniciarChatConVeterinario(vet: any) {
+    //aqui se inicia el chat con el veterinario y si no existe se crea
     this.contactoActual = vet.nombre;
     this.mensajes = [];
 
+    //aqui se busca el chat existente con el veterinario y si no existe se crea
     this.http.get<any[]>('/chat').subscribe({
       next: (chats) => {
         const chatExistente = chats.find(c =>
@@ -114,18 +120,21 @@ export class Chat implements OnInit, OnDestroy {
   }
 
   abrirChatExistente(chat: any) {
+    //aqui se abre el chat 
     this.contactoActual = chat.cliente?.nombre || 'Cliente';
     this.mensajes = [];
     this.abrirChat(chat.id, chat.mensajes);
   }
 
   abrirChat(id: number, mensajes: any[]) {
+    //aqui se abre el chat y se cargan los mensajes y al final hace un detectChanges para que se muestren
     this.chatId = id;
     this.mensajes = mensajes || [];
     this.cdr.detectChanges();
   }
 
   enviarMensaje() {
+    //aqui se envia el mensaje y al final se muestran todos los mensajes
     if (this.nuevoMensaje.trim() !== '' && this.chatId !== 0) {
       const payload = {
         mensaje: this.nuevoMensaje,
@@ -133,18 +142,23 @@ export class Chat implements OnInit, OnDestroy {
         usuarioId: this.userId
       };
 
+      // aqui se agregan los nuevos mensajes a la lista de mensajes que tiene que pintarse
       this.mensajes.push({
         ...payload,
         fecha_creacion: new Date().toISOString()
       });
 
+      // aqui se envia el mensaje al servidor
       this.socket.emit('enviar-mensaje', payload);
+      // limpiamos el input para volver a enviar otro mensaje sin colapso 
       this.nuevoMensaje = '';
 
+      //aqui se muestra el mensaje en la pantalla de manera inmediata
       setTimeout(() => this.cdr.detectChanges(), 50);
     }
   }
 
+  //aqui se cierra la conexion con el servidor al cerrar la pagina web
   ngOnDestroy() {
     if (this.socket) {
       this.socket.disconnect();
