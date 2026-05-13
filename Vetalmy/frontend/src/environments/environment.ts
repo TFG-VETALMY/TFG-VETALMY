@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: '/api',
-    wsUrl: '/'
+    apiUrl: 'https://tfg-vetalmy.onrender.com/api',
+    wsUrl: 'https://tfg-vetalmy.onrender.com'
 };

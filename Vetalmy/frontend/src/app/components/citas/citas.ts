@@ -78,6 +78,9 @@ export class Citas implements OnInit {
   horas: string[] = [];
   horaSeleccionada: string | undefined;
 
+  /** Todas las citas activas del sistema (sin filtrar por usuario) para bloqueo de horas */
+  private todasLasCitasSistema: any[] = [];
+
   ngOnInit() {
     this.userRole = localStorage.getItem('user_role') || '';
 
@@ -144,10 +147,14 @@ export class Citas implements OnInit {
     const userId = Number(localStorage.getItem('user_id'));
     const userRole = localStorage.getItem('user_role');
 
+    // Cargamos TODAS las citas del sistema para calcular disponibilidad de veterinarios
     this.http.get<any[]>('/citas').subscribe({
       next: (citas) => {
-        let citasFiltradas = citas;
+        // Guardamos TODAS las activas para el cálculo de bloqueo de horas
+        this.todasLasCitasSistema = citas.filter(c => c.estado !== 'COMPLETADA');
 
+        // Filtramos las que muestra la UI según el rol
+        let citasFiltradas = citas;
         if (userRole === 'veterinario') {
           citasFiltradas = citas.filter(cita => cita.veterinario?.id === userId);
         } else if (userRole !== 'admin') {
@@ -160,6 +167,9 @@ export class Citas implements OnInit {
           .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
           .filter(cita => new Date(cita.fecha) >= new Date())
           .slice(0, 3);
+
+        // Guardamos todas las citas activas para acceder a ellas desde el eventClick
+        this.todasLasCitas = activas;
 
         const calendarEvents = activas.map(cita => ({
           id: cita.id.toString(),
@@ -196,20 +206,70 @@ export class Citas implements OnInit {
   onFechaChange() {
     if (!this.fechaCitaNueva) return;
 
+    const fechaSeleccionada = new Date(this.fechaCitaNueva);
     const hoy = new Date();
-    const esHoy = this.fechaCitaNueva.setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0);
+    const esHoy =
+      fechaSeleccionada.getFullYear() === hoy.getFullYear() &&
+      fechaSeleccionada.getMonth() === hoy.getMonth() &&
+      fechaSeleccionada.getDate() === hoy.getDate();
 
-    if (esHoy) {
-      const ahoraEnMinutos = hoy.getHours() * 60 + hoy.getMinutes();
+    // Número total de veterinarios disponibles
+    const totalVets = this.veterinarios.length;
 
-      this.horasFiltradas = this.horasMaster.filter(h => {
-        const [hora, min] = h.split(':').map(Number);
-        const tiempoCitaEnMinutos = hora * 60 + min;
-        return tiempoCitaEnMinutos > ahoraEnMinutos;
-      });
-    } else {
-      this.horasFiltradas = [...this.horasMaster];
-    }
+    // Citas activas ese día concreto (de todo el sistema)
+    const citasDia = this.todasLasCitasSistema.filter(c => {
+      const fCita = new Date(c.fecha);
+      return (
+        fCita.getFullYear() === fechaSeleccionada.getFullYear() &&
+        fCita.getMonth() === fechaSeleccionada.getMonth() &&
+        fCita.getDate() === fechaSeleccionada.getDate()
+      );
+    });
+
+    // Contamos cuántas citas hay por franja horaria exacta (HH:MM)
+    const ocupacionPorHora: Record<string, Set<number>> = {};
+    citasDia.forEach(c => {
+      const fCita = new Date(c.fecha);
+      const hh = fCita.getHours().toString().padStart(2, '0');
+      const mm = fCita.getMinutes().toString().padStart(2, '0');
+      const slot = `${hh}:${mm}`;
+      if (!ocupacionPorHora[slot]) ocupacionPorHora[slot] = new Set();
+      if (c.veterinario?.id) ocupacionPorHora[slot].add(c.veterinario.id);
+    });
+
+    // Si estamos editando una cita, excluímos esa cita del cálculo
+    // (para que el propio slot de la cita editada no se bloquee)
+    const idEditando = this.citaEditandoId;
+
+    // Filtramos horas: eliminamos las pasadas (si es hoy) y las llenas de vets
+    this.horasFiltradas = this.horasMaster.filter(slot => {
+      // 1. Filtro por hora pasada si es hoy
+      if (esHoy) {
+        const [h, m] = slot.split(':').map(Number);
+        const slotMinutos = h * 60 + m;
+        const ahoraMinutos = hoy.getHours() * 60 + hoy.getMinutes();
+        if (slotMinutos <= ahoraMinutos) return false;
+      }
+
+      // 2. Filtro de ocupación: si todos los vets están pillados en ese slot, bloqueamos
+      if (totalVets > 0 && ocupacionPorHora[slot]) {
+        const vetsOcupados = ocupacionPorHora[slot].size;
+        // Si la cita que editamos ocupa este slot, no bloqueamos
+        const citaEditandoEnSlot = idEditando
+          ? citasDia.some(c => {
+              const fCita = new Date(c.fecha);
+              const hh = fCita.getHours().toString().padStart(2, '0');
+              const mm = fCita.getMinutes().toString().padStart(2, '0');
+              return `${hh}:${mm}` === slot && c.id === idEditando;
+            })
+          : false;
+
+        if (!citaEditandoEnSlot && vetsOcupados >= totalVets) return false;
+      }
+
+      return true;
+    });
+
     if (this.horaSeleccionada && !this.horasFiltradas.includes(this.horaSeleccionada)) {
       this.horaSeleccionada = undefined;
     }
@@ -335,6 +395,17 @@ export class Citas implements OnInit {
 
   value: string = '';
 
+  /** Almacena todas las citas activas para poder buscarlas al hacer click en el calendario */
+  private todasLasCitas: any[] = [];
+
+  onEventClick(info: any) {
+    const id = Number(info.event.id);
+    const cita = this.todasLasCitas.find(c => c.id === id);
+    if (cita) {
+      this.modificarCita(cita);
+    }
+  }
+
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -353,6 +424,7 @@ export class Citas implements OnInit {
 
     editable: true,
     eventDrop: this.onEventDrop.bind(this),
+    eventClick: this.onEventClick.bind(this),
     events: []
   };
 }

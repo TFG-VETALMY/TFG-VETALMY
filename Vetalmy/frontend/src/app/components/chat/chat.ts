@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../../environments/environment';
+import { UnreadMessagesService } from '../../services/unread-messages.service';
 
 @Component({
   selector: 'app-chat',
@@ -25,9 +26,17 @@ export class Chat implements OnInit, OnDestroy {
   contactoActual: string = '';
 
 
-  constructor(private http: HttpClient, private ngZone: NgZone, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private http: HttpClient,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
+    private unreadSvc: UnreadMessagesService
+  ) { }
 
   ngOnInit() {
+    // Al entrar en el chat, reseteamos el contador de mensajes sin leer
+    this.unreadSvc.resetUnread();
+
     this.rol = localStorage.getItem('user_role');
     const token = localStorage.getItem('token');
     const idStr = localStorage.getItem('user_id');
@@ -130,6 +139,8 @@ export class Chat implements OnInit, OnDestroy {
     //aqui se abre el chat y se cargan los mensajes y al final hace un detectChanges para que se muestren
     this.chatId = id;
     this.mensajes = mensajes || [];
+    // Notificamos al servicio cuál es el chat activo para no contar sus mensajes
+    this.unreadSvc.setActiveChat(id);
     this.cdr.detectChanges();
   }
 

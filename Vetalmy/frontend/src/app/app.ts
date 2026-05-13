@@ -19,7 +19,7 @@ export class App implements OnInit {
   private socket!: Socket;
 
   constructor(
-    public router: Router, 
+    public router: Router,
     private messageService: MessageService,
     private ngZone: NgZone
   ) {
@@ -38,9 +38,11 @@ export class App implements OnInit {
     }
   }
 
+
+
   conectarSocket() {
     if (this.socket) return;
-    
+
     const token = localStorage.getItem('token');
     this.socket = io(environment.wsUrl, {
       auth: { token: token }
@@ -49,11 +51,14 @@ export class App implements OnInit {
     this.socket.on('nuevo-mensaje', (mensaje) => {
       this.ngZone.run(() => {
         const userId = Number(localStorage.getItem('user_id'));
-        // Si el mensaje NO lo enviamos nosotros y NO estamos en la pantalla de chat
         if (mensaje.usuarioId !== userId && !this.router.url.includes('/chat')) {
+          const remitente = mensaje.usuario;
+          const nombre = remitente ? remitente.nombre : 'Desconocido';
+          const rol = remitente?.rol === 'veterinario' ? 'Veterinario' : 'Cliente';
+
           this.messageService.add({
             severity: 'info',
-            summary: 'Nuevo mensaje recibido',
+            summary: `Nuevo mensaje de: ${nombre} (${rol})`,
             detail: mensaje.mensaje || 'Tienes un nuevo mensaje en el chat.',
             life: 5000
           });

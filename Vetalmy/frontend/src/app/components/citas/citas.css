@@ -308,10 +308,8 @@
 
 :host ::ng-deep .fc-col-header-cell {
     border-bottom: 2px solid var(--marron-claro) !important;
-    padding-bottom: 8px !important;
-    background-color: var(--blanco) !important;
+    background: linear-gradient(135deg, #f9f3e8 0%, #f2e8d5 100%) !important;
     vertical-align: middle !important;
-    height: 30px;
     padding: 0 !important;
 }
 
@@ -322,13 +320,12 @@
 }
 
 :host ::ng-deep .fc-col-header-cell-cushion {
-    color: var(--marron-oscuro);
-    font-weight: bold;
+    color: var(--marron);
+    font-weight: 700;
     text-transform: uppercase;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
 }
-
-/* --- RESALTAR EL DÍA ACTUAL --- */
 
 :host ::ng-deep .fc-day-today {
     background-color: #f5f1e6 !important;
@@ -345,6 +342,36 @@
     border-left: 3px solid var(--marron-acento) !important;
     background-color: white !important;
     color: var(--marron-oscuro) !important;
+}
+
+/* Celdas más altas para que las citas sean legibles */
+:host ::ng-deep .fc-daygrid-day {
+    min-height: 90px !important;
+}
+
+/* Cursor pointer en eventos clickables */
+:host ::ng-deep .fc-event {
+    cursor: pointer !important;
+}
+
+/* Estilo de los eventos en el calendario */
+:host ::ng-deep .fc-daygrid-event {
+    border-radius: 6px !important;
+    padding: 2px 6px !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    border-left: 3px solid var(--marron-oscuro) !important;
+    background-color: var(--marron-acento) !important;
+    color: #fff !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+:host ::ng-deep .fc-daygrid-event:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
 }
 
 /* Responsive: Una sola columna en móviles */

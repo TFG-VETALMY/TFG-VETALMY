@@ -1,6 +1,8 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Importante para ngIf
+import { Subscription } from 'rxjs';
+import { UnreadMessagesService } from '../../services/unread-messages.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,10 +11,30 @@ import { CommonModule } from '@angular/common'; // Importante para ngIf
   templateUrl: './menu.html',
   styleUrl: './menu.css',
 })
-export class Menu {
+export class Menu implements OnInit, OnDestroy {
   isMenuOpen: boolean = false;
+  mensajesSinLeer: number = 0;
 
-  constructor(private router: Router, private eRef: ElementRef) { }
+  private unreadSub!: Subscription;
+
+  constructor(
+    private router: Router,
+    private eRef: ElementRef,
+    private unreadSvc: UnreadMessagesService
+  ) { }
+
+  ngOnInit() {
+    if (this.isLoggedIn) {
+      this.unreadSvc.init();
+      this.unreadSub = this.unreadSvc.unreadCount$.subscribe(count => {
+        this.mensajesSinLeer = count;
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    this.unreadSub?.unsubscribe();
+  }
 
   get isLoggedIn(): boolean {
     return typeof window !== 'undefined' && !!localStorage.getItem('token');
@@ -21,6 +43,7 @@ export class Menu {
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
+
   @HostListener('document:click', ['$event'])
   clickOut(event: MouseEvent) {
     if (this.isMenuOpen && !this.eRef.nativeElement.contains(event.target)) {

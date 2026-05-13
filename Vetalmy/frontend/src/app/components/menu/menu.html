@@ -21,7 +21,14 @@
             <li *ngIf="isLoggedIn"><a routerLink="/mi-cuenta" routerLinkActive="active" (click)="isMenuOpen = false">Mi cuenta</a></li>
             <li *ngIf="isLoggedIn"><a routerLink="/mis-mascotas" routerLinkActive="active" (click)="isMenuOpen = false">Mis mascotas</a></li>
             <li *ngIf="isLoggedIn"><a routerLink="/citas" routerLinkActive="active" (click)="isMenuOpen = false">Citas</a></li>
-            <li *ngIf="isLoggedIn"><a routerLink="/chat" routerLinkActive="active" (click)="isMenuOpen = false">Chat</a></li>
+            <li *ngIf="isLoggedIn" class="chat-nav-item">
+                <a routerLink="/chat" routerLinkActive="active" (click)="isMenuOpen = false">
+                    Chat
+                    <span class="badge-no-leidos" *ngIf="mensajesSinLeer > 0">
+                        {{ mensajesSinLeer > 99 ? '99+' : mensajesSinLeer }}
+                    </span>
+                </a>
+            </li>
             <li *ngIf="!isLoggedIn"><a routerLink="/login" routerLinkActive="active" (click)="isMenuOpen = false">Iniciar sesión</a></li>
         </ul>
 

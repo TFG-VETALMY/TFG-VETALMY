@@ -110,14 +110,165 @@ h1,
     width: 100% !important;
     display: flex !important;
     flex-direction: column;
+    font-family: 'Rubik', sans-serif !important;
 }
 
 .fc-view-harness {
     width: 100% !important;
 }
 
+/* === CABECERA DÍAS DE LA SEMANA === */
+.fc-col-header-cell {
+    background: linear-gradient(135deg, #f5ede0 0%, #edddc8 100%) !important;
+    border-bottom: 2px solid #A18675 !important;
+    padding: 0 !important;
+}
+
+.fc-col-header-cell-cushion {
+    display: inline-block !important;
+    padding: 10px 4px !important;
+    color: #564437 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.08em !important;
+    text-decoration: none !important;
+}
+
+/* === CELDAS DE DÍAS MÁS ALTAS === */
+.fc-daygrid-day {
+    min-height: 100px !important;
+}
+
+.fc .fc-daygrid-body-natural .fc-daygrid-day-events {
+    min-height: 2.5em !important;
+}
+
+/* Número del día */
+.fc-daygrid-day-number {
+    padding: 6px 8px !important;
+    color: #48392E !important;
+    font-size: 0.88rem !important;
+    text-decoration: none !important;
+}
+
+/* === DÍA ACTUAL === */
+.fc-day-today {
+    background-color: #fdf5e8 !important;
+}
+
+.fc-day-today .fc-daygrid-day-number {
+    color: #B06E39 !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+}
+
+/* === EVENTOS === */
+.fc-daygrid-event {
+    border-radius: 5px !important;
+    padding: 3px 7px !important;
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
+    background-color: #B06E39 !important;
+    border-color: #8a5228 !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    transition: filter 0.15s ease, transform 0.1s ease !important;
+    margin-bottom: 2px !important;
+}
+
+.fc-daygrid-event:hover {
+    filter: brightness(1.15) !important;
+    transform: translateY(-1px) !important;
+}
+
+.fc-event {
+    cursor: pointer !important;
+}
+
+/* === BORDES DE LA REJILLA === */
+.fc-theme-standard td,
+.fc-theme-standard th {
+    border-color: #ddd3c3 !important;
+}
+
+/* === BOTONES DE NAVEGACIÓN === */
+.fc .fc-button-primary {
+    background-color: #fff !important;
+    color: #564437 !important;
+    border: 1px solid #CBC7B7 !important;
+    box-shadow: none !important;
+}
+
+.fc .fc-button-primary:hover {
+    background-color: #f5ede0 !important;
+    border-color: #A18675 !important;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+    background-color: #B06E39 !important;
+    border-color: #8a5228 !important;
+    color: #fff !important;
+}
+
+.fc .fc-toolbar-title {
+    color: #48392E !important;
+    font-size: 1.3rem !important;
+    font-weight: 700 !important;
+}
+
+
 .inner-content {
     padding: 2rem;
     width: 100%;
     box-sizing: border-box;
+}
+
+/* ===== TOAST NOTIFICATIONS ===== */
+.p-toast {
+    z-index: 99999 !important;
+}
+
+.p-toast .p-toast-message {
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: 0 8px 32px rgba(86, 68, 55, 0.25) !important;
+    backdrop-filter: blur(8px) !important;
+    font-family: 'Rubik', sans-serif !important;
+    overflow: hidden !important;
+}
+
+/* Tipo info → marrón acento (mensajes de chat) */
+.p-toast .p-toast-message.p-toast-message-info {
+    background: linear-gradient(135deg, var(--marron-oscuro) 0%, var(--marron) 100%) !important;
+    color: var(--blanco) !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon {
+    color: var(--marron-acento) !important;
+    font-size: 1.4rem !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-info .p-toast-summary {
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    color: var(--blanco) !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-info .p-toast-detail {
+    font-size: 0.85rem !important;
+    color: var(--beige) !important;
+    margin-top: 0.25rem !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
+    color: var(--beige) !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close:hover {
+    background: rgba(255,255,255,0.1) !important;
+    color: var(--blanco) !important;
 }

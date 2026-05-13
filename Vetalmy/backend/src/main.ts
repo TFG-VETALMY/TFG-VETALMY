@@ -15,10 +15,11 @@ async function bootstrap() {
     transform: true,
   }));
   app.enableCors({
-    origin: ['http://localhost:4200', 'https://tfg-vetalmy.vercel.app'],
+    origin: true,  // Acepta cualquier origen (ajustar a la URL del frontend en producción)
     credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   });
-  await app.listen(3000);
+  await app.listen(process.env['PORT'] || 3000);
+
 }
 bootstrap();
