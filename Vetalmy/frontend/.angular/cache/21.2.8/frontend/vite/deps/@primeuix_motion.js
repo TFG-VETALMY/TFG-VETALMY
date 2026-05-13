@@ -1,11 +1,11 @@
 import {
-  P2 as P,
-  W2 as W,
+  P,
+  W,
   oe,
   qt,
-  te2 as te,
-  w2 as w
-} from "./chunk-NXUKL5GV.js";
+  te,
+  w
+} from "./chunk-IJ5CYRSM.js";
 import "./chunk-GOMI4DH3.js";
 
 // node_modules/@primeuix/motion/dist/index.mjs

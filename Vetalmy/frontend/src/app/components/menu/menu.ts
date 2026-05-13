@@ -10,6 +10,8 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Menu {
   isMenuOpen: boolean = false;
+  isLoggedIn: boolean = false;
+  mensajesSinLeer: number = 0; 
 
   // Inyectamos ElementRef para poder referenciar el propio componente
   constructor(private router: Router, private eRef: ElementRef) { }

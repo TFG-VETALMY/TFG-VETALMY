@@ -1,181 +1,205 @@
 {
-  "hash": "e283c3d6",
-  "configHash": "a1445e5a",
-  "lockfileHash": "cd762b02",
-  "browserHash": "21c48283",
+  "hash": "1a980a5b",
+  "configHash": "b4e375c7",
+  "lockfileHash": "d64aa46e",
+  "browserHash": "2d9bfb45",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "6773276f",
+      "fileHash": "e0341a28",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "1af3c968",
+      "fileHash": "6330b269",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "53b6965c",
+      "fileHash": "f7535cfb",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "f9854c68",
+      "fileHash": "c24f9923",
       "needsInterop": false
     },
     "@angular/platform-browser/animations/async": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/animations-async.mjs",
       "file": "@angular_platform-browser_animations_async.js",
-      "fileHash": "3977d1c9",
+      "fileHash": "3d407c1f",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "fff25440",
+      "fileHash": "c67665e5",
       "needsInterop": false
     },
     "@fullcalendar/angular": {
       "src": "../../../../../../node_modules/@fullcalendar/angular/fesm2020/fullcalendar-angular.mjs",
       "file": "@fullcalendar_angular.js",
-      "fileHash": "fa084b33",
+      "fileHash": "bf3526ac",
       "needsInterop": false
     },
     "@fullcalendar/core/locales/es": {
       "src": "../../../../../../node_modules/@fullcalendar/core/locales/es.js",
       "file": "@fullcalendar_core_locales_es.js",
-      "fileHash": "66ed18bd",
+      "fileHash": "48b661fb",
       "needsInterop": false
     },
     "@fullcalendar/daygrid": {
       "src": "../../../../../../node_modules/@fullcalendar/daygrid/index.js",
       "file": "@fullcalendar_daygrid.js",
-      "fileHash": "186cf49c",
+      "fileHash": "0c47df78",
       "needsInterop": false
     },
     "@fullcalendar/interaction": {
       "src": "../../../../../../node_modules/@fullcalendar/interaction/index.js",
       "file": "@fullcalendar_interaction.js",
-      "fileHash": "d1408626",
+      "fileHash": "ebd3bb77",
       "needsInterop": false
     },
     "@fullcalendar/timegrid": {
       "src": "../../../../../../node_modules/@fullcalendar/timegrid/index.js",
       "file": "@fullcalendar_timegrid.js",
-      "fileHash": "3cddc733",
+      "fileHash": "1ab67a50",
       "needsInterop": false
     },
     "@primeng/themes/aura": {
       "src": "../../../../../../node_modules/@primeng/themes/aura/index.mjs",
       "file": "@primeng_themes_aura.js",
-      "fileHash": "7e96fe51",
+      "fileHash": "6c35e73b",
       "needsInterop": false
     },
     "@primeuix/motion": {
       "src": "../../../../../../node_modules/@primeuix/motion/dist/index.mjs",
       "file": "@primeuix_motion.js",
-      "fileHash": "12b83e3c",
+      "fileHash": "4af85224",
       "needsInterop": false
     },
     "@primeuix/styled": {
       "src": "../../../../../../node_modules/@primeuix/styled/dist/index.mjs",
       "file": "@primeuix_styled.js",
-      "fileHash": "ae96b392",
+      "fileHash": "2b8adade",
       "needsInterop": false
     },
     "@primeuix/styles/badge": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/badge/index.mjs",
       "file": "@primeuix_styles_badge.js",
-      "fileHash": "47a47f6f",
+      "fileHash": "96347ef7",
       "needsInterop": false
     },
     "@primeuix/styles/base": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/base/index.mjs",
       "file": "@primeuix_styles_base.js",
-      "fileHash": "ba5383da",
+      "fileHash": "57b88797",
       "needsInterop": false
     },
     "@primeuix/styles/button": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/button/index.mjs",
       "file": "@primeuix_styles_button.js",
-      "fileHash": "f0f025c9",
+      "fileHash": "32a2a60a",
+      "needsInterop": false
+    },
+    "@primeuix/styles/card": {
+      "src": "../../../../../../node_modules/@primeuix/styles/dist/card/index.mjs",
+      "file": "@primeuix_styles_card.js",
+      "fileHash": "3ad6cc36",
       "needsInterop": false
     },
     "@primeuix/styles/carousel": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/carousel/index.mjs",
       "file": "@primeuix_styles_carousel.js",
-      "fileHash": "5e3f8b17",
+      "fileHash": "5df68650",
       "needsInterop": false
     },
     "@primeuix/styles/datepicker": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/datepicker/index.mjs",
       "file": "@primeuix_styles_datepicker.js",
-      "fileHash": "760a3c7b",
+      "fileHash": "cbdc10eb",
       "needsInterop": false
     },
     "@primeuix/styles/dialog": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/dialog/index.mjs",
       "file": "@primeuix_styles_dialog.js",
-      "fileHash": "0e9de21a",
+      "fileHash": "a8ae979c",
       "needsInterop": false
     },
     "@primeuix/styles/floatlabel": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/floatlabel/index.mjs",
       "file": "@primeuix_styles_floatlabel.js",
-      "fileHash": "bab5cf31",
+      "fileHash": "ecc0d586",
       "needsInterop": false
     },
     "@primeuix/styles/iconfield": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/iconfield/index.mjs",
       "file": "@primeuix_styles_iconfield.js",
-      "fileHash": "d8aad4e6",
+      "fileHash": "62db5566",
       "needsInterop": false
     },
     "@primeuix/styles/iftalabel": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/iftalabel/index.mjs",
       "file": "@primeuix_styles_iftalabel.js",
-      "fileHash": "51537455",
+      "fileHash": "7775f89a",
       "needsInterop": false
     },
     "@primeuix/styles/inputtext": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/inputtext/index.mjs",
       "file": "@primeuix_styles_inputtext.js",
-      "fileHash": "57124e52",
+      "fileHash": "f8431d70",
+      "needsInterop": false
+    },
+    "@primeuix/styles/menu": {
+      "src": "../../../../../../node_modules/@primeuix/styles/dist/menu/index.mjs",
+      "file": "@primeuix_styles_menu.js",
+      "fileHash": "59fec43c",
       "needsInterop": false
     },
     "@primeuix/styles/ripple": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/ripple/index.mjs",
       "file": "@primeuix_styles_ripple.js",
-      "fileHash": "3e38e595",
+      "fileHash": "bac9febc",
       "needsInterop": false
     },
     "@primeuix/styles/select": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/select/index.mjs",
       "file": "@primeuix_styles_select.js",
-      "fileHash": "6f76bc8d",
+      "fileHash": "1bae6515",
+      "needsInterop": false
+    },
+    "@primeuix/styles/tag": {
+      "src": "../../../../../../node_modules/@primeuix/styles/dist/tag/index.mjs",
+      "file": "@primeuix_styles_tag.js",
+      "fileHash": "c0ecf211",
       "needsInterop": false
     },
     "@primeuix/styles/tooltip": {
       "src": "../../../../../../node_modules/@primeuix/styles/dist/tooltip/index.mjs",
       "file": "@primeuix_styles_tooltip.js",
-      "fileHash": "4d60f497",
+      "fileHash": "5c4ceee8",
       "needsInterop": false
     },
     "@primeuix/utils": {
       "src": "../../../../../../node_modules/@primeuix/utils/dist/index.mjs",
       "file": "@primeuix_utils.js",
-      "fileHash": "beee6c79",
+      "fileHash": "68be036e",
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "76ff2e74",
+      "fileHash": "d6491a06",
+      "needsInterop": false
+    },
+    "@angular/common/http": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "a438037f",
       "needsInterop": false
     }
   },
@@ -183,29 +207,35 @@
     "browser-VXUJINTV": {
       "file": "browser-VXUJINTV.js"
     },
+    "chunk-IJ5CYRSM": {
+      "file": "chunk-IJ5CYRSM.js"
+    },
+    "chunk-M55NA43Y": {
+      "file": "chunk-M55NA43Y.js"
+    },
+    "chunk-SAPXHBS3": {
+      "file": "chunk-SAPXHBS3.js"
+    },
+    "chunk-EKHNZ4HL": {
+      "file": "chunk-EKHNZ4HL.js"
+    },
     "chunk-IL2F47GR": {
       "file": "chunk-IL2F47GR.js"
     },
-    "chunk-NXUKL5GV": {
-      "file": "chunk-NXUKL5GV.js"
+    "chunk-G45XYM2O": {
+      "file": "chunk-G45XYM2O.js"
     },
-    "chunk-IRWJDO3K": {
-      "file": "chunk-IRWJDO3K.js"
-    },
-    "chunk-CPEHZYDM": {
-      "file": "chunk-CPEHZYDM.js"
-    },
-    "chunk-LW3THO4T": {
-      "file": "chunk-LW3THO4T.js"
-    },
-    "chunk-57ISK6AM": {
-      "file": "chunk-57ISK6AM.js"
+    "chunk-QVYI6HPX": {
+      "file": "chunk-QVYI6HPX.js"
     },
     "chunk-GB2S65Z7": {
       "file": "chunk-GB2S65Z7.js"
     },
     "chunk-RSS3ODKE": {
       "file": "chunk-RSS3ODKE.js"
+    },
+    "chunk-LW3THO4T": {
+      "file": "chunk-LW3THO4T.js"
     },
     "chunk-GOMI4DH3": {
       "file": "chunk-GOMI4DH3.js"
