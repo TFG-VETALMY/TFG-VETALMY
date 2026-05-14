@@ -23,22 +23,22 @@ export class ConsejosCarruselComponent implements OnInit {
     this.consejos = [
       {
         titulo: 'Alimentación Saludable',
-        imagen: 'perro-comiendo-de-mano.jpeg',
+        imagen: 'Consejos/perro-comiendo-de-mano.jpeg',
         detalle: 'Una dieta equilibrada es la base de una vida larga. Asegúrate de elegir piensos de alta calidad y evitar alimentos prohibidos como el chocolate o la cebolla.'
       },
       {
         titulo: 'Higiene Dental',
-        imagen: 'perro-cepillo-dientes.webp',
+        imagen: 'Consejos/perro-cepillo-dientes.webp',
         detalle: 'El cepillado regular previene el sarro y enfermedades periodontales. Existen snacks dentales que ayudan, pero nada sustituye al cepillado semanal.'
       },
       {
         titulo: 'Vigila su peso',
-        imagen: 'perro-pesandose.jpg',
+        imagen: 'Consejos/perro-pesandose.jpg',
         detalle: 'Es importante consultar con el veterinario el rango de peso ideal de tu animal. Las mascotas con sobrepeso y obesidad corren más riesgo de diabetes, artrosis, enfermedades cardiovasculares, problemas respiratorios y problemas urinarios, así como sobrecargas articulares y dificultades de movilidad.'
       },
       {
         titulo: 'Opta por la esterilización',
-        imagen: 'gato-esterilizado.jpg',
+        imagen: 'Consejos/gato-esterilizado.jpg',
         detalle: 'Se ha demostrado estadísticamente que la esterilización aumenta la longevidad, de forma que los animales esterilizados viven más tiempo.'
       },
 

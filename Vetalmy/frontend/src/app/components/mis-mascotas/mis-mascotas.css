@@ -1,0 +1,310 @@
+
+/* --- CABECERA --- */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.header-text h1 {
+  color: var(--marron-oscuro);
+  font-size: var(--fs-h1);
+  margin: 0 0 0.3rem 0;
+}
+
+.subtitulo {
+  color: var(--marroncito);
+  font-size: var(--fs-peque);
+  margin: 0;
+}
+
+/* Botón "Registrar nueva" */
+.btn-nueva {
+  background-color: var(--marron-acento) !important;
+  border: none !important;
+  color: var(--blanco-total) !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 600 !important;
+  padding: 0.6rem 1.3rem !important;
+  border-radius: 8px !important;
+  font-size: var(--fs-normal) !important;
+  transition: background-color 0.2s ease, transform 0.15s ease !important;
+  white-space: nowrap;
+}
+
+.btn-nueva:hover {
+  background-color: var(--marron) !important;
+  transform: translateY(-1px);
+}
+
+/* --- RECORDATORIO --- */
+.recordatorio {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--marron-oscuro);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.recordatorio-icono {
+  background-color: var(--marron-acento);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.recordatorio-icono i {
+  color: var(--blanco-total);
+  font-size: 1.1rem;
+}
+
+.recordatorio-texto {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 180px;
+}
+
+.recordatorio-texto strong {
+  color: var(--blanco-total);
+  font-size: var(--fs-normal);
+  margin-bottom: 0.15rem;
+}
+
+.recordatorio-texto span {
+  color: var(--beige);
+  font-size: var(--fs-peque);
+}
+
+/* Botón "Agendar Refuerzo" */
+.btn-agendar {
+  background-color: var(--blanco-total) !important;
+  border: none !important;
+  color: var(--marron-oscuro) !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1.2rem !important;
+  border-radius: 8px !important;
+  font-size: var(--fs-peque) !important;
+  white-space: nowrap;
+  transition: background-color 0.2s ease !important;
+}
+
+.btn-agendar:hover {
+  background-color: var(--blanco) !important;
+}
+
+/* --- GRID DE TARJETAS --- */
+.mascotas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1.5rem;
+}
+
+/* --- TARJETA BASE --- */
+.mascota-card {
+  background-color: var(--blanco-total);
+  border: 1px solid var(--beige);
+  border-radius: 16px;
+  padding: 1.5rem 1.2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(86, 68, 55, 0.07);
+}
+
+.mascota-card:hover {
+  box-shadow: 0 6px 20px rgba(86, 68, 55, 0.15);
+  transform: translateY(-3px);
+}
+
+/* Menú de tres puntos */
+.card-menu {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.9rem;
+  color: var(--arena);
+  font-size: 1rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.card-menu:hover {
+  background-color: var(--blanco);
+  color: var(--marron);
+}
+
+/* Foto circular */
+.card-foto-wrapper {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--beige);
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.card-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Info de texto */
+.card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.1rem;
+  gap: 0.2rem;
+}
+
+.card-nombre {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--marron-oscuro);
+  margin: 0;
+}
+
+.card-raza {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--marron-acento);
+  letter-spacing: 0.06em;
+}
+
+.card-edad {
+  font-size: var(--fs-peque);
+  color: var(--arena);
+}
+
+/* Botones de la tarjeta */
+.card-acciones {
+  display: flex;
+  gap: 0.6rem;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-historial {
+  background-color: transparent !important;
+  border: 1.5px solid var(--beige) !important;
+  color: var(--marroncito) !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-size: var(--fs-peque) !important;
+  padding: 0.4rem 0.9rem !important;
+  border-radius: 7px !important;
+  transition: border-color 0.2s ease, color 0.2s ease !important;
+}
+
+.btn-historial:hover {
+  border-color: var(--marron-claro) !important;
+  color: var(--marron) !important;
+}
+
+.btn-perfil {
+  background-color: var(--marron-oscuro) !important;
+  border: none !important;
+  color: var(--blanco-total) !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-size: var(--fs-peque) !important;
+  font-weight: 600 !important;
+  padding: 0.4rem 0.9rem !important;
+  border-radius: 7px !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.btn-perfil:hover {
+  background-color: var(--marron) !important;
+}
+
+/* --- TARJETA "AÑADIR" (punteada) --- */
+.card-añadir {
+  border: 2px dashed var(--beige) !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 240px;
+  transition: border-color 0.25s ease, background-color 0.25s ease !important;
+}
+
+.card-añadir:hover {
+  border-color: var(--marron-acento) !important;
+  background-color: rgba(176, 110, 57, 0.04) !important;
+  transform: translateY(-3px);
+}
+
+.añadir-icono i {
+  font-size: 2.2rem;
+  color: var(--beige);
+  transition: color 0.2s ease;
+}
+
+.card-añadir:hover .añadir-icono i {
+  color: var(--marron-acento);
+}
+
+.añadir-titulo {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--marroncito);
+  margin: 0;
+  text-align: center;
+}
+
+.añadir-desc {
+  font-size: var(--fs-peque);
+  color: var(--arena);
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* --- MENÚ CONTEXTUAL (item peligroso) --- */
+:host ::ng-deep .menu-item-danger a {
+  color: var(--rojo-error) !important;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+  .mascotas-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .recordatorio {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-agendar {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .mascotas-grid {
+    grid-template-columns: 1fr;
+  }
+}

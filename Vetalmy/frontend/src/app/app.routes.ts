@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login';
 import { RegistroComponent } from './components/registro/registro';
 import { InicioComponent } from './components/inicio/inicio';
+import { Servicios } from './components/servicios/servicios';
 import { Footer } from './components/footer/footer';
 import { MiCuenta } from './components/mi-cuenta/mi-cuenta';
 import { Consejos } from './components/consejos/consejos';
@@ -23,6 +24,9 @@ export const routes: Routes = [
 
     // Para la página de inicio
     { path: 'inicio', component: InicioComponent },
+
+    // Para la página de servicios
+    { path: 'servicios', component: Servicios},
 
     // Para la página de Mi cuenta
     { path: 'mi-cuenta', component: MiCuenta },
