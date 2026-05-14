@@ -170,4 +170,146 @@
 @keyframes badge-pop {
     from { transform: scale(0); opacity: 0; }
     to   { transform: scale(1); opacity: 1; }
-}
+}
+
+/* ─── AVATAR ──────────────────────────────────── */
+.avatar-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.avatar-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--marron-acento, #b06e39), var(--marron, #6b3a1f));
+    border: 2px solid var(--beige, #e8d5b0);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+    padding: 0;
+}
+
+.avatar-btn:hover {
+    box-shadow: 0 0 0 3px rgba(176, 110, 57, 0.25);
+    transform: scale(1.05);
+}
+
+.avatar-inicial {
+    color: white;
+    font-weight: 800;
+    font-size: 1rem;
+    font-family: 'Josefin Sans', sans-serif;
+    line-height: 1;
+    user-select: none;
+}
+
+.avatar-inicial--lg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--marron-acento, #b06e39), var(--marron, #6b3a1f));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+/* ─── DROPDOWN ────────────────────────────────── */
+.avatar-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 220px;
+    background: white;
+    border: 1px solid var(--beige, #e8d5b0);
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(86, 68, 55, 0.18);
+    z-index: 2000;
+    overflow: hidden;
+    animation: dropdown-in 0.18s ease forwards;
+}
+
+@keyframes dropdown-in {
+    from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1rem 0.8rem;
+}
+
+.dropdown-nombre {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--marron-oscuro, #3b2315);
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--beige, #e8d5b0);
+    margin: 0.2rem 0;
+}
+
+.dropdown-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.65rem 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Rubik', sans-serif;
+    font-size: 0.88rem;
+    color: var(--marroncito, #7a5c3e);
+    text-align: left;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-item i {
+    font-size: 0.85rem;
+    width: 16px;
+    text-align: center;
+    color: var(--arena, #a08060);
+}
+
+.dropdown-item:hover {
+    background-color: #fdf8f4;
+    color: var(--marron-oscuro, #3b2315);
+}
+
+.dropdown-item--danger {
+    color: #c62828;
+}
+
+.dropdown-item--danger i {
+    color: #c62828;
+}
+
+.dropdown-item--danger:hover {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* --- FOTO AVATAR (Google) ----------------------- */
+.avatar-foto {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.avatar-foto--lg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}

@@ -1,5 +1,244 @@
 
+/* ══════════════════════════════════════════
+   VISTA VETERINARIO — BUSCADOR Y CLIENTES
+   ══════════════════════════════════════════ */
+
+.buscador-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.buscador-icono {
+  position: absolute;
+  left: 1rem;
+  color: var(--arena);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.buscador-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.8rem !important;
+  border: 1.5px solid var(--beige) !important;
+  border-radius: 10px !important;
+  font-size: var(--fs-normal) !important;
+  font-family: 'Rubik', sans-serif !important;
+  transition: border-color 0.2s ease !important;
+  background: white !important;
+}
+
+.buscador-input:focus {
+  border-color: var(--marron-acento) !important;
+  outline: none !important;
+}
+
+.buscador-contador {
+  white-space: nowrap;
+  font-size: var(--fs-peque);
+  color: var(--arena);
+}
+
+/* Lista de clientes */
+.clientes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.cliente-row {
+  border: 1.5px solid var(--beige);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.cliente-row:hover {
+  border-color: var(--marron-claro);
+}
+
+/* Cabecera del cliente */
+.cliente-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.2rem;
+  cursor: pointer;
+  background: white;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.cliente-header:hover,
+.cliente-header.expandido {
+  background-color: #fdf8f4;
+}
+
+.cliente-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--marron-acento), var(--marron));
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+.cliente-datos {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.cliente-nombre {
+  font-weight: 700;
+  color: var(--marron-oscuro);
+  font-size: var(--fs-normal);
+}
+
+.cliente-email {
+  font-size: var(--fs-peque);
+  color: var(--arena);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cliente-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.badge-mascotas {
+  background: var(--blanco);
+  border: 1px solid var(--beige);
+  border-radius: 20px;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.72rem;
+  color: var(--marroncito);
+  font-weight: 600;
+}
+
+.cliente-meta i {
+  color: var(--arena);
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+/* Sección expandida */
+.cliente-mascotas {
+  border-top: 1px solid var(--beige);
+  padding: 1rem 1.2rem;
+  background: #fdf8f4;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sin-mascotas {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--arena);
+  font-size: var(--fs-peque);
+}
+
+/* Grid vet — tarjetas verticales premium */
+.mascotas-grid-vet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 1rem;
+}
+
+.mascota-card-vet {
+  background: white;
+  border: 1.5px solid var(--beige);
+  border-radius: 16px;
+  padding: 1.2rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.2s ease;
+  gap: 0.5rem;
+}
+
+.mascota-card-vet:hover {
+  box-shadow: 0 6px 18px rgba(86,68,55,0.13);
+  transform: translateY(-2px);
+  border-color: var(--marron-claro);
+}
+
+/* Círculo con emoji */
+.card-emoji-vet {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fdf0e6, #f5dfc5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+  margin-bottom: 0.3rem;
+  border: 2px solid var(--beige);
+}
+
+.card-info-vet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 100%;
+}
+
+.card-info-vet strong {
+  font-size: 1rem;
+  color: var(--marron-oscuro);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.card-info-vet > span {
+  font-size: 0.72rem;
+  color: var(--marroncito);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Botón añadir dentro del cliente */
+.btn-add-vet {
+  background-color: transparent !important;
+  border: 1.5px dashed var(--marron-claro) !important;
+  color: var(--marroncito) !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-size: var(--fs-peque) !important;
+  border-radius: 8px !important;
+  padding: 0.5rem 1rem !important;
+  align-self: flex-start;
+  transition: border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+.btn-add-vet:hover {
+  border-color: var(--marron-acento) !important;
+  background-color: rgba(176,110,57,0.04) !important;
+}
+
 /* --- CABECERA --- */
+
 .page-header {
   display: flex;
   align-items: flex-start;
@@ -307,4 +546,174 @@
   .mascotas-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* --- ESTADO VACÍO --- */
+.estado-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.vacio-icono {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+.estado-vacio h3 {
+  color: var(--marron-oscuro);
+  font-family: 'Josefin Sans', sans-serif;
+  margin: 0;
+}
+
+.estado-vacio p {
+  color: var(--arena);
+  font-size: var(--fs-peque);
+  margin: 0;
+}
+
+/* --- EMOJI ANIMAL --- */
+.card-foto-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--beige), #edddc8);
+}
+
+.animal-emoji {
+  font-size: 3.2rem;
+  line-height: 1;
+}
+
+/* --- ESPECIE Y BADGES --- */
+.card-especie {
+  font-size: var(--fs-peque);
+  color: var(--marroncito);
+  font-weight: 600;
+}
+
+.card-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.3rem;
+}
+
+.badge-dato {
+  background: var(--blanco);
+  border: 1px solid var(--beige);
+  border-radius: 20px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.72rem;
+  color: var(--marroncito);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.badge-dato i {
+  font-size: 0.65rem;
+  color: var(--marron-acento);
+}
+
+/* --- BOTÓN ELIMINAR --- */
+.btn-eliminar {
+  background-color: transparent !important;
+  border: 1.5px solid #e57373 !important;
+  color: #c62828 !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-size: var(--fs-peque) !important;
+  padding: 0.4rem 0.9rem !important;
+  border-radius: 7px !important;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+.btn-eliminar:hover {
+  background-color: #ffebee !important;
+}
+
+/* --- FORMULARIO DIÁLOGO --- */
+.form-mascota {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 0.5rem 0;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field label {
+  font-size: var(--fs-peque);
+  font-weight: 600;
+  color: var(--marroncito);
+}
+
+.form-field input,
+.form-field p-inputNumber,
+.form-field p-select {
+  width: 100%;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.w-full {
+  width: 100% !important;
+}
+
+/* Botones del diálogo */
+.btn-cancelar-dialog {
+  background-color: transparent !important;
+  border: 1.5px solid var(--beige) !important;
+  color: var(--marroncito) !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 500 !important;
+  border-radius: 8px !important;
+}
+
+.btn-guardar-dialog {
+  background-color: var(--marron-acento) !important;
+  border: none !important;
+  color: white !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+}
+
+.btn-guardar-dialog:hover {
+  background-color: var(--marron) !important;
+}
+/* --- VER M�S / VER MENOS --- */
+.ver-mas-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.btn-ver-mas {
+  background-color: transparent !important;
+  border: 1.5px solid var(--beige) !important;
+  color: var(--marroncito) !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-size: var(--fs-peque) !important;
+  border-radius: 20px !important;
+  padding: 0.4rem 1.4rem !important;
+  transition: border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+.btn-ver-mas:hover {
+  border-color: var(--marron-acento) !important;
+  background-color: rgba(176,110,57,0.04) !important;
 }

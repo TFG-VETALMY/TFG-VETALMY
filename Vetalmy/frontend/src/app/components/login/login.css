@@ -143,3 +143,46 @@ input.error {
     background-color: var(--beige);
     cursor: not-allowed;
 }
+/* --- SEPARADOR OAUTH ---------------------------- */
+.separador-oauth {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1.2rem 0 1rem;
+    color: var(--arena, #a08060);
+    font-size: 0.8rem;
+}
+
+.separador-oauth::before,
+.separador-oauth::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--beige, #e8d5b0);
+}
+
+/* --- BOTÓN GOOGLE ------------------------------- */
+.btn-google {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 1.5px solid #dadce0;
+    border-radius: 10px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #3c4043;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.btn-google:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}

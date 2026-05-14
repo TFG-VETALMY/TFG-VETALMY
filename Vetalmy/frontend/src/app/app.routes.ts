@@ -10,6 +10,7 @@ import { MisMascotas } from './components/mis-mascotas/mis-mascotas';
 import { Citas } from './components/citas/citas';
 import { Chat } from './components/chat/chat';
 import { SobreNosotros } from './components/sobre-nosotros/sobre-nosotros';
+import { AuthCallbackComponent } from './components/auth-callback/auth-callback';
 
 
 export const routes: Routes = [
@@ -43,9 +44,11 @@ export const routes: Routes = [
     // Para la página de Chat
     { path: 'chat', component: Chat },
 
-    // Para la página de Sobre nosotros 
+    // Para la página de Sobre nosotros
     { path: 'sobre-nosotros', component: SobreNosotros },
 
+    // Callback de Google OAuth
+    { path: 'auth/callback', component: AuthCallbackComponent },
 
     // Esto es para que me rediriga al login sin poner nada
     { path: '', redirectTo: '/inicio', pathMatch: 'full' },

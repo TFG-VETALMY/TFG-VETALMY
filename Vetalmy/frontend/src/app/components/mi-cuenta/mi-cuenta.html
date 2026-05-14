@@ -1,3 +1,241 @@
-<div class="inner-content">
-    <p>mi-cuenta works!</p>
+﻿<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">{{ userInicial }}</div>
+            <div class="sidebar-user-info">
+                <span class="sidebar-nombre">{{ nombreCompleto || 'Usuario' }}</span>
+                <span class="sidebar-email">{{ usuario?.email }}</span>
+            </div>
+        </div>
+        <div class="sidebar-divider"></div>
+        <span class="sidebar-section-label">Menú de usuario</span>
+        <nav class="sidebar-nav">
+            <button class="sidebar-item" [class.activo]="seccionActiva === 'perfil'" (click)="seccionActiva = 'perfil'">
+                <i class="pi pi-user"></i><span>Mi Perfil</span>
+            </button>
+            <button class="sidebar-item" (click)="navegarA('/mis-mascotas')">
+                <i class="pi pi-heart"></i><span>Mis Mascotas</span>
+            </button>
+            <button class="sidebar-item" (click)="navegarA('/citas')">
+                <i class="pi pi-calendar"></i><span>Historial de Citas</span>
+            </button>
+        </nav>
+        <div class="sidebar-spacer"></div>
+        <button class="sidebar-item sidebar-item--danger" (click)="logout()">
+            <i class="pi pi-sign-out"></i><span>Cerrar Sesión</span>
+        </button>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="dashboard-content">
+
+        <div *ngIf="seccionActiva === 'perfil'" class="seccion-perfil">
+
+            <div class="seccion-header">
+                <div>
+                    <h1>Mi Perfil</h1>
+                    <p class="seccion-subtitulo">Gestiona tu información personal y de contacto.</p>
+                </div>
+                <button class="btn-editar" (click)="activarEdicion()" *ngIf="!editando && usuario">
+                    <i class="pi pi-pencil"></i> Editar perfil
+                </button>
+            </div>
+
+            <!-- Feedback -->
+            <div class="alerta-exito" *ngIf="mensajeExito">
+                <i class="pi pi-check-circle"></i> {{ mensajeExito }}
+            </div>
+            <div class="alerta-error" *ngIf="mensajeError">
+                <i class="pi pi-times-circle"></i> {{ mensajeError }}
+            </div>
+
+            <!-- MODO VER -->
+            <div class="perfil-card" *ngIf="usuario && !editando">
+                <div class="perfil-foto-section">
+                    <div class="perfil-foto-grande">
+                    <img *ngIf="userFoto" [src]="userFoto" class="perfil-foto-img" alt="foto de perfil" referrerpolicy="no-referrer">
+                    <span *ngIf="!userFoto">{{ userInicial }}</span>
+                </div>
+                    <div class="perfil-foto-info">
+                        <span class="foto-label">Foto de perfil</span>
+                        <span class="foto-hint">Próximamente disponible</span>
+                    </div>
+                </div>
+                <div class="perfil-divider"></div>
+                <div class="perfil-campos">
+                    <div class="campo-grupo">
+                        <div class="campo">
+                            <label>Nombre</label>
+                            <div class="campo-valor">{{ usuario.nombre }}</div>
+                        </div>
+                        <div class="campo">
+                            <label>Primer Apellido</label>
+                            <div class="campo-valor">{{ usuario.apellido1 || '—' }}</div>
+                        </div>
+                    </div>
+                    <div class="campo-grupo">
+                        <div class="campo">
+                            <label>Segundo Apellido</label>
+                            <div class="campo-valor">{{ usuario.apellido2 || '—' }}</div>
+                        </div>
+                        <div class="campo">
+                            <label>Correo Electrónico</label>
+                            <div class="campo-valor">{{ usuario.email }}</div>
+                        </div>
+                    </div>
+                    <div class="campo-grupo">
+                        <div class="campo">
+                            <label>Rol</label>
+                            <div class="campo-valor">
+                                <span class="rol-badge" [class.rol-vet]="usuario.rol === 'veterinario'">
+                                    {{ usuario.rol === 'veterinario' ? '🩺 Veterinario' : '👤 Cliente' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODO EDITAR -->
+            <div class="perfil-card" *ngIf="usuario && editando">
+                <div class="perfil-foto-section">
+                    <div class="perfil-foto-grande">
+                    <img *ngIf="userFoto" [src]="userFoto" class="perfil-foto-img" alt="foto de perfil" referrerpolicy="no-referrer">
+                    <span *ngIf="!userFoto">{{ userInicial }}</span>
+                </div>
+                    <div class="perfil-foto-info">
+                        <span class="foto-label">Foto de perfil</span>
+                        <span class="foto-hint">Próximamente disponible</span>
+                    </div>
+                </div>
+                <div class="perfil-divider"></div>
+                <div class="perfil-campos">
+                    <div class="campo-grupo">
+                        <div class="campo">
+                            <label>Nombre *</label>
+                            <input class="campo-input" type="text" [(ngModel)]="form.nombre" placeholder="Tu nombre" />
+                        </div>
+                        <div class="campo">
+                            <label>Primer Apellido</label>
+                            <input class="campo-input" type="text" [(ngModel)]="form.apellido1" placeholder="Primer apellido" />
+                        </div>
+                    </div>
+                    <div class="campo-grupo">
+                        <div class="campo">
+                            <label>Segundo Apellido</label>
+                            <input class="campo-input" type="text" [(ngModel)]="form.apellido2" placeholder="Segundo apellido" />
+                        </div>
+                        <div class="campo">
+                            <label>Correo Electrónico *</label>
+                            <input class="campo-input" type="email" [(ngModel)]="form.email" placeholder="correo@ejemplo.com" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acciones edición -->
+                <div class="perfil-divider"></div>
+                <div class="edicion-acciones">
+                    <button class="btn-cancelar" (click)="cancelarEdicion()" [disabled]="guardando">
+                        Cancelar
+                    </button>
+                    <button class="btn-guardar" (click)="guardarCambios()" [disabled]="guardando || !form.nombre || !form.email">
+                        <i class="pi" [class.pi-spin]="guardando" [class.pi-spinner]="guardando" [class.pi-check]="!guardando"></i>
+                        {{ guardando ? 'Guardando...' : 'Guardar cambios' }}
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- ─── CAMBIO DE CONTRASEÑA ─────────────── -->
+            <div class="password-card" *ngIf="usuario">
+
+                <div class="password-header" (click)="mostrarFormPassword = !mostrarFormPassword">
+                    <div class="password-header-left">
+                        <i class="pi pi-lock"></i>
+                        <div>
+                            <span class="password-titulo">Cambiar contraseña</span>
+                            <span class="password-hint">Actualiza tu contraseña de acceso</span>
+                        </div>
+                    </div>
+                    <i class="pi" [class.pi-chevron-down]="!mostrarFormPassword" [class.pi-chevron-up]="mostrarFormPassword"></i>
+                </div>
+
+                <div class="password-body" *ngIf="mostrarFormPassword">
+
+                    <div class="alerta-exito" *ngIf="passwordExito">
+                        <i class="pi pi-check-circle"></i> {{ passwordExito }}
+                    </div>
+                    <div class="alerta-error" *ngIf="passwordError">
+                        <i class="pi pi-times-circle"></i> {{ passwordError }}
+                    </div>
+
+                    <div class="password-campos">
+
+                        <div class="campo">
+                            <label>Nueva contraseña *</label>
+                            <div class="password-input-wrapper">
+                                <input class="campo-input" [type]="mostrarNueva ? 'text' : 'password'"
+                                    [(ngModel)]="passwordForm.nueva" placeholder="Mínimo 6 caracteres" />
+                                <button class="toggle-eye" type="button" (click)="mostrarNueva = !mostrarNueva">
+                                    <i class="pi" [class.pi-eye]="!mostrarNueva" [class.pi-eye-slash]="mostrarNueva"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="campo">
+                            <label>Confirmar contraseña *</label>
+                            <div class="password-input-wrapper">
+                                <input class="campo-input" [type]="mostrarConfirmar ? 'text' : 'password'"
+                                    [(ngModel)]="passwordForm.confirmar" placeholder="Repite la contraseña" />
+                                <button class="toggle-eye" type="button" (click)="mostrarConfirmar = !mostrarConfirmar">
+                                    <i class="pi" [class.pi-eye]="!mostrarConfirmar" [class.pi-eye-slash]="mostrarConfirmar"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Indicador de fortaleza -->
+                    <div class="strength-bar" *ngIf="passwordForm.nueva">
+                        <div class="strength-fill"
+                            [style.width]="passwordForm.nueva.length >= 12 ? '100%' : passwordForm.nueva.length >= 8 ? '66%' : '33%'"
+                            [class.weak]="passwordForm.nueva.length < 8"
+                            [class.medium]="passwordForm.nueva.length >= 8 && passwordForm.nueva.length < 12"
+                            [class.strong]="passwordForm.nueva.length >= 12">
+                        </div>
+                        <span class="strength-label">
+                            {{ passwordForm.nueva.length >= 12 ? 'Fuerte' : passwordForm.nueva.length >= 8 ? 'Media' : 'Débil' }}
+                        </span>
+                    </div>
+
+                    <div class="edicion-acciones">
+                        <button class="btn-cancelar" (click)="mostrarFormPassword = false; passwordForm = {actual:'',nueva:'',confirmar:''}; passwordError = ''"
+                            [disabled]="passwordGuardando">
+                            Cancelar
+                        </button>
+                        <button class="btn-guardar" (click)="cambiarContrasenia()" [disabled]="passwordGuardando || !passwordForm.nueva || !passwordForm.confirmar">
+                            <i class="pi" [class.pi-spin]="passwordGuardando" [class.pi-spinner]="passwordGuardando" [class.pi-check]="!passwordGuardando"></i>
+                            {{ passwordGuardando ? 'Cambiando...' : 'Cambiar contraseña' }}
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Skeleton carga -->
+            <div class="perfil-loading" *ngIf="!usuario">
+                <div class="skeleton skeleton-avatar"></div>
+                <div class="skeleton skeleton-line"></div>
+                <div class="skeleton skeleton-line skeleton-line--sm"></div>
+            </div>
+
+        </div>
+
+    </main>
+
 </div>
+
+

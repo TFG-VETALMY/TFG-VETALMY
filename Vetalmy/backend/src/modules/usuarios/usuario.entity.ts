@@ -31,6 +31,10 @@ export class Usuario {
     })
     rol?: string;
 
+    @Column({ nullable: true, type: 'text' })
+    @IsOptional()
+    foto?: string;
+
     @OneToMany(() => Mascota, (mascota) => mascota.usuario)
     mascotas: Mascota[];
 

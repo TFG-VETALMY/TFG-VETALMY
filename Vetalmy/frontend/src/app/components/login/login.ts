@@ -40,6 +40,7 @@ export class LoginComponent {
           localStorage.setItem('token', res.token);
           localStorage.setItem('user_role', res.user.rol);
           localStorage.setItem('user_id', res.user.id);
+          localStorage.setItem('user_nombre', res.user.nombre);
 
           this.router.navigate(['/inicio']);
         },
@@ -55,4 +56,12 @@ export class LoginComponent {
 
   get emailControl() { return this.loginForm.get('email'); }
   get passwordControl() { return this.loginForm.get('password'); }
+
+  loginConGoogle(): void {
+    const esLocal = window.location.hostname === 'localhost';
+    const backendUrl = esLocal
+      ? 'http://localhost:3000/api/auth/google'
+      : 'https://tfg-vetalmy.onrender.com/api/auth/google';
+    window.location.href = backendUrl;
+  }
 }
