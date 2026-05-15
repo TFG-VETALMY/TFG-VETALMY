@@ -11,6 +11,7 @@
     z-index: 1000;
     position: fixed;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .menu-logo {
@@ -31,9 +32,7 @@
     color: var(--marron);
 }
 
-/* --- ESTADOS DE NAVEGACIÓN --- */
-
-/* 1. PC: Se ve todo en línea */
+/* --- NAVEGACIÓN PC --- */
 .menu-nav {
     display: flex;
     align-items: center;
@@ -45,6 +44,7 @@
     list-style: none;
     gap: 2rem;
     margin: 0;
+    padding: 0;
 }
 
 .menu-links a {
@@ -60,17 +60,7 @@
     color: var(--marron);
 }
 
-.btn-logout {
-    background-color: var(--beige);
-    color: var(--blanco-total);
-    border: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* 2. HAMBURGUESA: Oculta por defecto en PC */
+/* --- HAMBURGUESA: oculta en PC --- */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -79,6 +69,7 @@
     border: none;
     cursor: pointer;
     padding: 5px;
+    z-index: 1100;
 }
 
 .menu-toggle .bar {
@@ -88,56 +79,33 @@
     border-radius: 2px;
 }
 
-/* --- MEDIA QUERIES (Gestión Responsive) --- */
-
-@media screen and (max-width: 1140px) {
-
-    /* Mostramos el botón hamburguesa a la derecha */
-    .menu-toggle {
-        display: flex;
-    }
-
-    /* OCULTAMOS el menú de navegación completamente */
-    .menu-nav {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        flex-direction: column;
-        background-color: var(--blanco-total);
-        padding: 2rem;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        gap: 1.5rem;
-    }
-
-    /* Solo cuando le añadas la clase "active" (con Angular/JS) se verá en móvil */
-    .menu-nav.active {
-        display: flex !important;
-    }
-
-    .menu-links {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-        padding: 0;
-        /* Aseguramos que no tenga padding residual del ul */
-    }
-
-    .menu-acciones {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .btn-logout {
-        width: 100%;
-        max-width: 200px;
-    }
+/* --- OVERLAY --- */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-/* --- BADGE MENSAJES SIN LEER --- */
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
 
+/* --- AVATAR PC: visible, móvil: oculto --- */
+.avatar-wrapper--pc {
+    display: flex;
+}
+
+/* --- AVATAR MÓVIL: oculto en PC --- */
+.avatar-movil {
+    display: none;
+}
+
+/* --- BADGE --- */
 .chat-nav-item a {
     position: relative;
     display: inline-flex;
@@ -159,12 +127,9 @@
     font-size: 0.65rem;
     font-weight: 800;
     line-height: 1;
-    letter-spacing: 0;
     box-shadow: 0 2px 6px rgba(107, 58, 31, 0.45);
     animation: badge-pop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     pointer-events: none;
-    vertical-align: middle;
-    flex-shrink: 0;
 }
 
 @keyframes badge-pop {
@@ -172,7 +137,7 @@
     to   { transform: scale(1); opacity: 1; }
 }
 
-/* ─── AVATAR ──────────────────────────────────── */
+/* --- AVATAR PC --- */
 .avatar-wrapper {
     position: relative;
     flex-shrink: 0;
@@ -216,9 +181,10 @@
     justify-content: center;
     font-size: 1.1rem;
     flex-shrink: 0;
+    color: white;
 }
 
-/* ─── DROPDOWN ────────────────────────────────── */
+/* --- DROPDOWN PC --- */
 .avatar-dropdown {
     position: absolute;
     top: calc(100% + 10px);
@@ -272,6 +238,7 @@
     color: var(--marroncito, #7a5c3e);
     text-align: left;
     transition: background-color 0.15s ease, color 0.15s ease;
+    box-sizing: border-box;
 }
 
 .dropdown-item i {
@@ -299,17 +266,121 @@
     color: #c62828;
 }
 
-/* --- FOTO AVATAR (Google) ----------------------- */
+/* --- FOTO AVATAR --- */
 .avatar-foto {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .avatar-foto--lg {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* --- AVATAR MÓVIL (acordeón) --- */
+.avatar-movil-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem 1.5rem;
+    border-top: 1px solid var(--beige, #e8d5b0);
+    margin-top: 0.5rem;
+}
+
+.avatar-movil-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.avatar-movil-nombre {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--marron-oscuro, #3b2315);
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.avatar-movil-btn i {
+    color: var(--arena, #a08060);
+    font-size: 0.85rem;
+    transition: transform 0.2s ease;
+}
+
+.avatar-movil-opciones {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.avatar-movil-opciones.open {
+    max-height: 300px;
+}
+
+/* --- MEDIA QUERIES --- */
+@media screen and (max-width: 1140px) {
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* Panel lateral desde la derecha */
+    .menu-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: var(--blanco-total);
+        padding: 5rem 0 2rem;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        transition: right 0.3s ease;
+        overflow-y: auto;
+        gap: 0;
+    }
+
+    .menu-nav.active {
+        right: 0;
+    }
+
+    .menu-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        width: 100%;
+    }
+
+    .menu-links li {
+        width: 100%;
+    }
+
+    .menu-links a {
+        display: block;
+        padding: 0.9rem 1.5rem;
+        width: 100%;
+        box-sizing: border-box;
+        border-bottom: 1px solid var(--beige, #e8d5b0);
+        font-size: 1rem;
+    }
+
+    /* Ocultar avatar PC en móvil */
+    .avatar-wrapper--pc {
+        display: none;
+    }
+
+    /* Mostrar avatar móvil */
+    .avatar-movil {
+        display: block;
+        width: 100%;
+    }
 }

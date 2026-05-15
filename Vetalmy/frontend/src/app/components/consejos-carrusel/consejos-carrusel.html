@@ -13,10 +13,16 @@
     </p-carousel>
 </div>
 
-<p-dialog header="{{ consejoSeleccionado?.titulo }}" [(visible)]="displayDialog" [modal]="true"
-    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+<p-dialog 
+  header="{{ consejoSeleccionado?.titulo }}" 
+  [(visible)]="displayDialog" 
+  [modal]="true"
+  [style]="{ width: '50vw' }" 
+  [draggable]="false" 
+  [resizable]="false" 
+  [dismissableMask]="true">
 
-    <div class="dialog-content" *ngIf="consejoSeleccionado">
-        <p class="detalle-texto">{{ consejoSeleccionado.detalle }}</p>
-    </div>
+  <div class="dialog-content" *ngIf="consejoSeleccionado">
+    <p class="detalle-texto">{{ consejoSeleccionado.detalle }}</p>
+  </div>
 </p-dialog>

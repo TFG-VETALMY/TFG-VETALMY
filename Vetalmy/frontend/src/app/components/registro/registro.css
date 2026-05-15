@@ -1,17 +1,15 @@
-/* Reutilizamos el contenedor principal */
+/* El contenedor principal */
 .contenedor-login {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    /* Cambiado a min-height por si el form es largo */
     padding: 2rem 0;
-    /* Espacio extra para móviles */
     background-color: var(--blanco);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Tarjeta del registro (basada en la de login) */
+/* Tarjeta del registro */
 .tarjeta-login {
     background: var(--blanco-total);
     padding: 2.5rem;
@@ -59,42 +57,68 @@
 
 /* Grupos del formulario */
 .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.5rem;
 }
 
-/* Estilos de PrimeNG FloatLabel */
+/* Label */
 :host ::ng-deep .p-floatlabel label {
     left: 0.8rem;
-    color: var(--gris);
+    font-size: var(--fs-normal);
+    color: var(--marron-claro) !important;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+/* Cuando es inválido, el label se pone rojo */
+:host ::ng-deep .group-error .p-floatlabel label {
+    color: var(--rojo-error) !important;
+}
+
+/* Tamaño reducido cuando el label flota */
+:host ::ng-deep .p-floatlabel input:focus ~ label,
+:host ::ng-deep .p-floatlabel input.p-filled ~ label,
+:host ::ng-deep .p-floatlabel:has(input:focus) label,
+:host ::ng-deep .p-floatlabel:has(input.p-filled) label,
+:host ::ng-deep .p-floatlabel:has(.p-password:focus-within) label {
+    font-size: var(--fs-peque) !important;
+    font-weight: 600;
 }
 
 /* Los inputs */
-input {
+input,
+:host ::ng-deep .p-password input {
     width: 100%;
     padding: 0.8rem;
     border: 2px solid var(--beige);
     border-radius: 10px;
     box-sizing: border-box;
     background-color: var(--blanco);
-    color: #353636;
+    color: var(--marron-claro) !important;
     transition: all 0.3s ease;
 }
 
+:host ::ng-deep .p-password input {
+    padding-right: 2.8rem;
+}
+
 /* Los inputs cuando se hacen focus */
-input:focus {
+input:focus,
+:host ::ng-deep .p-password input:focus {
     outline: none;
-    border-color: var(--marron-acento);
+    border-color: var(--marron-claro) !important;
     background-color: var(--blanco-total);
 }
 
 /* Los inputs cuando se hace hover */
-input:hover {
+input:hover,
+:host ::ng-deep .p-password input:hover {
     border-color: var(--marron-claro) !important;
 }
 
-/* Errores */
-input.error {
-    border-color: var(--rojo-error);
+/* Errores en bordes */
+input.error,
+:host ::ng-deep .p-password input.error {
+    border-color: var(--rojo-error) !important;
 }
 
 /* La clase error-message */
@@ -103,6 +127,47 @@ input.error {
     font-size: var(--fs-normal);
     margin-top: 0.3rem;
     margin-left: 0.5rem;
+    min-height: 1.2em;
+}
+
+/* p-password */
+:host ::ng-deep p-password,
+:host ::ng-deep .p-password {
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+:host ::ng-deep .p-password input {
+    width: 100%;
+    padding: 0.8rem;
+    padding-right: 2.8rem;
+    border: 2px solid var(--beige);
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: var(--blanco);
+    color: var(--marron-claro) !important;
+    transition: all 0.3s ease;
+}
+
+:host ::ng-deep .p-password input:hover {
+    border-color: var(--marron-claro) !important;
+}
+
+:host ::ng-deep .p-password input:focus {
+    outline: none;
+    border-color: var(--marron-acento);
+    background-color: var(--blanco-total);
+}
+
+:host ::ng-deep .p-password-toggle-icon,
+:host ::ng-deep .p-password .p-icon-field > .p-input-icon {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--marron-claro);
+    cursor: pointer;
 }
 
 /* Enlace para volver al login */
@@ -112,7 +177,6 @@ input.error {
     font-size: var(--fs-peque);
 }
 
-/* El enlace de la clase registro normal y cuando se ha visitado */
 .registro a,
 .registro a:visited {
     color: var(--marron);
@@ -135,22 +199,13 @@ input.error {
     margin-top: 1.5rem;
 }
 
-/* Botón del login cuando se hace hover y no está deshabilitado */
 .btn-principal:hover:not(:disabled) {
     background-color: var(--marron-oscuro);
     transform: translateY(-1px);
 }
 
-/* Botón del login cuando está deshabilitado */
 .btn-principal:disabled {
     background-color: var(--beige);
     cursor: not-allowed;
     opacity: 0.7;
-}
-
-/* Los floatlabels cuando se hace focus y cuando están rellenos */
-:host ::ng-deep .p-floatlabel input:focus~label,
-:host ::ng-deep .p-floatlabel input.p-filled~label {
-    font-size: var(--fs-peque);
-    font-weight: 600;
 }

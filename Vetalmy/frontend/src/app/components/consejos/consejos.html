@@ -1,6 +1,101 @@
-<div class="inner-content">
-    <div class="carusel-consejos">
-        <h2>Consejos</h2>
-        <app-consejos-carrusel></app-consejos-carrusel>
-    </div>
+<!-- CARRUSEL: fuera del contenedor limitado, ocupa todo el ancho -->
+<div class="seccion-carrusel">
+  <h1>Consejos para tu mascota</h1>
+  <app-consejos-carrusel></app-consejos-carrusel>
 </div>
+
+<!-- CONSEJOS POR CATEGORÍA: contenedor centrado -->
+<div class="seccion-consejos inner-content">
+
+  <p class="consejos-subtitulo">
+    Selecciona la categoría para ver los consejos específicos.
+  </p>
+
+  <p-tabs value="perros">
+    <p-tablist>
+      <p-tab value="perros"><i class="bx bx-dog-body"></i> Perros</p-tab>
+      <p-tab value="gatos"><i class="bx bx-cat"></i> Gatos</p-tab>
+      <p-tab value="pajaros"><i class="bx bx-bird"></i> Pájaros</p-tab>
+      <p-tab value="roedores"><i class="bx bx-bear"></i> Roedores</p-tab>
+    </p-tablist>
+
+    <p-tabpanels>
+
+      <p-tabpanel value="perros">
+        <div class="consejos-lista">
+          <p-card *ngFor="let consejo of consejosPerros" styleClass="consejo-card" (click)="mostrarDetalle(consejo)">
+            <div class="consejo-inner">
+              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" />
+              <div class="consejo-texto">
+                <h2 class="consejo-titulo">{{ consejo.titulo }}</h2>
+                <p class="consejo-detalle consejo-detalle--desktop">{{ consejo.detalle }}</p>
+                <span class="ver-consejo--mobile">Ver consejo</span>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="gatos">
+        <div class="consejos-lista">
+          <p-card *ngFor="let consejo of consejosGatos" styleClass="consejo-card" (click)="mostrarDetalle(consejo)">
+            <div class="consejo-inner">
+              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" />
+              <div class="consejo-texto">
+                <h2 class="consejo-titulo">{{ consejo.titulo }}</h2>
+                <p class="consejo-detalle consejo-detalle--desktop">{{ consejo.detalle }}</p>
+                <span class="ver-consejo--mobile">Ver consejo</span>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="pajaros">
+        <div class="consejos-lista">
+          <p-card *ngFor="let consejo of consejosParajaros" styleClass="consejo-card" (click)="mostrarDetalle(consejo)">
+            <div class="consejo-inner">
+              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" />
+              <div class="consejo-texto">
+                <h2 class="consejo-titulo">{{ consejo.titulo }}</h2>
+                <p class="consejo-detalle consejo-detalle--desktop">{{ consejo.detalle }}</p>
+                <span class="ver-consejo--mobile">Ver consejo</span>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      </p-tabpanel>
+
+      <p-tabpanel value="roedores">
+        <div class="consejos-lista">
+          <p-card *ngFor="let consejo of consejosRoedores" styleClass="consejo-card" (click)="mostrarDetalle(consejo)">
+            <div class="consejo-inner">
+              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" />
+              <div class="consejo-texto">
+                <h2 class="consejo-titulo">{{ consejo.titulo }}</h2>
+                <p class="consejo-detalle consejo-detalle--desktop">{{ consejo.detalle }}</p>
+                <span class="ver-consejo--mobile">Ver consejo</span>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      </p-tabpanel>
+
+    </p-tabpanels>
+  </p-tabs>
+
+</div>
+
+<!-- Dialog con el detalle del consejo -->
+<p-dialog
+  [(visible)]="displayDialog"
+  [modal]="true"
+  [closable]="true"
+  [dismissableMask]="true"
+  [header]="consejoSeleccionado?.titulo"
+  styleClass="consejo-dialog">
+  <div class="dialog-content" *ngIf="consejoSeleccionado">
+    <img [src]="consejoSeleccionado.imagen" [alt]="consejoSeleccionado.titulo" class="dialog-img" />
+    <p class="dialog-detalle">{{ consejoSeleccionado.detalle }}</p>
+  </div>
+</p-dialog>

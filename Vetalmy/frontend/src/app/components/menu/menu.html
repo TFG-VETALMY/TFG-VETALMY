@@ -10,7 +10,9 @@
         <span class="bar"></span>
     </button>
 
-    <!-- Nav links + avatar en el mismo bloque -->
+    <!-- Overlay oscuro detrás del panel -->
+    <div class="menu-overlay" [class.active]="isMenuOpen" (click)="isMenuOpen = false"></div>
+
     <div class="menu-nav" [class.active]="isMenuOpen">
         <ul class="menu-links">
             <li><a routerLink="/inicio" routerLinkActive="active" (click)="isMenuOpen = false">Inicio</a></li>
@@ -29,13 +31,12 @@
             <li *ngIf="!isLoggedIn"><a routerLink="/login" routerLinkActive="active" (click)="isMenuOpen = false">Iniciar sesión</a></li>
         </ul>
 
-        <!-- Avatar inline con los links -->
-        <div class="avatar-wrapper" *ngIf="isLoggedIn">
+        <!-- Avatar para PC (dropdown normal) -->
+        <div class="avatar-wrapper avatar-wrapper--pc" *ngIf="isLoggedIn">
             <button class="avatar-btn" (click)="toggleAvatarMenu($event)" [attr.aria-expanded]="avatarMenuOpen">
                 <img *ngIf="userFoto" [src]="userFoto" class="avatar-foto" alt="foto" referrerpolicy="no-referrer">
                 <span *ngIf="!userFoto" class="avatar-inicial">{{ userInicial }}</span>
             </button>
-
             <div class="avatar-dropdown" *ngIf="avatarMenuOpen">
                 <div class="dropdown-header">
                     <div class="avatar-inicial--lg">
@@ -45,6 +46,36 @@
                     <span class="dropdown-nombre">{{ userNombre }}</span>
                 </div>
                 <div class="dropdown-divider"></div>
+                <button class="dropdown-item" (click)="navegarA('/mi-cuenta')">
+                    <i class="pi pi-user"></i> Área personal
+                </button>
+                <button class="dropdown-item" (click)="navegarA('/mi-cuenta')">
+                    <i class="pi pi-id-card"></i> Ver perfil
+                </button>
+                <button class="dropdown-item" (click)="navegarA('/citas')">
+                    <i class="pi pi-calendar"></i> Historial de citas
+                </button>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item dropdown-item--danger" (click)="logout()">
+                    <i class="pi pi-sign-out"></i> Cerrar sesión
+                </button>
+            </div>
+        </div>
+
+        <!-- Avatar para móvil (acordeón) -->
+        <div class="avatar-movil" *ngIf="isLoggedIn">
+            <button class="avatar-movil-btn" (click)="toggleAvatarMenu($event)">
+                <div class="avatar-movil-info">
+                    <div class="avatar-btn avatar-btn--sm">
+                        <img *ngIf="userFoto" [src]="userFoto" class="avatar-foto" alt="foto" referrerpolicy="no-referrer">
+                        <span *ngIf="!userFoto" class="avatar-inicial">{{ userInicial }}</span>
+                    </div>
+                    <span class="avatar-movil-nombre">{{ userNombre }}</span>
+                </div>
+                <i class="pi" [class.pi-chevron-down]="!avatarMenuOpen" [class.pi-chevron-up]="avatarMenuOpen"></i>
+            </button>
+
+            <div class="avatar-movil-opciones" [class.open]="avatarMenuOpen">
                 <button class="dropdown-item" (click)="navegarA('/mi-cuenta')">
                     <i class="pi pi-user"></i> Área personal
                 </button>

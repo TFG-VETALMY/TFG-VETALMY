@@ -4,6 +4,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
+import { PasswordModule } from 'primeng/password';
 import { HttpClient } from '@angular/common/http'; // Importante para conectar con el backend
 
 
@@ -15,6 +16,7 @@ import { HttpClient } from '@angular/common/http'; // Importante para conectar c
     InputTextModule,
     FormsModule,
     ReactiveFormsModule,
+    PasswordModule,
     RouterModule
   ],
   templateUrl: './registro.html',

@@ -6,12 +6,13 @@ import { RouterLink } from "@angular/router";
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http'; // Importante
+import { HttpClient } from '@angular/common/http';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, FloatLabelModule, InputTextModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, FloatLabelModule, InputTextModule, FormsModule, PasswordModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })

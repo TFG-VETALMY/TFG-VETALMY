@@ -1,7 +1,9 @@
 /* Contenedor general del carrusel */
 .container-carrusel {
-    padding: 20px;
     background-color: var(--blanco-total);
+    width: 100%;
+    padding: 2rem 0 0;
+    box-sizing: border-box;
 }
 
 /* Tarjeta de cada consejo */
@@ -53,4 +55,25 @@
     color: var(--arena);
     padding-bottom: 15px;
     margin: 0;
+}
+
+/* Dialog */
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detalle-texto {
+    font-size: 1rem;
+    color: var(--marroncito);
+    line-height: 1.7;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    
+    :host ::ng-deep .p-dialog {
+        width: 92vw !important;
+    }
 }

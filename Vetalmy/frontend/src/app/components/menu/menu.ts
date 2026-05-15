@@ -80,7 +80,7 @@ export class Menu implements OnInit, OnDestroy {
     localStorage.removeItem('user_role');
     localStorage.removeItem('user_id');
     localStorage.removeItem('user_nombre');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/inicio']);
   }
 
   navegarA(ruta: string) {

@@ -41,6 +41,16 @@ export class ConsejosCarruselComponent implements OnInit {
         imagen: 'Consejos/gato-esterilizado.jpg',
         detalle: 'Se ha demostrado estadísticamente que la esterilización aumenta la longevidad, de forma que los animales esterilizados viven más tiempo.'
       },
+      {
+        titulo: 'Visitas al veterinario',
+        imagen: 'Consejos/chihuahua-en-veterinario.jpg',
+        detalle: 'No esperes a que tu mascota esté enferma para ir al veterinario. Las revisiones periódicas permiten detectar problemas antes de que se agraven y mantener al día las vacunas y la desparasitación.'
+      },
+      {
+        titulo: 'Alimentos prohibidos',
+        imagen: 'Consejos/chocolate2.jpg',
+        detalle: 'El chocolate, las uvas, la cebolla, el ajo, el aguacate y el xilitol (presente en chicles y dulces) son altamente tóxicos para perros y gatos. Incluso pequeñas cantidades pueden causar daños graves. Ante cualquier ingestión accidental, acude al veterinario de inmediato.'
+      },
 
     ];
 
