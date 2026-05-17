@@ -54,7 +54,8 @@ export class Menu implements OnInit, OnDestroy {
     return localStorage.getItem('user_foto') ?? '';
   }
 
-  toggleMenu() {
+  toggleMenu(event: MouseEvent) {
+    event.stopPropagation();
     this.isMenuOpen = !this.isMenuOpen;
     this.avatarMenuOpen = false;
   }

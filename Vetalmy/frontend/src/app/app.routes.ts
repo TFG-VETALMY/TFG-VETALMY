@@ -11,6 +11,7 @@ import { Citas } from './components/citas/citas';
 import { Chat } from './components/chat/chat';
 import { SobreNosotros } from './components/sobre-nosotros/sobre-nosotros';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback';
+import { AuthGuard } from './guards/auth.guard';
 
 
 export const routes: Routes = [
@@ -30,19 +31,19 @@ export const routes: Routes = [
     { path: 'servicios', component: Servicios},
 
     // Para la página de Mi cuenta
-    { path: 'mi-cuenta', component: MiCuenta },
+    { path: 'mi-cuenta', component: MiCuenta, canActivate: [AuthGuard] },
 
     // Para la página de Consejos
     { path: 'consejos', component: Consejos },
 
     // Para la página de Mis mascotas
-    { path: 'mis-mascotas', component: MisMascotas },
+    { path: 'mis-mascotas', component: MisMascotas, canActivate: [AuthGuard] },
 
     // Para la página de Citas
-    { path: 'citas', component: Citas },
+    { path: 'citas', component: Citas, canActivate: [AuthGuard] },
 
     // Para la página de Chat
-    { path: 'chat', component: Chat },
+    { path: 'chat', component: Chat, canActivate: [AuthGuard] },
 
     // Para la página de Sobre nosotros
     { path: 'sobre-nosotros', component: SobreNosotros },

@@ -52,6 +52,8 @@ export class RegistroComponent {
   get passwordControl() { return this.registroForm.get('password'); }
   get confirmControl() { return this.registroForm.get('confirmPassword'); }
 
+
+
   onRegister() {
     if (this.registroForm.valid) {
       // Extraemos solo los campos que el backend espera (nombre, email, password)

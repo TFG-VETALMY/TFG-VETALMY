@@ -110,7 +110,42 @@
             </div>
 
             <div class="historial-link">
-                <a href="#">Ver historial de citas pasadas <i class="pi pi-history"></i></a>
+                <a href="javascript:void(0)" (click)="toggleHistorial()">
+                    {{ mostrarHistorial ? 'Ocultar historial' : 'Ver historial de citas pasadas' }} <i class="pi pi-history"></i>
+                </a>
+            </div>
+
+            <div *ngIf="mostrarHistorial" class="historial-container mt-4">
+                <h3 class="lista-titulo"><i class="pi pi-history"></i> Historial</h3>
+                <div *ngIf="historialCitas.length === 0" class="cita-card card" style="text-align: center; padding: 2rem;">
+                    <p>No hay citas pasadas en tu historial.</p>
+                </div>
+                <div *ngFor="let cita of historialCitas" class="cita-card card" style="opacity: 0.8;">
+                    <div class="cita-header">
+                        <div class="mascota-info">
+                            <div class="icono-huella">🐾</div>
+                            <div class="mascota-nombres">
+                                <h4>{{ cita.mascota?.nombre || 'Mascota' }}</h4>
+                                <span>{{ cita.tipo || 'Cita Médica' }}</span>
+                            </div>
+                        </div>
+                        <span class="badge" style="background-color: var(--beige); color: var(--marron-oscuro);">COMPLETADA</span>
+                    </div>
+
+                    <div class="cita-detalles">
+                        <ng-container *ngIf="userRole !== 'veterinario'">
+                            <p *ngIf="cita.veterinario"><i class="pi pi-user"></i> Dr(a). {{ cita.veterinario.nombre }} {{ cita.veterinario.apellido1 }}</p>
+                        </ng-container>
+
+                        <ng-container *ngIf="userRole === 'veterinario'">
+                            <p *ngIf="cita.cliente"><i class="pi pi-user"></i> Cliente: {{ cita.cliente.nombre }} {{ cita.cliente.apellido1 }}</p>
+                        </ng-container>
+
+                        <p><i class="pi pi-calendar"></i> {{ cita.fecha | date:'fullDate' }}</p>
+                        <p><i class="pi pi-clock"></i> {{ cita.fecha | date:'shortTime' }}</p>
+                        <p *ngIf="cita.motivo" style="margin-top: 0.5rem; font-style: italic;"><i class="pi pi-info-circle"></i> {{ cita.motivo }}</p>
+                    </div>
+                </div>
             </div>
 
         </section>

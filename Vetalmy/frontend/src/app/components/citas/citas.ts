@@ -39,6 +39,8 @@ export class Citas implements OnInit {
   visible: boolean = false;
 
   proximasCitas: any[] = [];
+  historialCitas: any[] = [];
+  mostrarHistorial: boolean = false;
   mascotas: any[] = [];
   veterinarios: any[] = [];
   mascotaSeleccionada: any;
@@ -162,11 +164,15 @@ export class Citas implements OnInit {
         }
 
         const activas = citasFiltradas.filter(c => c.estado !== 'COMPLETADA');
+        const completadas = citasFiltradas.filter(c => c.estado === 'COMPLETADA');
 
         this.proximasCitas = [...activas]
           .sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
           .filter(cita => new Date(cita.fecha) >= new Date())
           .slice(0, 3);
+
+        this.historialCitas = [...completadas]
+          .sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
 
         // Guardamos todas las citas activas para acceder a ellas desde el eventClick
         this.todasLasCitas = activas;
@@ -404,6 +410,10 @@ export class Citas implements OnInit {
     if (cita) {
       this.modificarCita(cita);
     }
+  }
+
+  toggleHistorial() {
+    this.mostrarHistorial = !this.mostrarHistorial;
   }
 
   calendarOptions: CalendarOptions = {

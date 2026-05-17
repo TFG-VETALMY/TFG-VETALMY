@@ -58,6 +58,8 @@ export class LoginComponent {
   get emailControl() { return this.loginForm.get('email'); }
   get passwordControl() { return this.loginForm.get('password'); }
 
+
+
   loginConGoogle(): void {
     const esLocal = window.location.hostname === 'localhost';
     const backendUrl = esLocal

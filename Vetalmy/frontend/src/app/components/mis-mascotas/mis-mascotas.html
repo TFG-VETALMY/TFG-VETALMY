@@ -18,12 +18,8 @@
         <!-- Buscador -->
         <div class="buscador-wrapper">
             <span class="buscador-icono"><i class="pi pi-search"></i></span>
-            <input
-                pInputText
-                [(ngModel)]="busqueda"
-                (ngModelChange)="filtrarClientes()"
-                placeholder="Buscar cliente por nombre..."
-                class="buscador-input" />
+            <input pInputText [(ngModel)]="busqueda" (ngModelChange)="filtrarClientes()"
+                placeholder="Buscar cliente por nombre..." class="buscador-input" />
             <span class="buscador-contador" *ngIf="busqueda">
                 {{ clientesFiltrados.length }} resultado{{ clientesFiltrados.length !== 1 ? 's' : '' }}
             </span>
@@ -42,7 +38,7 @@
 
                 <!-- Cabecera del cliente (clickable para expandir) -->
                 <div class="cliente-header" (click)="toggleCliente(c.usuario.id)"
-                     [class.expandido]="clienteExpandido === c.usuario.id">
+                    [class.expandido]="clienteExpandido === c.usuario.id">
                     <div class="cliente-avatar">
                         {{ c.usuario.nombre.charAt(0).toUpperCase() }}
                     </div>
@@ -55,7 +51,7 @@
                             {{ c.mascotas.length }} mascota{{ c.mascotas.length !== 1 ? 's' : '' }}
                         </span>
                         <i class="pi" [class.pi-chevron-down]="clienteExpandido !== c.usuario.id"
-                           [class.pi-chevron-up]="clienteExpandido === c.usuario.id"></i>
+                            [class.pi-chevron-up]="clienteExpandido === c.usuario.id"></i>
                     </div>
                 </div>
 
@@ -93,9 +89,8 @@
                     </div>
 
                     <!-- Añadir mascota a este cliente -->
-                    <button pButton label="+ Añadir mascota" icon="pi pi-plus"
-                            class="btn-add-vet"
-                            (click)="registrarNueva(c.usuario.id)">
+                    <button pButton label="+ Añadir mascota" icon="pi pi-plus" class="btn-add-vet"
+                        (click)="registrarNueva(c.usuario.id)">
                     </button>
 
                 </div>
@@ -152,8 +147,10 @@
                 </div>
 
                 <div class="card-acciones">
-                    <button pButton label="Editar" icon="pi pi-pencil" class="btn-historial" (click)="abrirEdicion(mascota)"></button>
-                    <button pButton label="Eliminar" icon="pi pi-trash" class="btn-eliminar" (click)="confirmarEliminar(mascota)"></button>
+                    <button pButton label="Editar" icon="pi pi-pencil" class="btn-historial"
+                        (click)="abrirEdicion(mascota)"></button>
+                    <button pButton label="Eliminar" icon="pi pi-trash" class="btn-eliminar"
+                        (click)="confirmarEliminar(mascota)"></button>
                 </div>
             </div>
 
@@ -172,12 +169,8 @@
 <!-- ══════════════════════════════════════════════════════ -->
 <!--  DIÁLOGO CREAR / EDITAR (compartido)                   -->
 <!-- ══════════════════════════════════════════════════════ -->
-<p-dialog
-    [(visible)]="dialogVisible"
-    [modal]="true"
-    [draggable]="false"
-    [header]="editando ? 'Editar mascota' : 'Nueva mascota'"
-    [style]="{ width: '480px' }">
+<p-dialog [(visible)]="dialogVisible" [modal]="true" [draggable]="false"
+    [header]="editando ? 'Editar mascota' : 'Nueva mascota'" [style]="{ width: '480px' }">
 
     <div class="form-mascota">
         <div class="form-field">
@@ -186,8 +179,7 @@
         </div>
         <div class="form-field">
             <label>Animal *</label>
-            <p-select [(ngModel)]="form.animal" [options]="animalesOpciones"
-                optionLabel="label" optionValue="value"
+            <p-select [(ngModel)]="form.animal" [options]="animalesOpciones" optionLabel="label" optionValue="value"
                 placeholder="Selecciona tipo" styleClass="w-full">
             </p-select>
         </div>
@@ -202,16 +194,16 @@
             </div>
             <div class="form-field">
                 <label>Peso (kg)</label>
-                <p-inputNumber [(ngModel)]="form.peso" [min]="0" [minFractionDigits]="1" [maxFractionDigits]="2" styleClass="w-full"></p-inputNumber>
+                <p-inputNumber [(ngModel)]="form.peso" [min]="0" [minFractionDigits]="1" [maxFractionDigits]="2"
+                    styleClass="w-full"></p-inputNumber>
             </div>
         </div>
     </div>
 
     <ng-template pTemplate="footer">
         <button pButton label="Cancelar" class="btn-cancelar-dialog" (click)="dialogVisible = false"></button>
-        <button pButton [label]="editando ? 'Guardar cambios' : 'Registrar'"
-                class="btn-guardar-dialog" (click)="guardar()"
-                [disabled]="!form.nombre || !form.animal">
+        <button pButton [label]="editando ? 'Guardar cambios' : 'Registrar'" class="btn-guardar-dialog"
+            (click)="guardar()" [disabled]="!form.nombre || !form.animal">
         </button>
     </ng-template>
 </p-dialog>
