@@ -15,9 +15,12 @@
           </div>
           <div *ngFor="let vet of veterinarios" class="contact-card"
             [ngClass]="{'active': contactoActual === vet.nombre}" (click)="iniciarChatConVeterinario(vet)">
-            <div class="avatar"><i class="pi pi-user"></i></div>
+            <div class="avatar letter-avatar" [attr.data-letter]="vet.nombre ? vet.nombre.charAt(0).toUpperCase() : 'V'">
+              {{ vet.nombre ? vet.nombre.charAt(0).toUpperCase() : 'V' }}
+            </div>
             <div class="contact-info">
               <h4>{{ vet.nombre }}</h4>
+              <span class="subtitle">Veterinario Vetalmy</span>
             </div>
           </div>
         </ng-container>
@@ -27,9 +30,12 @@
           </div>
           <div *ngFor="let chat of chatsActivos" class="contact-card" [ngClass]="{'active': chatId === chat.id}"
             (click)="abrirChatExistente(chat)">
-            <div class="avatar"><i class="pi pi-user"></i></div>
+            <div class="avatar letter-avatar" [attr.data-letter]="(chat.cliente?.nombre || 'Cliente').charAt(0).toUpperCase()">
+              {{ (chat.cliente?.nombre || 'Cliente').charAt(0).toUpperCase() }}
+            </div>
             <div class="contact-info">
               <h4>{{ chat.cliente?.nombre || 'Cliente' }}</h4>
+              <span class="subtitle">Consulta activa</span>
             </div>
           </div>
         </ng-container>
@@ -43,17 +49,26 @@
       <!-- PANTALLA VACÍA -->
       <div *ngIf="chatId === 0" class="empty-state-welcome">
         <div class="empty-content">
-          <i class="pi pi-comments" style="font-size: 4rem; color: var(--beige); margin-bottom: 1rem;"></i>
+          <div class="empty-illustration">💬</div>
           <h2>Vetalmy Connect</h2>
-          <p>Selecciona una conversación de la izquierda para empezar a hablar.</p>
+          <p>Selecciona una conversación de la izquierda para empezar a hablar con nuestro equipo profesional.</p>
         </div>
       </div>
 
       <!-- CHAT ABIERTO -->
       <ng-container *ngIf="chatId !== 0">
         <div class="chat-header">
-          <div class="header-info">
-            <h3>{{ contactoActual }}</h3>
+          <div class="header-info" style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="avatar header-avatar letter-avatar" [attr.data-letter]="contactoInicial">
+              {{ contactoInicial }}
+            </div>
+            <div>
+              <h3 style="margin: 0; font-size: 1.15rem; color: var(--marron-oscuro); font-weight: 700;">{{ contactoActual }}</h3>
+              <span class="status-online" style="font-size: 0.75rem; color: #10b981; display: flex; align-items: center; gap: 0.25rem; font-weight: 500; margin-top: 0.15rem;">
+                <span class="dot" style="width: 6px; height: 6px; background-color: #10b981; border-radius: 50%; display: inline-block;"></span> 
+                En línea
+              </span>
+            </div>
           </div>
         </div>
 
@@ -66,16 +81,73 @@
           <!-- Mensajes -->
           <div *ngFor="let msg of mensajes" class="message-wrapper"
             [ngClass]="{'mine': msg.usuarioId === userId, 'theirs': msg.usuarioId !== userId}">
+            
+            <!-- Avatar al lado del mensaje (para theirs) -->
+            <div *ngIf="msg.usuarioId !== userId" class="msg-avatar letter-avatar" [attr.data-letter]="contactoInicial">
+              {{ contactoInicial }}
+            </div>
+
             <div class="message-bubble">
               <p class="text">{{ msg.mensaje }}</p>
               <span class="time">{{ msg.fecha_creacion | date:'shortTime' }}</span>
+            </div>
+
+            <!-- Avatar al lado del mensaje (para mine) -->
+            <div *ngIf="msg.usuarioId === userId" class="msg-avatar letter-avatar mine" [attr.data-letter]="miInicial">
+              {{ miInicial }}
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Asistente de cita inteligente inline -->
+        <div *ngIf="mostrarAsistenteCita" class="appointment-assistant-panel">
+          <div class="panel-header">
+            <h4><i class="pi pi-calendar-plus"></i> Asistente de Citas Inteligente</h4>
+            <button class="close-btn" (click)="mostrarAsistenteCita = false"><i class="pi pi-times"></i></button>
+          </div>
+          <div class="panel-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>🐾 Mascota</label>
+                <select [(ngModel)]="citaForm.mascotaId" class="panel-select">
+                  <option *ngFor="let m of mascotasDisponibles" [value]="m.id">{{ m.nombre }} ({{ m.animal }})</option>
+                  <option *ngIf="mascotasDisponibles.length === 0" disabled>Sin mascotas disponibles</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>⏰ Fecha y Hora</label>
+                <input type="datetime-local" [(ngModel)]="citaForm.fechaHora" class="panel-input" />
+              </div>
+              <div class="form-group">
+                <label>🩺 Tipo de Cita</label>
+                <select [(ngModel)]="citaForm.tipo" class="panel-select">
+                  <option value="Consulta">Consulta General</option>
+                  <option value="Revisión">Revisión de Control</option>
+                  <option value="Vacunación">Vacunación</option>
+                  <option value="Urgencia">Urgencia Médica</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label>📝 Motivo / Observaciones</label>
+                <input type="text" [(ngModel)]="citaForm.motivo" placeholder="Ej: Revisión rutinaria, cojera en pata delantera..." class="panel-input" />
+              </div>
+            </div>
+            <div class="panel-actions">
+              <button class="assistant-btn cancel" (click)="mostrarAsistenteCita = false">Cancelar</button>
+              <button class="assistant-btn schedule" (click)="agendarCita()" [disabled]="!citaForm.mascotaId || !citaForm.fechaHora">
+                <i class="pi pi-check"></i> Agendar Cita
+              </button>
             </div>
           </div>
         </div>
 
         <!-- Input de mensajes -->
         <div class="chat-input-area">
-          <input type="text" [(ngModel)]="nuevoMensaje" (keyup.enter)="enviarMensaje()"
+          <button (click)="abrirAsistenteCita()" class="action-shortcut-btn" title="Programar cita inteligente (@cita)">
+            <i class="pi pi-calendar-plus"></i>
+          </button>
+          <input type="text" [(ngModel)]="nuevoMensaje" (ngModelChange)="onMensajeChange($event)" (keyup.enter)="enviarMensaje()"
             placeholder="Escribe un mensaje..." class="chat-input" />
           <button (click)="enviarMensaje()" class="send-btn" [disabled]="!nuevoMensaje.trim()">
             <i class="pi pi-send"></i> <span class="btn-text">Enviar</span>

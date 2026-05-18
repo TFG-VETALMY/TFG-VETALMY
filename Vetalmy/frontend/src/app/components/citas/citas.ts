@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { RouterLink } from '@angular/router';
 
 // Imports de Primeng para la Nueva cita
 import { ButtonModule } from 'primeng/button';
@@ -28,7 +29,7 @@ interface Tipo {
 @Component({
   selector: 'app-citas',
   standalone: true,
-  imports: [CommonModule, DatePickerModule, IftaLabelModule, FormsModule, ButtonModule, DialogModule, InputTextModule, SelectModule, FullCalendarModule],
+  imports: [CommonModule, DatePickerModule, IftaLabelModule, FormsModule, ButtonModule, DialogModule, InputTextModule, SelectModule, FullCalendarModule, RouterLink],
   templateUrl: './citas.html',
   styleUrl: './citas.css',
 })
@@ -56,7 +57,14 @@ export class Citas implements OnInit {
     this.horaSeleccionada = undefined;
     this.tipoSeleccionado = undefined;
     this.mascotaSeleccionada = undefined;
-    this.veterinarioSeleccionado = undefined;
+    
+    if (this.userRole === 'veterinario') {
+      const currentUserId = Number(localStorage.getItem('user_id'));
+      this.veterinarioSeleccionado = this.veterinarios.find(v => v.id === currentUserId);
+    } else {
+      this.veterinarioSeleccionado = undefined;
+    }
+    
     this.value = '';
     this.visible = true;
   }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { timeout, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 export interface UsuarioPerfil {
   id: number;
@@ -26,6 +27,10 @@ export class MiCuenta implements OnInit {
 
   seccionActiva: 'perfil' | 'mascotas' | 'citas' = 'perfil';
   usuario: UsuarioPerfil | null = null;
+  mascotas: any[] = [];
+  historialCitas: any[] = [];
+  mascotaExpandida: number | null = null;
+
 
   // Modo edición
   editando = false;
@@ -44,9 +49,19 @@ export class MiCuenta implements OnInit {
   mostrarNueva = false;
   mostrarConfirmar = false;
 
-  constructor(private router: Router, private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private http: HttpClient, 
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['tab']) {
+        this.seccionActiva = params['tab'] as any;
+      }
+    });
     const userId = localStorage.getItem('user_id');
     if (userId) {
       this.http.get<UsuarioPerfil>(`/usuarios/${userId}`).subscribe({
@@ -57,6 +72,31 @@ export class MiCuenta implements OnInit {
         },
         error: () => {}
       });
+
+      this.http.get<any[]>('/mascotas').subscribe({
+        next: (todas) => {
+          const esVet = localStorage.getItem('user_role') === 'veterinario';
+          this.mascotas = esVet ? todas : todas.filter(m => m.usuarioId === Number(userId));
+          
+          this.http.get<any[]>('/citas').subscribe({
+            next: (citas) => {
+              this.historialCitas = citas.filter(c => c.estado === 'COMPLETADA');
+              
+              this.mascotas.forEach(m => {
+                m.proximasCitas = citas.filter(c => c.estado !== 'COMPLETADA' && c.mascota?.id === m.id);
+                
+                this.http.get<any>(`/historial/mascota/${m.id}`).subscribe({
+                  next: (h) => {
+                    m.historial = h;
+                    this.cdr.detectChanges();
+                  }
+                });
+              });
+              this.cdr.detectChanges();
+            }
+          });
+        }
+      });
     }
   }
 
@@ -66,6 +106,10 @@ export class MiCuenta implements OnInit {
 
   get userFoto(): string {
     return this.usuario?.foto || localStorage.getItem('user_foto') || '';
+  }
+
+  get esVeterinario(): boolean {
+    return this.usuario?.rol === 'veterinario';
   }
 
   get nombreCompleto(): string {
@@ -178,6 +222,110 @@ export class MiCuenta implements OnInit {
 
   navegarA(ruta: string) {
     this.router.navigate([ruta]);
+  }
+
+  toggleMascota(id: number) {
+    this.mascotaExpandida = this.mascotaExpandida === id ? null : id;
+    this.cdr.detectChanges();
+  }
+
+  anadirVacuna(mascota: any, nombre: string, fechaStr: string): void {
+    if (!nombre || !fechaStr) {
+      alert('Por favor rellena el nombre y la fecha de la vacuna.');
+      return;
+    }
+    
+    this.obtenerOCrearHistorial(mascota.id, (historialId) => {
+      const payload = {
+        nombre: nombre,
+        fecha_aplicacion: new Date(fechaStr),
+        historialId: historialId
+      };
+
+      this.http.post<any>('/vacunas', payload).subscribe({
+        next: () => {
+          // Registrar automáticamente la cita de vacunación como completada
+          const citaPayload = {
+            fecha: new Date(fechaStr),
+            tipo: 'Vacunación',
+            estado: 'COMPLETADA',
+            motivo: `Vacunación: ${nombre}`,
+            mascotaId: mascota.id,
+            clienteId: mascota.usuarioId || mascota.usuario?.id,
+            veterinarioId: this.usuario?.id
+          };
+          this.http.post<any>('/citas', citaPayload).subscribe();
+
+          this.recargarHistorialMascota(mascota);
+        },
+        error: () => alert('Error al añadir la vacuna.')
+      });
+    });
+  }
+
+  anadirEnfermedad(mascota: any, observaciones: string, fechaStr: string, dadaAlta: boolean): void {
+    if (!observaciones || !fechaStr) {
+      alert('Por favor rellena el diagnóstico y la fecha.');
+      return;
+    }
+
+    this.obtenerOCrearHistorial(mascota.id, (historialId) => {
+      const payload = {
+        observaciones: observaciones,
+        fecha_diagnostico: new Date(fechaStr),
+        fecha_alta: dadaAlta ? new Date() : null,
+        historialId: historialId,
+        veterinarioId: this.usuario?.id
+      };
+
+      this.http.post<any>('/enfermedades', payload).subscribe({
+        next: () => {
+          this.recargarHistorialMascota(mascota);
+        },
+        error: () => alert('Error al añadir la enfermedad.')
+      });
+    });
+  }
+
+  obtenerOCrearHistorial(mascotaId: number, callback: (historialId: number) => void): void {
+    this.http.get<any>(`/historial/mascota/${mascotaId}`).subscribe({
+      next: (h) => {
+        if (h) {
+          callback(h.id);
+        } else {
+          this.http.post<any>('/historial', { mascotaId }).subscribe({
+            next: (newH) => callback(newH.id),
+            error: () => alert('No se pudo crear la ficha clínica.')
+          });
+        }
+      },
+      error: () => {
+        this.http.post<any>('/historial', { mascotaId }).subscribe({
+          next: (newH) => callback(newH.id),
+          error: () => alert('No se pudo crear la ficha clínica.')
+        });
+      }
+    });
+  }
+
+  recargarHistorialMascota(mascota: any): void {
+    this.http.get<any>(`/historial/mascota/${mascota.id}`).subscribe({
+      next: (h) => {
+        mascota.historial = h;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  toggleEstadoEnfermedad(mascota: any, enfermedad: any): void {
+    const nuevaFechaAlta = enfermedad.fecha_alta ? null : new Date();
+    
+    this.http.patch<any>(`/enfermedades/${enfermedad.id}`, { fecha_alta: nuevaFechaAlta }).subscribe({
+      next: () => {
+        this.recargarHistorialMascota(mascota);
+      },
+      error: () => alert('Error al cambiar el estado de la enfermedad.')
+    });
   }
 
   logout() {

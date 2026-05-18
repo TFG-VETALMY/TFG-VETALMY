@@ -17,6 +17,11 @@ export class HistorialController {
     return this.historialService.findAll();
   }
 
+  @Get('mascota/:id')
+  findByMascota(@Param('id') id: string) {
+    return this.historialService.findByMascota(+id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.historialService.findOne(+id);

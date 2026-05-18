@@ -147,6 +147,8 @@
                 </div>
 
                 <div class="card-acciones">
+                    <button pButton label="Ver perfil" icon="pi pi-eye" class="btn-perfil"
+                        [routerLink]="['/mi-cuenta']" [queryParams]="{tab: 'mascotas'}"></button>
                     <button pButton label="Editar" icon="pi pi-pencil" class="btn-historial"
                         (click)="abrirEdicion(mascota)"></button>
                     <button pButton label="Eliminar" icon="pi pi-trash" class="btn-eliminar"
@@ -170,34 +172,117 @@
 <!--  DIÁLOGO CREAR / EDITAR (compartido)                   -->
 <!-- ══════════════════════════════════════════════════════ -->
 <p-dialog [(visible)]="dialogVisible" [modal]="true" [draggable]="false"
-    [header]="editando ? 'Editar mascota' : 'Nueva mascota'" [style]="{ width: '480px' }">
+    [header]="editando ? 'Editar mascota' : 'Nueva mascota'" [style]="{ width: esVeterinario && editando ? '820px' : '480px' }">
 
-    <div class="form-mascota">
-        <div class="form-field">
-            <label>Nombre *</label>
-            <input pInputText [(ngModel)]="form.nombre" placeholder="Ej: Luna" class="w-full" />
-        </div>
-        <div class="form-field">
-            <label>Animal *</label>
-            <p-select [(ngModel)]="form.animal" [options]="animalesOpciones" optionLabel="label" optionValue="value"
-                placeholder="Selecciona tipo" styleClass="w-full">
-            </p-select>
-        </div>
-        <div class="form-field">
-            <label>Raza</label>
-            <input pInputText [(ngModel)]="form.raza" placeholder="Ej: Golden Retriever" class="w-full" />
-        </div>
-        <div class="form-row">
+    <div [class.edit-mascota-layout]="esVeterinario && editando" style="display: flex; gap: 2rem;">
+        
+        <!-- COLUMNA DATOS MASCOTA -->
+        <div class="form-mascota" [style.width]="esVeterinario && editando ? '50%' : '100%'" style="display: flex; flex-direction: column; gap: 1rem;">
             <div class="form-field">
-                <label>Edad (años)</label>
-                <p-inputNumber [(ngModel)]="form.edad" [min]="0" [max]="50" styleClass="w-full"></p-inputNumber>
+                <label style="font-weight: 600; display: block; margin-bottom: 0.25rem;">Nombre *</label>
+                <input pInputText [(ngModel)]="form.nombre" placeholder="Ej: Luna" class="w-full" />
             </div>
             <div class="form-field">
-                <label>Peso (kg)</label>
-                <p-inputNumber [(ngModel)]="form.peso" [min]="0" [minFractionDigits]="1" [maxFractionDigits]="2"
-                    styleClass="w-full"></p-inputNumber>
+                <label style="font-weight: 600; display: block; margin-bottom: 0.25rem;">Animal *</label>
+                <p-select [(ngModel)]="form.animal" [options]="animalesOpciones" optionLabel="label" optionValue="value"
+                    placeholder="Selecciona tipo" styleClass="w-full">
+                </p-select>
+            </div>
+            <div class="form-field">
+                <label style="font-weight: 600; display: block; margin-bottom: 0.25rem;">Raza</label>
+                <input pInputText [(ngModel)]="form.raza" placeholder="Ej: Golden Retriever" class="w-full" />
+            </div>
+            <div class="form-row" style="display: flex; gap: 1rem;">
+                <div class="form-field" style="flex: 1;">
+                    <label style="font-weight: 600; display: block; margin-bottom: 0.25rem;">Edad (años)</label>
+                    <p-inputNumber [(ngModel)]="form.edad" [min]="0" [max]="50" styleClass="w-full"></p-inputNumber>
+                </div>
+                <div class="form-field" style="flex: 1;">
+                    <label style="font-weight: 600; display: block; margin-bottom: 0.25rem;">Peso (kg)</label>
+                    <p-inputNumber [(ngModel)]="form.peso" [min]="0" [minFractionDigits]="1" [maxFractionDigits]="2"
+                        styleClass="w-full"></p-inputNumber>
+                </div>
             </div>
         </div>
+
+        <!-- COLUMNA HISTORIAL CLÍNICO (Sólo para Veterinario y Editando) -->
+        <div *ngIf="esVeterinario && editando" class="form-historial-vet" style="width: 50%; border-left: 1px solid #e2e8f0; padding-left: 2rem; display: flex; flex-direction: column; gap: 1.5rem; max-height: 480px; overflow-y: auto;">
+            
+            <h3 style="margin: 0; color: var(--marron-oscuro); display: flex; align-items: center; gap: 0.5rem; font-size: 1.2rem;">
+                <i class="pi pi-shield" style="color: var(--naranja)"></i> Historial Clínico
+            </h3>
+
+            <!-- SECCIÓN VACUNAS -->
+            <div style="background: #fdfbf7; border: 1px solid #f0ece3; border-radius: 8px; padding: 1rem;">
+                <h4 style="margin: 0 0 0.5rem 0; font-size: 0.95rem; color: var(--marron-oscuro);">Vacunas registradas</h4>
+                
+                <!-- Lista de vacunas -->
+                <div *ngIf="mascotaHistorial?.vacuna?.length > 0; else noVacunasVet" style="max-height: 100px; overflow-y: auto; margin-bottom: 1rem; border: 1px solid #f0ece3; border-radius: 6px; background: white; padding: 0.5rem;">
+                    <div *ngFor="let v of mascotaHistorial.vacuna" style="display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.25rem 0; border-bottom: 1px dashed #f0ece3;">
+                        <strong>{{ v.nombre }}</strong>
+                        <span style="color: #64748b;">{{ v.fecha_aplicacion | date:'shortDate' }}</span>
+                    </div>
+                </div>
+                <ng-template #noVacunasVet>
+                    <p style="font-size: 0.85rem; color: #94a3b8; font-style: italic; margin-bottom: 1rem;">Sin vacunas registradas.</p>
+                </ng-template>
+
+                <!-- Añadir Vacuna -->
+                <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
+                    <div style="flex: 1;">
+                        <input pInputText [(ngModel)]="nuevaVacuna.nombre" placeholder="Nombre vacuna" style="font-size: 0.85rem; padding: 0.4rem;" class="w-full" />
+                    </div>
+                    <div style="width: 110px;">
+                        <input type="date" [(ngModel)]="nuevaVacuna.fecha" style="font-size: 0.85rem; padding: 0.35rem; border: 1px solid #cbd5e1; border-radius: 6px; width: 100%;" />
+                    </div>
+                    <button pButton label="+" (click)="anadirVacuna()" style="padding: 0.4rem 0.75rem; min-width: auto; background-color: var(--naranja); border: none;"></button>
+                </div>
+            </div>
+
+            <!-- SECCIÓN ENFERMEDADES -->
+            <div style="background: #fdfbf7; border: 1px solid #f0ece3; border-radius: 8px; padding: 1rem;">
+                <h4 style="margin: 0 0 0.5rem 0; font-size: 0.95rem; color: var(--marron-oscuro);">Diagnósticos y Enfermedades</h4>
+                
+                <!-- Lista de enfermedades -->
+                <div *ngIf="mascotaHistorial?.enfermedad?.length > 0; else noEnfermedadesVet" style="max-height: 100px; overflow-y: auto; margin-bottom: 1rem; border: 1px solid #f0ece3; border-radius: 6px; background: white; padding: 0.5rem;">
+                    <div *ngFor="let e of mascotaHistorial.enfermedad" style="display: flex; flex-direction: column; font-size: 0.85rem; padding: 0.25rem 0; border-bottom: 1px dashed #f0ece3;">
+                        <div style="display: flex; justify-content: space-between; font-weight: 500; align-items: center;">
+                            <span>{{ e.observaciones }}</span>
+                            <button (click)="toggleEstadoEnfermedad(e)"
+                                [style.background]="e.fecha_alta ? '#d1fae5' : '#fef3c7'"
+                                [style.color]="e.fecha_alta ? '#065f46' : '#92400e'"
+                                [style.border]="e.fecha_alta ? '1px solid #10b981' : '1px solid #f59e0b'"
+                                style="font-weight: 600; font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 9999px; cursor: pointer; display: flex; align-items: center; gap: 0.15rem;"
+                                title="Haga clic para cambiar el estado">
+                                <i class="pi" [class.pi-check-circle]="e.fecha_alta" [class.pi-info-circle]="!e.fecha_alta" style="font-size: 0.7rem;"></i>
+                                {{ e.fecha_alta ? 'Alta' : 'Activa' }}
+                            </button>
+                        </div>
+                        <span style="color: #94a3b8; font-size: 0.75rem;">Diag: {{ e.fecha_diagnostico | date:'shortDate' }}</span>
+                    </div>
+                </div>
+                <ng-template #noEnfermedadesVet>
+                    <p style="font-size: 0.85rem; color: #94a3b8; font-style: italic; margin-bottom: 1rem;">Sin diagnósticos registrados.</p>
+                </ng-template>
+
+                <!-- Añadir Enfermedad -->
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <input pInputText [(ngModel)]="nuevaEnfermedad.observaciones" placeholder="Diagnóstico / Observación" style="font-size: 0.85rem; padding: 0.4rem;" class="w-full" />
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <div style="flex: 1;">
+                            <input type="date" [(ngModel)]="nuevaEnfermedad.fechaDiagnostico" style="font-size: 0.85rem; padding: 0.35rem; border: 1px solid #cbd5e1; border-radius: 6px; width: 100%;" />
+                        </div>
+                        <label style="font-size: 0.8rem; display: flex; align-items: center; gap: 0.25rem; user-select: none;">
+                            <input type="checkbox" [(ngModel)]="nuevaEnfermedad.dadaAlta" />
+                            Alta médica
+                        </label>
+                        <button pButton label="+" (click)="anadirEnfermedad()" style="padding: 0.4rem 0.75rem; min-width: auto; background-color: var(--naranja); border: none;"></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
     <ng-template pTemplate="footer">

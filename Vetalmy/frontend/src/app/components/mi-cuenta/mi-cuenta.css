@@ -357,7 +357,7 @@
   }
 }
 
-/* --- BOT�N EDITAR PERFIL ------------------------ */
+/* --- BOT�N EDITAR PERFIL ------------------------ */
 .seccion-header {
   display: flex;
   align-items: flex-start;
@@ -389,7 +389,7 @@
   background-color: var(--marron, #6b3a1f);
 }
 
-/* --- INPUTS EDICI�N ----------------------------- */
+/* --- INPUTS EDICI�N ----------------------------- */
 .campo-input {
   width: 100%;
   padding: 0.6rem 0.9rem;
@@ -409,7 +409,7 @@
   box-shadow: 0 0 0 3px rgba(176, 110, 57, 0.15);
 }
 
-/* --- ACCIONES EDICI�N --------------------------- */
+/* --- ACCIONES EDICI�N --------------------------- */
 .edicion-acciones {
   display: flex;
   justify-content: flex-end;
@@ -485,7 +485,7 @@
   color: #991b1b;
 }
 
-/* --- TARJETA CONTRASE�A ------------------------- */
+/* --- TARJETA CONTRASE�A ------------------------- */
 .password-card {
   background: white;
   border: 1px solid var(--beige, #e8d5b0);
@@ -617,3 +617,333 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+/* RESPONSIVE DASHBOARD */
+@media screen and (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+  .dashboard-sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    position: relative;
+    top: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--beige);
+    padding: 1rem;
+  }
+  .sidebar-user {
+    display: none; /* Hide huge user info to save space */
+  }
+  .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .sidebar-item {
+    white-space: nowrap;
+    width: auto;
+    padding: 0.5rem 1rem;
+    flex-shrink: 0;
+  }
+  .sidebar-spacer, .sidebar-divider, .sidebar-section-label {
+    display: none;
+  }
+  .dashboard-content {
+    padding: 1.5rem 1rem;
+  }
+  .seccion-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .historial-medico {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── PESTAÑA MASCOTAS ────────────────────────── */
+.seccion-mascotas {
+  max-width: 800px;
+}
+
+.mascotas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+.mascota-card {
+  background: white;
+  border: 1px solid var(--beige, #e8d5b0);
+  border-radius: 14px;
+  box-shadow: 0 4px 6px rgba(122, 92, 62, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.mascota-card:hover {
+  box-shadow: 0 6px 12px rgba(122, 92, 62, 0.06);
+}
+
+.mascota-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  background: white;
+  user-select: none;
+}
+
+.mascota-header:hover {
+  background: #fdfaf7;
+}
+
+.mascota-info-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mascota-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f7f3ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.mascota-nombres h4 {
+  margin: 0 0 0.15rem 0;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.15rem;
+  color: var(--marron-oscuro, #3b2315);
+}
+
+.mascota-nombres span {
+  font-size: 0.85rem;
+  color: var(--arena, #a08060);
+  font-family: 'Rubik', sans-serif;
+}
+
+.mascota-header i {
+  color: var(--arena, #a08060);
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.mascota-detalles {
+  padding: 1.5rem;
+  border-top: 1px dashed var(--beige, #e8d5b0);
+  background: #fdfbf9;
+  animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mascota-grid-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0.8rem 1rem;
+  background: #f7f3ef;
+  border-radius: 8px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.92rem;
+  color: var(--marron-oscuro, #3b2315);
+}
+
+/* ─── ALERTAS DE CITAS (COLOR MARRÓN) ────────── */
+.alerta-citas {
+  background: #f5ebe6;
+  border: 1.5px solid #d9c7be;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #5c4033;
+}
+
+.alerta-citas h5 {
+  margin: 0 0 0.5rem 0;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8b5a2b;
+}
+
+.alerta-cita-item {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  border-bottom: 1px solid rgba(217, 199, 190, 0.5);
+  padding: 0.4rem 0;
+}
+
+.alerta-cita-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.cita-motivo {
+  font-style: italic;
+  font-size: 0.82rem;
+  color: #7c5e4f;
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid #8b5a2b;
+}
+
+/* ─── HISTORIAL MÉDICO ────────────────────────── */
+.historial-medico {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.historial-seccion h5 {
+  margin: 0 0 0.6rem 0;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--marron-acento, #b06e39);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-bottom: 1px solid var(--beige, #e8d5b0);
+  padding-bottom: 0.4rem;
+}
+
+.tabla-historial {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  font-family: 'Rubik', sans-serif;
+}
+
+.tabla-historial th {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  color: var(--arena, #a08060);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--beige, #e8d5b0);
+}
+
+.tabla-historial td {
+  padding: 0.6rem;
+  border-bottom: 1px solid #f2e9dc;
+  color: var(--marron-oscuro, #3b2315);
+}
+
+.no-data {
+  font-size: 0.85rem;
+  color: var(--arena, #a08060);
+  font-style: italic;
+  margin: 0.5rem 0;
+}
+
+/* ─── PESTAÑA HISTORIAL CITAS ────────────────── */
+.seccion-citas {
+  max-width: 800px;
+}
+
+.historial-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.cita-card {
+  background: white;
+  border: 1px solid var(--beige, #e8d5b0);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(122, 92, 62, 0.02);
+}
+
+.cita-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mascota-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.icono-huella {
+  font-size: 1.4rem;
+  opacity: 0.85;
+}
+
+.mascota-nombres h4 {
+  margin: 0 0 0.1rem 0;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 1.05rem;
+  color: var(--marron-oscuro, #3b2315);
+}
+
+.mascota-nombres span {
+  font-size: 0.78rem;
+  color: var(--arena, #a08060);
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  font-family: 'Rubik', sans-serif;
+}
+
+.cita-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-family: 'Rubik', sans-serif;
+  color: var(--marroncito, #7a5c3e);
+}
+
+.cita-detalles p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cita-detalles p i {
+  color: var(--arena, #a08060);
+  font-size: 0.85rem;
+  width: 14px;
+}
+

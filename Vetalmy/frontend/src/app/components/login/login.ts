@@ -42,6 +42,11 @@ export class LoginComponent {
           localStorage.setItem('user_role', res.user.rol);
           localStorage.setItem('user_id', res.user.id);
           localStorage.setItem('user_nombre', res.user.nombre);
+          if (res.user.foto) {
+            localStorage.setItem('user_foto', res.user.foto);
+          } else {
+            localStorage.removeItem('user_foto');
+          }
 
           this.router.navigate(['/inicio']);
         },

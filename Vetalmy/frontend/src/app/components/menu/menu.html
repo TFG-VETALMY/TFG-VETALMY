@@ -16,9 +16,10 @@
     <div class="menu-nav" [class.active]="isMenuOpen">
         <ul class="menu-links">
             <li><a routerLink="/inicio" routerLinkActive="active" (click)="isMenuOpen = false">Inicio</a></li>
+            <li><a routerLink="/servicios" routerLinkActive="active" (click)="isMenuOpen = false">Servicios</a></li>
             <li><a routerLink="/consejos" routerLinkActive="active" (click)="isMenuOpen = false">Consejos</a></li>
             <li><a routerLink="/sobre-nosotros" routerLinkActive="active" (click)="isMenuOpen = false">Sobre nosotros</a></li>
-            <li *ngIf="isLoggedIn"><a routerLink="/mis-mascotas" routerLinkActive="active" (click)="isMenuOpen = false">Mis mascotas</a></li>
+            <li *ngIf="isLoggedIn"><a routerLink="/mis-mascotas" routerLinkActive="active" (click)="isMenuOpen = false">{{ esVeterinario ? 'Mascotas' : 'Mis mascotas' }}</a></li>
             <li *ngIf="isLoggedIn"><a routerLink="/citas" routerLinkActive="active" (click)="isMenuOpen = false">Citas</a></li>
             <li *ngIf="isLoggedIn" class="chat-nav-item">
                 <a routerLink="/chat" routerLinkActive="active" (click)="isMenuOpen = false">
@@ -49,12 +50,6 @@
                 <button class="dropdown-item" (click)="navegarA('/mi-cuenta')">
                     <i class="pi pi-user"></i> Área personal
                 </button>
-                <button class="dropdown-item" (click)="navegarA('/mi-cuenta')">
-                    <i class="pi pi-id-card"></i> Ver perfil
-                </button>
-                <button class="dropdown-item" (click)="navegarA('/citas')">
-                    <i class="pi pi-calendar"></i> Historial de citas
-                </button>
                 <div class="dropdown-divider"></div>
                 <button class="dropdown-item dropdown-item--danger" (click)="logout()">
                     <i class="pi pi-sign-out"></i> Cerrar sesión
@@ -78,12 +73,6 @@
             <div class="avatar-movil-opciones" [class.open]="avatarMenuOpen">
                 <button class="dropdown-item" (click)="navegarA('/mi-cuenta')">
                     <i class="pi pi-user"></i> Área personal
-                </button>
-                <button class="dropdown-item" (click)="navegarA('/mi-cuenta')">
-                    <i class="pi pi-id-card"></i> Ver perfil
-                </button>
-                <button class="dropdown-item" (click)="navegarA('/citas')">
-                    <i class="pi pi-calendar"></i> Historial de citas
                 </button>
                 <div class="dropdown-divider"></div>
                 <button class="dropdown-item dropdown-item--danger" (click)="logout()">

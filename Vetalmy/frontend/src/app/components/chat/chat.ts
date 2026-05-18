@@ -25,6 +25,26 @@ export class Chat implements OnInit, OnDestroy {
   chatsActivos: any[] = [];
   contactoActual: string = '';
 
+  mostrarAsistenteCita = false;
+  activeChatObj: any = null;
+  mascotasDisponibles: any[] = [];
+  
+  citaForm = {
+    mascotaId: '',
+    fechaHora: '',
+    tipo: 'Consulta',
+    motivo: ''
+  };
+
+  get miInicial(): string {
+    const nombre = localStorage.getItem('user_nombre') || 'U';
+    return nombre.charAt(0).toUpperCase();
+  }
+
+  get contactoInicial(): string {
+    return this.contactoActual ? this.contactoActual.charAt(0).toUpperCase() : '?';
+  }
+
 
   constructor(
     private http: HttpClient,
@@ -85,6 +105,12 @@ export class Chat implements OnInit, OnDestroy {
     this.http.get<any[]>('/usuarios').subscribe({
       next: (usuarios) => {
         this.veterinarios = usuarios.filter(u => u.rol === 'veterinario');
+        
+        // Cargar automáticamente el chat del primer veterinario si no hay ninguno seleccionado
+        if (this.veterinarios.length > 0 && this.chatId === 0) {
+          this.iniciarChatConVeterinario(this.veterinarios[0]);
+        }
+        
         this.cdr.detectChanges();
       }
     });
@@ -98,6 +124,12 @@ export class Chat implements OnInit, OnDestroy {
           c.veterinarioId === this.userId ||
           (c.veterinario && c.veterinario.id === this.userId)
         );
+
+        // Cargar automáticamente el primer chat activo si no hay ninguno seleccionado
+        if (this.chatsActivos.length > 0 && this.chatId === 0) {
+          this.abrirChatExistente(this.chatsActivos[0]);
+        }
+
         this.cdr.detectChanges();
       }
     });
@@ -117,11 +149,15 @@ export class Chat implements OnInit, OnDestroy {
         );
 
         if (chatExistente) {
+          this.activeChatObj = chatExistente;
           this.abrirChat(chatExistente.id, chatExistente.mensajes);
         } else {
           const nuevoChat = { clienteId: this.userId, veterinarioId: vet.id };
           this.http.post<any>('/chat', nuevoChat).subscribe({
-            next: (chat) => this.abrirChat(chat.id, [])
+            next: (chat) => {
+              this.activeChatObj = chat;
+              this.abrirChat(chat.id, []);
+            }
           });
         }
       }
@@ -132,6 +168,7 @@ export class Chat implements OnInit, OnDestroy {
     //aqui se abre el chat 
     this.contactoActual = chat.cliente?.nombre || 'Cliente';
     this.mensajes = [];
+    this.activeChatObj = chat;
     this.abrirChat(chat.id, chat.mensajes);
   }
 
@@ -167,6 +204,95 @@ export class Chat implements OnInit, OnDestroy {
       //aqui se muestra el mensaje en la pantalla de manera inmediata
       setTimeout(() => this.cdr.detectChanges(), 50);
     }
+  }
+
+  onMensajeChange(valor: string) {
+    if (valor.toLowerCase().includes('@cita')) {
+      // Eliminar el '@cita' del input para que no se envíe como mensaje plano
+      this.nuevoMensaje = valor.replace(/@cita/gi, '').trim();
+      this.abrirAsistenteCita();
+    }
+  }
+
+  abrirAsistenteCita() {
+    if (!this.activeChatObj) return;
+    
+    const clienteId = this.activeChatObj.clienteId || this.activeChatObj.cliente?.id;
+    if (!clienteId) return;
+
+    this.http.get<any[]>('/mascotas').subscribe({
+      next: (mascotas) => {
+        this.mascotasDisponibles = mascotas.filter(m => m.usuarioId === clienteId || m.usuario?.id === clienteId);
+        this.mostrarAsistenteCita = true;
+        
+        // Pre-seleccionar la primera mascota si hay disponibles
+        if (this.mascotasDisponibles.length > 0) {
+          this.citaForm.mascotaId = this.mascotasDisponibles[0].id.toString();
+        }
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  agendarCita() {
+    if (!this.citaForm.mascotaId || !this.citaForm.fechaHora) {
+      alert('Por favor seleccione la mascota y la fecha/hora de la cita.');
+      return;
+    }
+
+    const motivoFinal = this.citaForm.motivo.trim() || 'Consulta programada vía Chat';
+
+    const mascota = this.mascotasDisponibles.find(m => m.id === Number(this.citaForm.mascotaId));
+    const nombreMascota = mascota ? mascota.nombre : 'la mascota';
+    
+    const payloadCita = {
+      fecha: new Date(this.citaForm.fechaHora),
+      tipo: this.citaForm.tipo,
+      estado: 'PROGRAMADA',
+      motivo: motivoFinal,
+      mascotaId: Number(this.citaForm.mascotaId),
+      clienteId: this.activeChatObj.clienteId || this.activeChatObj.cliente?.id,
+      veterinarioId: this.activeChatObj.veterinarioId || this.activeChatObj.veterinario?.id
+    };
+
+    this.http.post<any>('/citas', payloadCita).subscribe({
+      next: () => {
+        // Enviar un mensaje al chat notificando que la cita ha sido agendada
+        const fechaFormateada = new Date(this.citaForm.fechaHora).toLocaleString('es-ES', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        
+        const textoMensaje = `📅 [ASISTENTE] ¡Se ha agendado una cita! \n🐾 Mascota: ${nombreMascota} \n🩺 Tipo: ${this.citaForm.tipo} \n⏰ Fecha y Hora: ${fechaFormateada} \n📝 Motivo: ${motivoFinal}`;
+        
+        const payloadMensaje = {
+          mensaje: textoMensaje,
+          chatId: this.chatId,
+          usuarioId: this.userId
+        };
+
+        this.mensajes.push({
+          ...payloadMensaje,
+          fecha_creacion: new Date().toISOString()
+        });
+
+        this.socket.emit('enviar-mensaje', payloadMensaje);
+        
+        // Cerrar el asistente y resetear formulario
+        this.mostrarAsistenteCita = false;
+        this.citaForm = {
+          mascotaId: '',
+          fechaHora: '',
+          tipo: 'Consulta',
+          motivo: ''
+        };
+        this.cdr.detectChanges();
+      },
+      error: () => alert('Error al crear la cita.')
+    });
   }
 
   //aqui se cierra la conexion con el servidor al cerrar la pagina web

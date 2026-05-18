@@ -54,6 +54,10 @@ export class Menu implements OnInit, OnDestroy {
     return localStorage.getItem('user_foto') ?? '';
   }
 
+  get esVeterinario(): boolean {
+    return typeof window !== 'undefined' && localStorage.getItem('user_role') === 'veterinario';
+  }
+
   toggleMenu(event: MouseEvent) {
     event.stopPropagation();
     this.isMenuOpen = !this.isMenuOpen;
@@ -63,7 +67,6 @@ export class Menu implements OnInit, OnDestroy {
   toggleAvatarMenu(event: MouseEvent) {
     event.stopPropagation();
     this.avatarMenuOpen = !this.avatarMenuOpen;
-    this.isMenuOpen = false;
   }
 
   @HostListener('document:click', ['$event'])
@@ -81,6 +84,7 @@ export class Menu implements OnInit, OnDestroy {
     localStorage.removeItem('user_role');
     localStorage.removeItem('user_id');
     localStorage.removeItem('user_nombre');
+    localStorage.removeItem('user_foto');
     this.router.navigate(['/inicio']);
   }
 

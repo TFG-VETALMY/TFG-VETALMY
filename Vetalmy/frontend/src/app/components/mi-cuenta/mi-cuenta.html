@@ -1,4 +1,4 @@
-﻿<div class="dashboard-layout">
+<div class="dashboard-layout">
 
     <!-- SIDEBAR -->
     <aside class="dashboard-sidebar">
@@ -15,10 +15,10 @@
             <button class="sidebar-item" [class.activo]="seccionActiva === 'perfil'" (click)="seccionActiva = 'perfil'">
                 <i class="pi pi-user"></i><span>Mi Perfil</span>
             </button>
-            <button class="sidebar-item" (click)="navegarA('/mis-mascotas')">
-                <i class="pi pi-heart"></i><span>Mis Mascotas</span>
+            <button class="sidebar-item" [class.activo]="seccionActiva === 'mascotas'" (click)="seccionActiva = 'mascotas'">
+                <i class="pi pi-heart"></i><span>{{ esVeterinario ? 'Mascotas' : 'Mis Mascotas' }}</span>
             </button>
-            <button class="sidebar-item" (click)="navegarA('/citas')">
+            <button class="sidebar-item" [class.activo]="seccionActiva === 'citas'" (click)="seccionActiva = 'citas'">
                 <i class="pi pi-calendar"></i><span>Historial de Citas</span>
             </button>
         </nav>
@@ -232,6 +232,176 @@
                 <div class="skeleton skeleton-line skeleton-line--sm"></div>
             </div>
 
+        </div>
+
+        <!-- PESTAÑA MASCOTAS -->
+        <div *ngIf="seccionActiva === 'mascotas'" class="seccion-mascotas">
+            <div class="seccion-header">
+                <div>
+                    <h1>{{ esVeterinario ? 'Mascotas' : 'Mis Mascotas' }}</h1>
+                    <p class="seccion-subtitulo">{{ esVeterinario ? 'Consulta el historial médico y datos de todos los pacientes.' : 'Consulta el historial médico y datos de tus mascotas.' }}</p>
+                </div>
+            </div>
+
+            <div *ngIf="mascotas.length === 0" class="perfil-card" style="text-align: center; padding: 2rem;">
+                <p>{{ esVeterinario ? 'No hay mascotas registradas en el sistema.' : 'No tienes mascotas registradas.' }}</p>
+            </div>
+
+            <div class="mascotas-lista">
+                <div *ngFor="let m of mascotas" class="mascota-card card">
+                    <div class="mascota-header" (click)="toggleMascota(m.id)">
+                        <div class="mascota-info-header">
+                            <div class="mascota-avatar">🐾</div>
+                            <div class="mascota-nombres">
+                                <h4>{{ m.nombre }}</h4>
+                                <span>{{ m.animal }} {{ m.raza ? '- ' + m.raza : '' }}</span>
+                            </div>
+                        </div>
+                        <i class="pi" [class.pi-chevron-down]="mascotaExpandida !== m.id" [class.pi-chevron-up]="mascotaExpandida === m.id"></i>
+                    </div>
+                    
+                    <div class="mascota-detalles" *ngIf="mascotaExpandida === m.id">
+                        <div class="mascota-grid-datos">
+                            <div><strong>Edad:</strong> {{ m.edad }} años</div>
+                            <div><strong>Peso:</strong> {{ m.peso }} kg</div>
+                        </div>
+                        
+                        <!-- Alerta de próximas citas -->
+                        <div *ngIf="m.proximasCitas && m.proximasCitas.length > 0" class="alerta-citas">
+                            <h5><i class="pi pi-bell"></i> Citas pendientes</h5>
+                            <div *ngFor="let cita of m.proximasCitas" class="alerta-cita-item">
+                                <strong>{{ cita.tipo }}</strong> - {{ cita.fecha | date:'short' }}
+                                <div class="cita-motivo" *ngIf="cita.motivo">{{ cita.motivo }}</div>
+                            </div>
+                        </div>
+
+                        <div class="historial-medico">
+                            <div class="historial-seccion">
+                                <h5><i class="pi pi-shield"></i> Vacunas</h5>
+                                <table class="tabla-historial" *ngIf="m.historial?.vacuna?.length > 0; else noVacunas">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let v of m.historial.vacuna">
+                                            <td>{{ v.nombre }}</td>
+                                            <td>{{ (v.fecha_aplicacion || v.fecha) | date:'shortDate' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <ng-template #noVacunas><p class="no-data">No hay vacunas registradas.</p></ng-template>
+
+                                <!-- Inyección directa de vacunas para veterinarios -->
+                                <div *ngIf="esVeterinario" class="form-add-historial" style="display: flex; gap: 0.5rem; align-items: flex-end; margin-top: 1rem; padding: 0.75rem; background: #fdfbf7; border: 1px solid #f0ece3; border-radius: 8px;">
+                                    <div style="flex: 1;">
+                                        <input #vacunaInput type="text" placeholder="Nueva vacuna..." class="p-inputtext p-component" style="font-size: 0.85rem; padding: 0.4rem; width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; background: white;" />
+                                    </div>
+                                    <div style="width: 120px;">
+                                        <input #vacunaFecha type="date" value="2026-05-18" style="font-size: 0.85rem; padding: 0.35rem; border: 1px solid #cbd5e1; border-radius: 6px; width: 100%; background: white;" />
+                                    </div>
+                                    <button (click)="anadirVacuna(m, vacunaInput.value, vacunaFecha.value); vacunaInput.value = ''" style="background: #e27c3e !important; color: white !important; border: none !important; border-radius: 6px !important; padding: 0.5rem 1rem !important; cursor: pointer !important; display: flex; align-items: center; justify-content: center; font-weight: bold; height: 36px; min-width: 45px; transition: all 0.2s ease;" title="Guardar vacuna">
+                                        <span style="font-size: 1.1rem; color: white !important; font-weight: bold; line-height: 1;">✔</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="historial-seccion">
+                                <h5><i class="pi pi-heart"></i> Enfermedades</h5>
+                                <table class="tabla-historial" *ngIf="m.historial?.enfermedad?.length > 0; else noEnfermedades">
+                                    <thead>
+                                        <tr>
+                                            <th>Diagnóstico</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let e of m.historial.enfermedad">
+                                            <td>{{ e.observaciones || e.nombre }}</td>
+                                            <td>
+                                                <span *ngIf="!esVeterinario" [style.color]="e.fecha_alta ? '#10b981' : '#f59e0b'" style="font-weight: 600; font-size: 0.85rem;">
+                                                    {{ e.fecha_alta ? 'Dada de alta' : 'Activa' }}
+                                                </span>
+                                                <button *ngIf="esVeterinario" (click)="toggleEstadoEnfermedad(m, e)" 
+                                                    [style.background]="e.fecha_alta ? '#d1fae5' : '#fef3c7'"
+                                                    [style.color]="e.fecha_alta ? '#065f46' : '#92400e'"
+                                                    [style.border]="e.fecha_alta ? '1px solid #10b981' : '1px solid #f59e0b'"
+                                                    style="font-weight: 600; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; cursor: pointer; display: flex; align-items: center; gap: 0.25rem;"
+                                                    title="Haga clic para cambiar el estado">
+                                                    <i class="pi" [class.pi-check-circle]="e.fecha_alta" [class.pi-info-circle]="!e.fecha_alta" style="font-size: 0.75rem;"></i>
+                                                    {{ e.fecha_alta ? 'Dada de alta' : 'Activa' }}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <ng-template #noEnfermedades><p class="no-data">No hay enfermedades registradas.</p></ng-template>
+
+                                <!-- Inyección directa de enfermedades para veterinarios -->
+                                <div *ngIf="esVeterinario" class="form-add-historial" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; padding: 0.75rem; background: #fdfbf7; border: 1px solid #f0ece3; border-radius: 8px;">
+                                    <input #enfermedadInput type="text" placeholder="Nuevo diagnóstico..." class="p-inputtext p-component" style="font-size: 0.85rem; padding: 0.4rem; width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; background: white;" />
+                                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                        <div style="flex: 1;">
+                                            <input #enfermedadFecha type="date" value="2026-05-18" style="font-size: 0.85rem; padding: 0.35rem; border: 1px solid #cbd5e1; border-radius: 6px; width: 100%; background: white;" />
+                                        </div>
+                                        <label style="font-size: 0.8rem; display: flex; align-items: center; gap: 0.25rem; user-select: none; color: var(--marron-oscuro); cursor: pointer;">
+                                            <input #enfermedadAlta type="checkbox" />
+                                            Alta médica
+                                        </label>
+                                        <button (click)="anadirEnfermedad(m, enfermedadInput.value, enfermedadFecha.value, enfermedadAlta.checked); enfermedadInput.value = ''; enfermedadAlta.checked = false" style="background: #e27c3e !important; color: white !important; border: none !important; border-radius: 6px !important; padding: 0.5rem 1rem !important; cursor: pointer !important; display: flex; align-items: center; justify-content: center; font-weight: bold; height: 36px; min-width: 45px; transition: all 0.2s ease;" title="Guardar enfermedad">
+                                            <span style="font-size: 1.1rem; color: white !important; font-weight: bold; line-height: 1;">✔</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA HISTORIAL CITAS -->
+        <div *ngIf="seccionActiva === 'citas'" class="seccion-citas">
+            <div class="seccion-header">
+                <div>
+                    <h1>Historial de Citas</h1>
+                    <p class="seccion-subtitulo">Consulta las citas pasadas de tus mascotas.</p>
+                </div>
+            </div>
+
+            <div class="historial-container mt-4">
+                <div *ngIf="historialCitas.length === 0" class="cita-card card" style="text-align: center; padding: 2rem;">
+                    <p>No hay citas pasadas en tu historial.</p>
+                </div>
+                <div *ngFor="let cita of historialCitas" class="cita-card card" style="opacity: 0.8;">
+                    <div class="cita-header">
+                        <div class="mascota-info">
+                            <div class="icono-huella">🐾</div>
+                            <div class="mascota-nombres">
+                                <h4>{{ cita.mascota?.nombre || 'Mascota' }}</h4>
+                                <span>{{ cita.tipo || 'Cita Médica' }}</span>
+                            </div>
+                        </div>
+                        <span class="badge" style="background-color: var(--beige); color: var(--marron-oscuro);">COMPLETADA</span>
+                    </div>
+
+                    <div class="cita-detalles">
+                        <ng-container *ngIf="usuario?.rol !== 'veterinario'">
+                            <p *ngIf="cita.veterinario"><i class="pi pi-user"></i> Dr(a). {{ cita.veterinario.nombre }} {{ cita.veterinario.apellido1 }}</p>
+                        </ng-container>
+
+                        <ng-container *ngIf="usuario?.rol === 'veterinario'">
+                            <p *ngIf="cita.cliente"><i class="pi pi-user"></i> Cliente: {{ cita.cliente.nombre }} {{ cita.cliente.apellido1 }}</p>
+                        </ng-container>
+
+                        <p><i class="pi pi-calendar"></i> {{ cita.fecha | date:'fullDate' }}</p>
+                        <p><i class="pi pi-clock"></i> {{ cita.fecha | date:'shortTime' }}</p>
+                        <p *ngIf="cita.motivo" style="margin-top: 0.5rem; font-style: italic;"><i class="pi pi-info-circle"></i> {{ cita.motivo }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>

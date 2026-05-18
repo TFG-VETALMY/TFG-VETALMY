@@ -19,14 +19,21 @@ export class HistorialService {
 
   async findAll() {
     return await this.historialRepository.find({
-      relations: ['mascota'],
+      relations: ['mascota', 'vacuna', 'enfermedad'],
+    });
+  }
+
+  async findByMascota(mascotaId: number) {
+    return await this.historialRepository.findOne({
+      where: { mascotaId },
+      relations: ['mascota', 'vacuna', 'enfermedad'],
     });
   }
 
   async findOne(id: number) {
     return await this.historialRepository.findOne({
       where: { id },
-      relations: ['mascota'],
+      relations: ['mascota', 'vacuna', 'enfermedad'],
     });
   }
 

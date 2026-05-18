@@ -56,7 +56,11 @@ export class AuthCallbackComponent implements OnInit {
         localStorage.setItem('user_id', id);
         localStorage.setItem('user_nombre', params['nombre'] ?? '');
         localStorage.setItem('user_role', params['rol'] ?? 'user');
-        if (params['foto']) localStorage.setItem('user_foto', params['foto']);
+        if (params['foto']) {
+          localStorage.setItem('user_foto', params['foto']);
+        } else {
+          localStorage.removeItem('user_foto');
+        }
         this.router.navigate(['/inicio']);
       } else {
         // Si no hay token, algo falló → vuelve al login

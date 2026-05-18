@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { MenuItem, MessageService, ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { CommonModule, UpperCasePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -43,7 +44,7 @@ export interface ClienteConMascotas {
   imports: [
     ButtonModule, MenuModule, CommonModule, UpperCasePipe,
     DialogModule, InputTextModule, InputNumberModule,
-    FormsModule, ToastModule, ConfirmDialogModule, SelectModule
+    FormsModule, ToastModule, ConfirmDialogModule, SelectModule, RouterLink
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './mis-mascotas.html',
@@ -76,6 +77,11 @@ export class MisMascotas implements OnInit {
   form: Partial<Mascota> = {};
   usuarioIdParaNueva: number | null = null;
 
+  // Variables para la gestión clínica del veterinario
+  mascotaHistorial: any = null;
+  nuevaVacuna = { nombre: '', fecha: '' };
+  nuevaEnfermedad = { observaciones: '', fechaDiagnostico: '', dadaAlta: false, fechaAlta: '' };
+
   animalesOpciones = [
     { label: 'Perro', value: 'Perro' },
     { label: 'Gato', value: 'Gato' },
@@ -87,7 +93,8 @@ export class MisMascotas implements OnInit {
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -107,6 +114,7 @@ export class MisMascotas implements OnInit {
     this.http.get<Mascota[]>('/mascotas').subscribe({
       next: (todas) => {
         this.mascotas = todas.filter(m => m.usuarioId === this.userId);
+        this.cdr.detectChanges();
       },
       error: () => this.showError('No se pudieron cargar las mascotas.')
     });
@@ -139,6 +147,7 @@ export class MisMascotas implements OnInit {
         this.clientesOriginales = Array.from(mapa.values())
           .sort((a, b) => a.usuario.nombre.localeCompare(b.usuario.nombre));
         this.clientesFiltrados = [...this.clientesOriginales];
+        this.cdr.detectChanges();
       },
       error: () => this.showError('No se pudieron cargar los datos.')
     });
@@ -157,10 +166,12 @@ export class MisMascotas implements OnInit {
         })
       : [...this.clientesOriginales];
     this.mostrarTodos = false; // reset al filtrar
+    this.cdr.detectChanges();
   }
 
   toggleCliente(userId: number): void {
     this.clienteExpandido = this.clienteExpandido === userId ? null : userId;
+    this.cdr.detectChanges();
   }
 
   // ─── CRUD COMPARTIDO ──────────────────────────────────────────────
@@ -177,6 +188,36 @@ export class MisMascotas implements OnInit {
     this.mascotaSeleccionada = mascota;
     this.form = { ...mascota };
     this.dialogVisible = true;
+
+    if (this.esVeterinario) {
+      this.mascotaHistorial = null;
+      this.nuevaVacuna = { nombre: '', fecha: new Date().toISOString().substring(0, 10) };
+      this.nuevaEnfermedad = { observaciones: '', fechaDiagnostico: new Date().toISOString().substring(0, 10), dadaAlta: false, fechaAlta: '' };
+
+      this.http.get<any>(`/historial/mascota/${mascota.id}`).subscribe({
+        next: (h) => {
+          if (h) {
+            this.mascotaHistorial = h;
+            this.cdr.detectChanges();
+          } else {
+            this.http.post<any>('/historial', { mascotaId: mascota.id }).subscribe({
+              next: (newH) => {
+                this.mascotaHistorial = newH;
+                this.cdr.detectChanges();
+              }
+            });
+          }
+        },
+        error: () => {
+          this.http.post<any>('/historial', { mascotaId: mascota.id }).subscribe({
+            next: (newH) => {
+              this.mascotaHistorial = newH;
+              this.cdr.detectChanges();
+            }
+          });
+        }
+      });
+    }
   }
 
   guardar(): void {
@@ -228,6 +269,93 @@ export class MisMascotas implements OnInit {
   recargar(): void {
     if (this.esVeterinario) this.cargarTodos();
     else this.cargarMisMascotas();
+  }
+
+  anadirVacuna(): void {
+    if (!this.nuevaVacuna.nombre || !this.nuevaVacuna.fecha) {
+      this.showError('Por favor rellenar el nombre y la fecha de la vacuna.');
+      return;
+    }
+    if (!this.mascotaHistorial) return;
+
+    const payload = {
+      nombre: this.nuevaVacuna.nombre,
+      fecha_aplicacion: new Date(this.nuevaVacuna.fecha),
+      historialId: this.mascotaHistorial.id
+    };
+
+    this.http.post<any>('/vacunas', payload).subscribe({
+      next: () => {
+        this.showExito('Vacuna añadida correctamente.');
+        
+        // Registrar automáticamente la cita completada de vacunación
+        const citaPayload = {
+          fecha: new Date(this.nuevaVacuna.fecha),
+          tipo: 'Vacunación',
+          estado: 'COMPLETADA',
+          motivo: `Vacunación: ${this.nuevaVacuna.nombre}`,
+          mascotaId: this.mascotaSeleccionada!.id,
+          clienteId: this.mascotaSeleccionada!.usuarioId || (this.mascotaSeleccionada!.usuario as any)?.id,
+          veterinarioId: this.userId
+        };
+        this.http.post<any>('/citas', citaPayload).subscribe();
+
+        this.nuevaVacuna = { nombre: '', fecha: new Date().toISOString().substring(0, 10) };
+        this.http.get<any>(`/historial/mascota/${this.mascotaSeleccionada!.id}`).subscribe({
+          next: (h) => {
+            this.mascotaHistorial = h;
+            this.cdr.detectChanges();
+          }
+        });
+      },
+      error: () => this.showError('Error al añadir la vacuna.')
+    });
+  }
+
+  anadirEnfermedad(): void {
+    if (!this.nuevaEnfermedad.observaciones || !this.nuevaEnfermedad.fechaDiagnostico) {
+      this.showError('Por favor rellenar el diagnóstico y la fecha.');
+      return;
+    }
+    if (!this.mascotaHistorial) return;
+
+    const payload = {
+      observaciones: this.nuevaEnfermedad.observaciones,
+      fecha_diagnostico: new Date(this.nuevaEnfermedad.fechaDiagnostico),
+      fecha_alta: this.nuevaEnfermedad.dadaAlta ? new Date() : null,
+      historialId: this.mascotaHistorial.id,
+      veterinarioId: this.userId
+    };
+
+    this.http.post<any>('/enfermedades', payload).subscribe({
+      next: () => {
+        this.showExito('Enfermedad añadida correctamente.');
+        this.nuevaEnfermedad = { observaciones: '', fechaDiagnostico: new Date().toISOString().substring(0, 10), dadaAlta: false, fechaAlta: '' };
+        this.http.get<any>(`/historial/mascota/${this.mascotaSeleccionada!.id}`).subscribe({
+          next: (h) => {
+            this.mascotaHistorial = h;
+            this.cdr.detectChanges();
+          }
+        });
+      },
+      error: () => this.showError('Error al añadir la enfermedad.')
+    });
+  }
+
+  toggleEstadoEnfermedad(enfermedad: any): void {
+    const nuevaFechaAlta = enfermedad.fecha_alta ? null : new Date();
+    
+    this.http.patch<any>(`/enfermedades/${enfermedad.id}`, { fecha_alta: nuevaFechaAlta }).subscribe({
+      next: () => {
+        this.http.get<any>(`/historial/mascota/${this.mascotaSeleccionada!.id}`).subscribe({
+          next: (h) => {
+            this.mascotaHistorial = h;
+            this.cdr.detectChanges();
+          }
+        });
+      },
+      error: () => this.showError('Error al cambiar el estado de la enfermedad.')
+    });
   }
 
   getMenuOpciones(mascota: Mascota): MenuItem[] {
