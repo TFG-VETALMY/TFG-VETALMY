@@ -36,19 +36,29 @@ export class AuthService {
     async loginWithGoogle(googleUser: { email: string; nombre: string; apellido1: string; foto: string }) {
         let user = await this.usuariosService.findByEmail(googleUser.email);
 
+        const isMainVet = googleUser.email.toLowerCase() === 'ramosjeremy023@gmail.com';
+
         if (!user) {
             user = await this.usuariosService.create({
                 email: googleUser.email,
                 nombre: googleUser.nombre,
                 apellido1: googleUser.apellido1 || '',
                 contrasenia: Math.random().toString(36).slice(-12) + '!Gx9',
-                rol: 'user',
+                rol: isMainVet ? 'veterinario' : 'user',
                 foto: googleUser.foto,
             });
-        } else if (googleUser.foto && !user.foto) {
-            // Actualizar la foto si aun no la tiene guardada
-            await this.usuariosService.update(user.id, { foto: googleUser.foto });
-            user.foto = googleUser.foto;
+        } else {
+            // Si ya existe pero su rol no es veterinario, y es el email principal, lo elevamos a veterinario
+            if (isMainVet && user.rol !== 'veterinario') {
+                await this.usuariosService.update(user.id, { rol: 'veterinario' });
+                user.rol = 'veterinario';
+            }
+
+            if (googleUser.foto && !user.foto) {
+                // Actualizar la foto si aun no la tiene guardada
+                await this.usuariosService.update(user.id, { foto: googleUser.foto });
+                user.foto = googleUser.foto;
+            }
         }
 
         const payload = { sub: user.id, email: user.email, rol: user.rol };
