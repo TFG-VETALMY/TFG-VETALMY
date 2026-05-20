@@ -1,7 +1,7 @@
 
-/* ══════════════════════════════════════════
-   VISTA VETERINARIO — BUSCADOR Y CLIENTES
-   ══════════════════════════════════════════ */
+/* ââââââââââââââââââââââââââââââââââââââââââ
+   VISTA VETERINARIO â BUSCADOR Y CLIENTES
+   ââââââââââââââââââââââââââââââââââââââââââ */
 
 .buscador-wrapper {
   position: relative;
@@ -135,7 +135,7 @@
   transition: transform 0.2s ease;
 }
 
-/* Sección expandida */
+/* SecciÃ³n expandida */
 .cliente-mascotas {
   border-top: 1px solid var(--beige);
   padding: 1rem 1.2rem;
@@ -153,7 +153,7 @@
   font-size: var(--fs-peque);
 }
 
-/* Grid vet — tarjetas verticales premium */
+/* Grid vet â tarjetas verticales premium */
 .mascotas-grid-vet {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
@@ -180,7 +180,7 @@
   border-color: var(--marron-claro);
 }
 
-/* Círculo con emoji */
+/* CÃ­rculo con emoji */
 .card-emoji-vet {
   width: 64px;
   height: 64px;
@@ -219,7 +219,7 @@
   text-transform: uppercase;
 }
 
-/* Botón añadir dentro del cliente */
+/* BotÃ³n aÃ±adir dentro del cliente */
 .btn-add-vet {
   background-color: transparent !important;
   border: 1.5px dashed var(--marron-claro) !important;
@@ -260,7 +260,7 @@
   margin: 0;
 }
 
-/* Botón "Registrar nueva" */
+/* BotÃ³n "Registrar nueva" */
 .btn-nueva {
   background-color: var(--marron-acento) !important;
   border: none !important;
@@ -325,7 +325,7 @@
   font-size: var(--fs-peque);
 }
 
-/* Botón "Agendar Refuerzo" */
+/* BotÃ³n "Agendar Refuerzo" */
 .btn-agendar {
   background-color: var(--blanco-total) !important;
   border: none !important;
@@ -369,7 +369,7 @@
   transform: translateY(-3px);
 }
 
-/* Menú de tres puntos */
+/* MenÃº de tres puntos */
 .card-menu {
   position: absolute;
   top: 0.8rem;
@@ -474,8 +474,8 @@
   background-color: var(--marron) !important;
 }
 
-/* --- TARJETA "AÑADIR" (punteada) --- */
-.card-añadir {
+/* --- TARJETA "AÃADIR" (punteada) --- */
+.card-aÃ±adir {
   border: 2px dashed var(--beige) !important;
   background-color: transparent !important;
   box-shadow: none !important;
@@ -486,23 +486,23 @@
   transition: border-color 0.25s ease, background-color 0.25s ease !important;
 }
 
-.card-añadir:hover {
+.card-aÃ±adir:hover {
   border-color: var(--marron-acento) !important;
   background-color: rgba(176, 110, 57, 0.04) !important;
   transform: translateY(-3px);
 }
 
-.añadir-icono i {
+.aÃ±adir-icono i {
   font-size: 2.2rem;
   color: var(--beige);
   transition: color 0.2s ease;
 }
 
-.card-añadir:hover .añadir-icono i {
+.card-aÃ±adir:hover .aÃ±adir-icono i {
   color: var(--marron-acento);
 }
 
-.añadir-titulo {
+.aÃ±adir-titulo {
   font-family: 'Josefin Sans', sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -511,7 +511,7 @@
   text-align: center;
 }
 
-.añadir-desc {
+.aÃ±adir-desc {
   font-size: var(--fs-peque);
   color: var(--arena);
   text-align: center;
@@ -519,7 +519,7 @@
   line-height: 1.4;
 }
 
-/* --- MENÚ CONTEXTUAL (item peligroso) --- */
+/* --- MENÃ CONTEXTUAL (item peligroso) --- */
 :host ::ng-deep .menu-item-danger a {
   color: var(--rojo-error) !important;
 }
@@ -548,7 +548,7 @@
   }
 }
 
-/* --- ESTADO VACÍO --- */
+/* --- ESTADO VACÃO --- */
 .estado-vacio {
   display: flex;
   flex-direction: column;
@@ -621,7 +621,7 @@
   color: var(--marron-acento);
 }
 
-/* --- BOTÓN ELIMINAR --- */
+/* --- BOTÃN ELIMINAR --- */
 .btn-eliminar {
   background-color: transparent !important;
   border: 1.5px solid #e57373 !important;
@@ -637,7 +637,7 @@
   background-color: #ffebee !important;
 }
 
-/* --- FORMULARIO DIÁLOGO --- */
+/* --- FORMULARIO DIÃLOGO --- */
 .form-mascota {
   display: flex;
   flex-direction: column;
@@ -673,7 +673,7 @@
   width: 100% !important;
 }
 
-/* Botones del diálogo */
+/* Botones del diÃ¡logo */
 .btn-cancelar-dialog {
   background-color: transparent !important;
   border: 1.5px solid var(--beige) !important;
@@ -695,7 +695,7 @@
 .btn-guardar-dialog:hover {
   background-color: var(--marron) !important;
 }
-/* --- VER M�S / VER MENOS --- */
+/* --- VER MÁS / VER MENOS --- */
 .ver-mas-wrapper {
   display: flex;
   justify-content: center;
@@ -716,4 +716,25 @@
 .btn-ver-mas:hover {
   border-color: var(--marron-acento) !important;
   background-color: rgba(176,110,57,0.04) !important;
+}
+
+/* --- DIALOGO RESPONSIVE --- */
+@media (max-width: 768px) {
+  .edit-mascota-layout {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+  .form-mascota {
+    width: 100% !important;
+  }
+  .form-historial-vet {
+    width: 100% !important;
+    border-left: none !important;
+    padding-left: 0 !important;
+    border-top: 1px solid #e2e8f0 !important;
+    padding-top: 1.5rem !important;
+  }
+  .form-row {
+    grid-template-columns: 1fr !important;
+  }
 }

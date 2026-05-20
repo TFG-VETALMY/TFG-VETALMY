@@ -6,7 +6,7 @@
         <p class="hero-subtitle">Clínica veterinaria integral: prevención, urgencias y bienestar animal. Profesionales
             apasionados que tratan a tu mascota como a la nuestra.</p>
         <div class="hero-buttons">
-            <a routerLink="/citas" class="btn btn-primary">Reserva tu cita</a>
+            <a [routerLink]="rutaCitas" class="btn btn-primary">Reserva tu cita</a>
             <a routerLink="/sobre-nosotros" class="btn btn-secondary">Conócenos</a>
         </div>
     </div>
@@ -64,4 +64,19 @@
     <p>Regístrate en nuestro portal y accede a todo el historial clínico, citas y recetas de tus mascotas al instante.
     </p>
     <a routerLink="/login" class="btn btn-primary-dark">Únete ahora</a>
+</div>
+
+<!-- COOKIES BANNER -->
+<div class="cookies-widget" *ngIf="mostrarCookies">
+    <div class="cookies-content">
+        <div class="cookies-icon">🍪</div>
+        <div class="cookies-text">
+            <h4>Valoramos tu privacidad</h4>
+            <p>Utilizamos almacenamiento local estrictamente necesario para mantener tu sesión iniciada y garantizar el funcionamiento de Vetalmy.</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; width: 100%;">
+            <button class="btn-cookies btn-cookies-reject" (click)="rechazarCookies()">Rechazar</button>
+            <button class="btn-cookies" (click)="aceptarCookies()">Aceptar</button>
+        </div>
+    </div>
 </div>

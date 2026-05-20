@@ -4,7 +4,7 @@
         <ng-template let-consejo pTemplate="item">
             <div class="tarjeta-consejo" (click)="mostrarDetalle(consejo)">
                 <div class="contenedor-img">
-                    <img [src]="'imgs/Web/' + consejo.imagen" [alt]="consejo.titulo" class="img-consejo" />
+                    <img [src]="'imgs/Web/' + consejo.imagen" [alt]="consejo.titulo" class="img-consejo" loading="lazy" decoding="async" />
                 </div>
                 <div class="titulo-consejo">{{ consejo.titulo }}</div>
                 <p class="click-info">Haz clic para leer más</p>

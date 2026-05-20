@@ -237,4 +237,81 @@
     .cta-bottom h2 {
         font-size: 2rem;
     }
+    .cookies-widget {
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+    }
+}
+
+/* --- COOKIES WIDGET --- */
+.cookies-widget {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    background-color: var(--blanco-total);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
+    max-width: 380px;
+    z-index: 9999;
+    border: 1px solid var(--beige);
+    animation: slideUpCookie 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes slideUpCookie {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.cookies-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cookies-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.cookies-text h4 {
+    color: var(--marron-oscuro);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.cookies-text p {
+    color: var(--gris);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.btn-cookies {
+    background-color: var(--marron-acento);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.btn-cookies:hover {
+    background-color: #c7674e;
+    transform: translateY(-2px);
+}
+
+.btn-cookies-reject {
+    background-color: transparent;
+    color: var(--marron-oscuro);
+    border: 1px solid #cbd5e1;
+}
+
+.btn-cookies-reject:hover {
+    background-color: #f1f5f9;
+    color: var(--marron-oscuro);
+    transform: translateY(-2px);
 }

@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { PasswordModule } from 'primeng/password';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient // Inyectamos HttpClient
+    private http: HttpClient,
+    private messageService: MessageService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -52,7 +54,7 @@ export class LoginComponent {
         },
         error: (err) => {
           console.error('Error en el login', err);
-          alert('Credenciales galácticas incorrectas');
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Correo o contraseña errónea' });
         }
       });
     } else {

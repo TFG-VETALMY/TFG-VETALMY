@@ -5,7 +5,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
-import { HttpClient } from '@angular/common/http'; // Importante para conectar con el backend
+import { HttpClient } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -28,8 +29,9 @@ export class RegistroComponent {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient, // Inyectamos el cliente HTTP
-    private router: Router     // Inyectamos el router para navegar
+    private http: HttpClient,
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.registroForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -71,7 +73,7 @@ export class RegistroComponent {
         },
         error: (err) => {
           console.error('Error en el registro:', err);
-          alert('No se pudo crear la cuenta. Revisa si el email ya existe o si el servidor está activo.');
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo crear la cuenta. Revisa si el email ya existe o si el servidor está activo.' });
         }
       });
     }

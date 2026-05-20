@@ -108,7 +108,7 @@ export class MisMascotas implements OnInit {
     }
   }
 
-  // ─── MODO USUARIO ─────────────────────────────────────────────────
+
 
   cargarMisMascotas(): void {
     this.http.get<Mascota[]>('/mascotas').subscribe({
@@ -120,7 +120,7 @@ export class MisMascotas implements OnInit {
     });
   }
 
-  // ─── MODO VETERINARIO ─────────────────────────────────────────────
+
 
   cargarTodos(): void {
     forkJoin({
@@ -161,8 +161,10 @@ export class MisMascotas implements OnInit {
     }
     this.clientesFiltrados = q
       ? this.clientesOriginales.filter(c => {
-          const nombre = `${c.usuario.nombre} ${c.usuario.apellido1 ?? ''}`.toLowerCase();
-          return nombre.includes(q);
+          const nombreCliente = `${c.usuario.nombre} ${c.usuario.apellido1 ?? ''}`.toLowerCase();
+          const coincideCliente = nombreCliente.includes(q);
+          const coincideMascota = c.mascotas.some(m => m.nombre.toLowerCase().includes(q));
+          return coincideCliente || coincideMascota;
         })
       : [...this.clientesOriginales];
     this.mostrarTodos = false; // reset al filtrar
@@ -174,7 +176,7 @@ export class MisMascotas implements OnInit {
     this.cdr.detectChanges();
   }
 
-  // ─── CRUD COMPARTIDO ──────────────────────────────────────────────
+
 
   registrarNueva(usuarioId?: number): void {
     this.editando = false;

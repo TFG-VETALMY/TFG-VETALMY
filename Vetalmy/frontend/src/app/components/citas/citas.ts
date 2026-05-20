@@ -11,6 +11,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { IftaLabelModule } from 'primeng/iftalabel';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 // Imports de FullCalendar
@@ -29,7 +31,8 @@ interface Tipo {
 @Component({
   selector: 'app-citas',
   standalone: true,
-  imports: [CommonModule, DatePickerModule, IftaLabelModule, FormsModule, ButtonModule, DialogModule, InputTextModule, SelectModule, FullCalendarModule, RouterLink],
+  imports: [CommonModule, DatePickerModule, IftaLabelModule, FormsModule, ButtonModule, DialogModule, InputTextModule, SelectModule, FullCalendarModule, RouterLink, ConfirmDialogModule],
+  providers: [ConfirmationService],
   templateUrl: './citas.html',
   styleUrl: './citas.css',
 })
@@ -49,7 +52,7 @@ export class Citas implements OnInit {
   citaEditandoId: number | null = null;
   userRole: string = '';
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   showDialog() {
     this.citaEditandoId = null;
@@ -93,6 +96,7 @@ export class Citas implements OnInit {
 
   ngOnInit() {
     this.userRole = localStorage.getItem('user_role') || '';
+    this.calendarOptions.editable = this.userRole === 'veterinario';
 
     this.tipos = [
       { name: 'Revisión', code: 'REV' },
@@ -330,36 +334,52 @@ export class Citas implements OnInit {
   }
 
   cancelarCita(id: number) {
-    if (confirm('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.')) {
-      this.http.delete(`/citas/${id}`).subscribe({
-        next: () => {
-          this.loadCitas();
-        },
-        error: (err) => {
-          console.error('Error al cancelar la cita', err);
-          alert('Hubo un error al cancelar la cita');
-        }
-      });
-    }
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.',
+      header: 'Cancelar cita',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sí, cancelar',
+      rejectLabel: 'Atrás',
+      acceptButtonStyleClass: 'p-button-danger',
+      accept: () => {
+        this.http.delete(`/citas/${id}`).subscribe({
+          next: () => {
+            this.loadCitas();
+          },
+          error: (err) => {
+            console.error('Error al cancelar la cita', err);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un error al cancelar la cita' });
+          }
+        });
+      }
+    });
   }
 
   completarCita(id: number) {
-    if (confirm('¿Estás seguro de marcar esta cita como completada? Se moverá al historial.')) {
-      this.http.patch(`/citas/${id}`, { estado: 'COMPLETADA' }).subscribe({
-        next: () => {
-          this.loadCitas();
-        },
-        error: (err) => {
-          console.error('Error al completar la cita', err);
-          alert('Hubo un error al completar la cita');
-        }
-      });
-    }
+    this.confirmationService.confirm({
+      message: '¿Estás seguro de marcar esta cita como completada? Se moverá al historial.',
+      header: 'Completar cita',
+      icon: 'pi pi-check-circle',
+      acceptLabel: 'Sí, completar',
+      rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'p-button-success',
+      accept: () => {
+        this.http.patch(`/citas/${id}`, { estado: 'COMPLETADA' }).subscribe({
+          next: () => {
+            this.loadCitas();
+          },
+          error: (err) => {
+            console.error('Error al completar la cita', err);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un error al completar la cita' });
+          }
+        });
+      }
+    });
   }
 
   guardarCita() {
     if (!this.fechaCitaNueva || !this.horaSeleccionada || !this.mascotaSeleccionada || !this.tipoSeleccionado) {
-      alert('Por favor, rellena todos los campos obligatorios (Fecha, Hora, Mascota y Tipo).');
+      this.messageService.add({ severity: 'warn', summary: 'Campos incompletos', detail: 'Por favor, rellena todos los campos obligatorios (Fecha, Hora, Mascota y Tipo).' });
       return;
     }
 
@@ -390,7 +410,7 @@ export class Citas implements OnInit {
         },
         error: (err) => {
           console.error('Error al actualizar la cita', err);
-          alert('Hubo un error al actualizar la cita');
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un error al actualizar la cita' });
         }
       });
     } else {
@@ -401,7 +421,7 @@ export class Citas implements OnInit {
         },
         error: (err) => {
           console.error('Error al crear la cita', err);
-          alert('Hubo un error al guardar la cita');
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Hubo un error al guardar la cita' });
         }
       });
     }
@@ -413,6 +433,7 @@ export class Citas implements OnInit {
   private todasLasCitas: any[] = [];
 
   onEventClick(info: any) {
+    if (this.userRole !== 'veterinario') return;
     const id = Number(info.event.id);
     const cita = this.todasLasCitas.find(c => c.id === id);
     if (cita) {

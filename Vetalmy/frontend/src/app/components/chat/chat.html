@@ -49,7 +49,7 @@
       <!-- PANTALLA VACÍA -->
       <div *ngIf="chatId === 0" class="empty-state-welcome">
         <div class="empty-content">
-          <div class="empty-illustration">💬</div>
+          <div class="empty-illustration"><i class='bx bx-message-rounded-dots'></i></div>
           <h2>Vetalmy Connect</h2>
           <p>Selecciona una conversación de la izquierda para empezar a hablar con nuestro equipo profesional.</p>
         </div>
@@ -103,41 +103,49 @@
         <!-- Asistente de cita inteligente inline -->
         <div *ngIf="mostrarAsistenteCita" class="appointment-assistant-panel">
           <div class="panel-header">
-            <h4><i class="pi pi-calendar-plus"></i> Asistente de Citas Inteligente</h4>
-            <button class="close-btn" (click)="mostrarAsistenteCita = false"><i class="pi pi-times"></i></button>
+            <h4><i class="bx bx-calendar-plus"></i> Asistente de Citas Inteligente</h4>
+            <button class="close-btn" (click)="mostrarAsistenteCita = false"><i class="bx bx-x"></i></button>
           </div>
-          <div class="panel-body">
+          <div class="panel-body p-fluid">
             <div class="form-grid">
               <div class="form-group">
-                <label>🐾 Mascota</label>
-                <select [(ngModel)]="citaForm.mascotaId" class="panel-select">
-                  <option *ngFor="let m of mascotasDisponibles" [value]="m.id">{{ m.nombre }} ({{ m.animal }})</option>
-                  <option *ngIf="mascotasDisponibles.length === 0" disabled>Sin mascotas disponibles</option>
-                </select>
+                <label><i class='bx bx-bone'></i> Mascota</label>
+                <p-select 
+                  [options]="mascotasDisponibles" 
+                  [(ngModel)]="citaForm.mascotaId" 
+                  optionLabel="displayName" 
+                  optionValue="id" 
+                  placeholder="Seleccione mascota" 
+                  emptyMessage="Sin mascotas disponibles">
+                </p-select>
               </div>
               <div class="form-group">
-                <label>⏰ Fecha y Hora</label>
-                <input type="datetime-local" [(ngModel)]="citaForm.fechaHora" class="panel-input" />
+                <label><i class='bx bx-time-five'></i> Fecha y Hora</label>
+                <p-datepicker 
+                  [(ngModel)]="citaForm.fechaHora" 
+                  [showTime]="true" 
+                  [showSeconds]="false" 
+                  dateFormat="dd/mm/yy" 
+                  placeholder="Seleccione fecha y hora">
+                </p-datepicker>
               </div>
               <div class="form-group">
-                <label>🩺 Tipo de Cita</label>
-                <select [(ngModel)]="citaForm.tipo" class="panel-select">
-                  <option value="Consulta">Consulta General</option>
-                  <option value="Revisión">Revisión de Control</option>
-                  <option value="Vacunación">Vacunación</option>
-                  <option value="Urgencia">Urgencia Médica</option>
-                </select>
+                <label><i class='bx bx-plus-medical'></i> Tipo de Cita</label>
+                <p-select 
+                  [options]="tiposCita" 
+                  [(ngModel)]="citaForm.tipo" 
+                  optionLabel="label" 
+                  optionValue="value">
+                </p-select>
               </div>
               <div class="form-group full-width">
-                <label>📝 Motivo / Observaciones</label>
-                <input type="text" [(ngModel)]="citaForm.motivo" placeholder="Ej: Revisión rutinaria, cojera en pata delantera..." class="panel-input" />
+                <label><i class='bx bx-edit-alt'></i> Motivo / Observaciones</label>
+                <input pInputText type="text" [(ngModel)]="citaForm.motivo" placeholder="Ej: Revisión rutinaria, cojera en pata delantera..." />
               </div>
             </div>
-            <div class="panel-actions">
-              <button class="assistant-btn cancel" (click)="mostrarAsistenteCita = false">Cancelar</button>
-              <button class="assistant-btn schedule" (click)="agendarCita()" [disabled]="!citaForm.mascotaId || !citaForm.fechaHora">
-                <i class="pi pi-check"></i> Agendar Cita
-              </button>
+            <div class="panel-actions" style="margin-top: 1rem;">
+              <p-button label="Cancelar" icon="bx bx-x" styleClass="p-button-text p-button-secondary p-button-sm" (onClick)="mostrarAsistenteCita = false"></p-button>
+              <p-button label="Agendar Cita" icon="bx bx-check" styleClass="p-button-warning p-button-sm" (onClick)="agendarCita()" [disabled]="!citaForm.mascotaId || !citaForm.fechaHora"></p-button>
             </div>
           </div>
         </div>
@@ -145,12 +153,12 @@
         <!-- Input de mensajes -->
         <div class="chat-input-area">
           <button (click)="abrirAsistenteCita()" class="action-shortcut-btn" title="Programar cita inteligente (@cita)">
-            <i class="pi pi-calendar-plus"></i>
+            <i class="bx bx-calendar-plus"></i>
           </button>
           <input type="text" [(ngModel)]="nuevoMensaje" (ngModelChange)="onMensajeChange($event)" (keyup.enter)="enviarMensaje()"
             placeholder="Escribe un mensaje..." class="chat-input" />
           <button (click)="enviarMensaje()" class="send-btn" [disabled]="!nuevoMensaje.trim()">
-            <i class="pi pi-send"></i> <span class="btn-text">Enviar</span>
+            <i class="bx bx-send"></i> <span class="btn-text">Enviar</span>
           </button>
         </div>
       </ng-container>

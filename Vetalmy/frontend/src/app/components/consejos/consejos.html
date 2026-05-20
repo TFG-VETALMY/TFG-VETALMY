@@ -25,7 +25,7 @@
         <div class="consejos-lista">
           <p-card *ngFor="let consejo of consejosPerros" styleClass="consejo-card" (click)="mostrarDetalle(consejo)">
             <div class="consejo-inner">
-              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" />
+              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" loading="lazy" decoding="async" />
               <div class="consejo-texto">
                 <h2 class="consejo-titulo">{{ consejo.titulo }}</h2>
                 <p class="consejo-detalle consejo-detalle--desktop">{{ consejo.detalle }}</p>
@@ -40,7 +40,7 @@
         <div class="consejos-lista">
           <p-card *ngFor="let consejo of consejosGatos" styleClass="consejo-card" (click)="mostrarDetalle(consejo)">
             <div class="consejo-inner">
-              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" />
+              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" loading="lazy" decoding="async" />
               <div class="consejo-texto">
                 <h2 class="consejo-titulo">{{ consejo.titulo }}</h2>
                 <p class="consejo-detalle consejo-detalle--desktop">{{ consejo.detalle }}</p>
@@ -55,7 +55,7 @@
         <div class="consejos-lista">
           <p-card *ngFor="let consejo of consejosParajaros" styleClass="consejo-card" (click)="mostrarDetalle(consejo)">
             <div class="consejo-inner">
-              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" />
+              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" loading="lazy" decoding="async" />
               <div class="consejo-texto">
                 <h2 class="consejo-titulo">{{ consejo.titulo }}</h2>
                 <p class="consejo-detalle consejo-detalle--desktop">{{ consejo.detalle }}</p>
@@ -70,7 +70,7 @@
         <div class="consejos-lista">
           <p-card *ngFor="let consejo of consejosRoedores" styleClass="consejo-card" (click)="mostrarDetalle(consejo)">
             <div class="consejo-inner">
-              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" />
+              <img [src]="consejo.imagen" [alt]="consejo.titulo" class="consejo-img" loading="lazy" decoding="async" />
               <div class="consejo-texto">
                 <h2 class="consejo-titulo">{{ consejo.titulo }}</h2>
                 <p class="consejo-detalle consejo-detalle--desktop">{{ consejo.detalle }}</p>
@@ -95,7 +95,7 @@
   [header]="consejoSeleccionado?.titulo"
   styleClass="consejo-dialog">
   <div class="dialog-content" *ngIf="consejoSeleccionado">
-    <img [src]="consejoSeleccionado.imagen" [alt]="consejoSeleccionado.titulo" class="dialog-img" />
+    <img [src]="consejoSeleccionado.imagen" [alt]="consejoSeleccionado.titulo" class="dialog-img" loading="lazy" decoding="async" />
     <p class="dialog-detalle">{{ consejoSeleccionado.detalle }}</p>
   </div>
 </p-dialog>

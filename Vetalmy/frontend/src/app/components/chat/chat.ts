@@ -6,10 +6,17 @@ import { io, Socket } from 'socket.io-client';
 import { environment } from '../../../environments/environment';
 import { UnreadMessagesService } from '../../services/unread-messages.service';
 
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SelectModule, DatePickerModule, InputTextModule, ButtonModule],
   templateUrl: './chat.html',
   styleUrl: './chat.css',
 })
@@ -29,9 +36,21 @@ export class Chat implements OnInit, OnDestroy {
   activeChatObj: any = null;
   mascotasDisponibles: any[] = [];
   
-  citaForm = {
-    mascotaId: '',
-    fechaHora: '',
+  tiposCita = [
+    { label: 'Consulta General', value: 'Consulta' },
+    { label: 'Revisión de Control', value: 'Revisión' },
+    { label: 'Vacunación', value: 'Vacunación' },
+    { label: 'Urgencia Médica', value: 'Urgencia' }
+  ];
+
+  citaForm: {
+    mascotaId: any;
+    fechaHora: Date | null;
+    tipo: string;
+    motivo: string;
+  } = {
+    mascotaId: null,
+    fechaHora: null,
     tipo: 'Consulta',
     motivo: ''
   };
@@ -45,12 +64,12 @@ export class Chat implements OnInit, OnDestroy {
     return this.contactoActual ? this.contactoActual.charAt(0).toUpperCase() : '?';
   }
 
-
   constructor(
     private http: HttpClient,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-    private unreadSvc: UnreadMessagesService
+    private unreadSvc: UnreadMessagesService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -222,12 +241,15 @@ export class Chat implements OnInit, OnDestroy {
 
     this.http.get<any[]>('/mascotas').subscribe({
       next: (mascotas) => {
-        this.mascotasDisponibles = mascotas.filter(m => m.usuarioId === clienteId || m.usuario?.id === clienteId);
+        this.mascotasDisponibles = mascotas.filter(m => m.usuarioId === clienteId || m.usuario?.id === clienteId).map(m => ({
+          ...m,
+          displayName: `${m.nombre} (${m.animal})`
+        }));
         this.mostrarAsistenteCita = true;
         
         // Pre-seleccionar la primera mascota si hay disponibles
         if (this.mascotasDisponibles.length > 0) {
-          this.citaForm.mascotaId = this.mascotasDisponibles[0].id.toString();
+          this.citaForm.mascotaId = this.mascotasDisponibles[0].id;
         }
         this.cdr.detectChanges();
       }
@@ -235,22 +257,26 @@ export class Chat implements OnInit, OnDestroy {
   }
 
   agendarCita() {
-    if (!this.citaForm.mascotaId || !this.citaForm.fechaHora) {
-      alert('Por favor seleccione la mascota y la fecha/hora de la cita.');
+    if (!this.citaForm.mascotaId) {
+      this.messageService.add({ severity: 'warn', summary: 'Atención', detail: 'Por favor seleccione la mascota.' });
+      return;
+    }
+    if (!this.citaForm.fechaHora) {
+      this.messageService.add({ severity: 'warn', summary: 'Atención', detail: 'Por favor seleccione la fecha y hora de la cita.' });
       return;
     }
 
     const motivoFinal = this.citaForm.motivo.trim() || 'Consulta programada vía Chat';
 
-    const mascota = this.mascotasDisponibles.find(m => m.id === Number(this.citaForm.mascotaId));
+    const mascota = this.mascotasDisponibles.find(m => m.id === this.citaForm.mascotaId);
     const nombreMascota = mascota ? mascota.nombre : 'la mascota';
     
     const payloadCita = {
-      fecha: new Date(this.citaForm.fechaHora),
+      fecha: this.citaForm.fechaHora,
       tipo: this.citaForm.tipo,
       estado: 'PROGRAMADA',
       motivo: motivoFinal,
-      mascotaId: Number(this.citaForm.mascotaId),
+      mascotaId: this.citaForm.mascotaId,
       clienteId: this.activeChatObj.clienteId || this.activeChatObj.cliente?.id,
       veterinarioId: this.activeChatObj.veterinarioId || this.activeChatObj.veterinario?.id
     };
@@ -258,7 +284,7 @@ export class Chat implements OnInit, OnDestroy {
     this.http.post<any>('/citas', payloadCita).subscribe({
       next: () => {
         // Enviar un mensaje al chat notificando que la cita ha sido agendada
-        const fechaFormateada = new Date(this.citaForm.fechaHora).toLocaleString('es-ES', {
+        const fechaFormateada = this.citaForm.fechaHora!.toLocaleString('es-ES', {
           day: '2-digit',
           month: '2-digit',
           year: 'numeric',
@@ -284,14 +310,14 @@ export class Chat implements OnInit, OnDestroy {
         // Cerrar el asistente y resetear formulario
         this.mostrarAsistenteCita = false;
         this.citaForm = {
-          mascotaId: '',
-          fechaHora: '',
+          mascotaId: null,
+          fechaHora: null,
           tipo: 'Consulta',
           motivo: ''
         };
         this.cdr.detectChanges();
       },
-      error: () => alert('Error al crear la cita.')
+      error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al crear la cita.' })
     });
   }
 

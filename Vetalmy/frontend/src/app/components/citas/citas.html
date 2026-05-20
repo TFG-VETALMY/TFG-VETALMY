@@ -1,5 +1,5 @@
 <div class="inner-content citas-page">
-
+    <p-confirmDialog></p-confirmDialog>
     <header class="citas-header">
         <div class="header-text">
             <h1>Mis Citas</h1>
@@ -103,7 +103,7 @@
                 </div>
 
                 <div class="cita-acciones">
-                    <button class="btn-secundario" (click)="modificarCita(cita)">Modificar</button>
+                    <button *ngIf="userRole === 'veterinario'" class="btn-secundario" (click)="modificarCita(cita)">Modificar</button>
                     <button *ngIf="userRole === 'veterinario'" class="btn-primario" style="background-color: #4ade80; border: none; color: #1f2937;" (click)="completarCita(cita.id)">Completar</button>
                     <button class="btn-peligro" (click)="cancelarCita(cita.id)">Cancelar</button>
                 </div>

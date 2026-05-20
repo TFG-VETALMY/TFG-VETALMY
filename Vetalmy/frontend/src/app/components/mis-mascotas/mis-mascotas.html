@@ -2,9 +2,7 @@
     <p-toast></p-toast>
     <p-confirmDialog></p-confirmDialog>
 
-    <!-- ══════════════════════════════════════════════════════ -->
-    <!--  VISTA VETERINARIO                                      -->
-    <!-- ══════════════════════════════════════════════════════ -->
+
     <ng-container *ngIf="esVeterinario">
 
         <!-- Cabecera -->
@@ -19,7 +17,7 @@
         <div class="buscador-wrapper">
             <span class="buscador-icono"><i class="pi pi-search"></i></span>
             <input pInputText [(ngModel)]="busqueda" (ngModelChange)="filtrarClientes()"
-                placeholder="Buscar cliente por nombre..." class="buscador-input" />
+                placeholder="Buscar por cliente o mascota..." class="buscador-input" />
             <span class="buscador-contador" *ngIf="busqueda">
                 {{ clientesFiltrados.length }} resultado{{ clientesFiltrados.length !== 1 ? 's' : '' }}
             </span>
@@ -99,9 +97,7 @@
 
     </ng-container>
 
-    <!-- ══════════════════════════════════════════════════════ -->
-    <!--  VISTA CLIENTE (usuario normal)                         -->
-    <!-- ══════════════════════════════════════════════════════ -->
+
     <ng-container *ngIf="!esVeterinario">
 
         <!-- Cabecera -->
@@ -168,11 +164,12 @@
 
 </div>
 
-<!-- ══════════════════════════════════════════════════════ -->
-<!--  DIÁLOGO CREAR / EDITAR (compartido)                   -->
-<!-- ══════════════════════════════════════════════════════ -->
+
 <p-dialog [(visible)]="dialogVisible" [modal]="true" [draggable]="false"
-    [header]="editando ? 'Editar mascota' : 'Nueva mascota'" [style]="{ width: esVeterinario && editando ? '820px' : '480px' }">
+    [header]="editando ? 'Editar mascota' : 'Nueva mascota'" 
+    [style]="{ width: '100%', maxWidth: esVeterinario && editando ? '820px' : '480px' }"
+    [breakpoints]="{ '640px': '95vw' }"
+    styleClass="dialog-mascota">
 
     <div [class.edit-mascota-layout]="esVeterinario && editando" style="display: flex; gap: 2rem;">
         
@@ -185,7 +182,7 @@
             <div class="form-field">
                 <label style="font-weight: 600; display: block; margin-bottom: 0.25rem;">Animal *</label>
                 <p-select [(ngModel)]="form.animal" [options]="animalesOpciones" optionLabel="label" optionValue="value"
-                    placeholder="Selecciona tipo" styleClass="w-full">
+                    placeholder="Selecciona tipo" styleClass="w-full" appendTo="body">
                 </p-select>
             </div>
             <div class="form-field">

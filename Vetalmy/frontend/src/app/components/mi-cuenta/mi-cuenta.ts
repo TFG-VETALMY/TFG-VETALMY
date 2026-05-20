@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { timeout, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 export interface UsuarioPerfil {
   id: number;
@@ -28,6 +29,8 @@ export class MiCuenta implements OnInit {
   seccionActiva: 'perfil' | 'mascotas' | 'citas' = 'perfil';
   usuario: UsuarioPerfil | null = null;
   mascotas: any[] = [];
+  mascotasOriginales: any[] = [];
+  busquedaMascotas: string = '';
   historialCitas: any[] = [];
   mascotaExpandida: number | null = null;
 
@@ -53,7 +56,8 @@ export class MiCuenta implements OnInit {
     private router: Router, 
     private route: ActivatedRoute, 
     private http: HttpClient, 
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +81,7 @@ export class MiCuenta implements OnInit {
         next: (todas) => {
           const esVet = localStorage.getItem('user_role') === 'veterinario';
           this.mascotas = esVet ? todas : todas.filter(m => m.usuarioId === Number(userId));
+          this.mascotasOriginales = [...this.mascotas];
           
           this.http.get<any[]>('/citas').subscribe({
             next: (citas) => {
@@ -229,9 +234,23 @@ export class MiCuenta implements OnInit {
     this.cdr.detectChanges();
   }
 
+  filtrarMascotas() {
+    const q = this.busquedaMascotas.toLowerCase().trim();
+    if (!q) {
+      this.mascotas = [...this.mascotasOriginales];
+    } else {
+      this.mascotas = this.mascotasOriginales.filter(m => {
+        const nombreMascota = m.nombre?.toLowerCase() || '';
+        const nombreDueño = m.usuario ? `${m.usuario.nombre} ${m.usuario.apellido1 || ''}`.toLowerCase() : '';
+        return nombreMascota.includes(q) || nombreDueño.includes(q);
+      });
+    }
+    this.cdr.detectChanges();
+  }
+
   anadirVacuna(mascota: any, nombre: string, fechaStr: string): void {
     if (!nombre || !fechaStr) {
-      alert('Por favor rellena el nombre y la fecha de la vacuna.');
+      this.messageService.add({ severity: 'warn', summary: 'Campos incompletos', detail: 'Por favor rellena el nombre y la fecha de la vacuna.' });
       return;
     }
     
@@ -258,14 +277,14 @@ export class MiCuenta implements OnInit {
 
           this.recargarHistorialMascota(mascota);
         },
-        error: () => alert('Error al añadir la vacuna.')
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al añadir la vacuna.' })
       });
     });
   }
 
   anadirEnfermedad(mascota: any, observaciones: string, fechaStr: string, dadaAlta: boolean): void {
     if (!observaciones || !fechaStr) {
-      alert('Por favor rellena el diagnóstico y la fecha.');
+      this.messageService.add({ severity: 'warn', summary: 'Campos incompletos', detail: 'Por favor rellena el diagnóstico y la fecha.' });
       return;
     }
 
@@ -282,7 +301,7 @@ export class MiCuenta implements OnInit {
         next: () => {
           this.recargarHistorialMascota(mascota);
         },
-        error: () => alert('Error al añadir la enfermedad.')
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al añadir la enfermedad.' })
       });
     });
   }
@@ -295,14 +314,14 @@ export class MiCuenta implements OnInit {
         } else {
           this.http.post<any>('/historial', { mascotaId }).subscribe({
             next: (newH) => callback(newH.id),
-            error: () => alert('No se pudo crear la ficha clínica.')
+            error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo crear la ficha clínica.' })
           });
         }
       },
       error: () => {
         this.http.post<any>('/historial', { mascotaId }).subscribe({
           next: (newH) => callback(newH.id),
-          error: () => alert('No se pudo crear la ficha clínica.')
+          error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo crear la ficha clínica.' })
         });
       }
     });
@@ -324,7 +343,7 @@ export class MiCuenta implements OnInit {
       next: () => {
         this.recargarHistorialMascota(mascota);
       },
-      error: () => alert('Error al cambiar el estado de la enfermedad.')
+      error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al cambiar el estado de la enfermedad.' })
     });
   }
 

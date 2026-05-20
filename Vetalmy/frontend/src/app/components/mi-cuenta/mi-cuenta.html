@@ -148,7 +148,7 @@
             </div>
 
 
-            <!-- ─── CAMBIO DE CONTRASEÑA ─────────────── -->
+
             <div class="password-card" *ngIf="usuario">
 
                 <div class="password-header" (click)="mostrarFormPassword = !mostrarFormPassword">
@@ -241,6 +241,15 @@
                     <h1>{{ esVeterinario ? 'Mascotas' : 'Mis Mascotas' }}</h1>
                     <p class="seccion-subtitulo">{{ esVeterinario ? 'Consulta el historial médico y datos de todos los pacientes.' : 'Consulta el historial médico y datos de tus mascotas.' }}</p>
                 </div>
+            </div>
+
+            <!-- Buscador -->
+            <div class="buscador-mascotas" style="margin-bottom: 1.5rem; position: relative;">
+                <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8;"><i class="pi pi-search"></i></span>
+                <input type="text" [(ngModel)]="busquedaMascotas" (ngModelChange)="filtrarMascotas()"
+                    [placeholder]="esVeterinario ? 'Buscar por mascota o dueño...' : 'Buscar mascota por nombre...'" 
+                    style="width: 100%; padding: 0.8rem 1rem 0.8rem 2.5rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; outline: none;" 
+                    onfocus="this.style.borderColor='var(--naranja)'" onblur="this.style.borderColor='#cbd5e1'" />
             </div>
 
             <div *ngIf="mascotas.length === 0" class="perfil-card" style="text-align: center; padding: 2rem;">

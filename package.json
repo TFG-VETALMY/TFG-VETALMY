@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@primeng/themes": "^21.0.4"
+    "@primeng/themes": "^21.0.4",
+    "sharp": "^0.34.5"
   }
 }
