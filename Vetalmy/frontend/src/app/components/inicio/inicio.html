@@ -58,6 +58,22 @@
     </div>
 </div>
 
+<!-- Test de animales -->
+<section id="seccion-test" class="test-section">
+  <div class="section-header">
+    <h2>¿Qué mascota serías?</h2>
+    <p>Responde a estas 5 preguntas rápidas y descubre qué animal encaja mejor con tu personalidad.</p>
+    
+    <button class="btn btn-primary mt-4" (click)="toggleTest()">
+      {{ mostrarTest ? 'Ocultar Test' : 'Hacer el test' }}
+    </button>
+  </div>
+  
+  <div class="test-acordeon" [class.abierto]="mostrarTest">
+    <app-animal-test></app-animal-test>
+  </div>
+</section>
+
 <!-- CTA BOTTOM -->
 <div class="cta-bottom">
     <h2>¿Aún no formas parte de la familia Vetalmy?</h2>
@@ -72,7 +88,8 @@
         <div class="cookies-icon">🍪</div>
         <div class="cookies-text">
             <h4>Valoramos tu privacidad</h4>
-            <p>Utilizamos almacenamiento local estrictamente necesario para mantener tu sesión iniciada y garantizar el funcionamiento de Vetalmy.</p>
+            <p>Utilizamos almacenamiento local estrictamente necesario para mantener tu sesión iniciada y garantizar el
+                funcionamiento de Vetalmy.</p>
         </div>
         <div style="display: flex; gap: 0.5rem; width: 100%;">
             <button class="btn-cookies btn-cookies-reject" (click)="rechazarCookies()">Rechazar</button>

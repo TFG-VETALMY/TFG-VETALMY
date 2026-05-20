@@ -1,15 +1,28 @@
 import { Component, OnInit, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Test } from '../test/test';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, Test],
   templateUrl: './inicio.html',
   styleUrl: './inicio.css',
 })
 export class InicioComponent implements OnInit {
+
+  // Para el test de animales
+  mostrarTest: boolean = false;
+  
+  scrollToTest() {
+    document.getElementById('seccion-test')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  toggleTest() {
+    this.mostrarTest = !this.mostrarTest;
+  }
+
   mostrarCookies = false;
 
   get rutaCitas(): string {

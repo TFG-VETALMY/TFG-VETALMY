@@ -68,15 +68,15 @@
 }
 
 .btn-primary {
+    border: none !important; 
+    padding: 1rem 3.5rem !important; 
+    border-radius: 50px;
     background-color: var(--marron-acento);
     color: var(--blanco-total);
-    box-shadow: 0 4px 15px rgba(224, 122, 95, 0.4);
-}
-
-.btn-primary:hover {
-    background-color: #c7674e;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(224, 122, 95, 0.6);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
 }
 
 .btn-secondary {
@@ -96,20 +96,26 @@
 .section-header {
     text-align: center;
     margin-bottom: 3.5rem;
-}
-
-.section-header h2 {
-    font-size: 2.5rem;
-    color: var(--marron-oscuro);
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .section-header p {
     font-size: 1.1rem;
     color: var(--marron-claro);
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 1rem auto;
+    padding: 0 0.5rem;
+    line-height: 1.6;
 }
+.section-header h2 {
+    font-size: 2.5rem;
+    color: var(--marron-oscuro);
+    margin-bottom: 1rem;
+}
+
+
 
 /* --- SERVICES SECTION --- */
 .services-section {
@@ -314,4 +320,42 @@
     background-color: #f1f5f9;
     color: var(--marron-oscuro);
     transform: translateY(-2px);
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+/* Test de animales */
+.test-acordeon {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin: 0 1rem; 
+    transition: max-height 0.6s ease-in-out, opacity 0.6s ease-in-out, padding 0.6s ease-in-out;
+}
+
+.test-acordeon.abierto {
+    max-height: 1200px;
+    opacity: 1;
+    padding: 0 0 2rem 0;
+    margin-bottom: 3rem; 
+    margin-top: 0;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .test-acordeon {
+        margin: 0 15%; 
+    }
+}
+
+@media (max-width: 599px) {
+    .test-acordeon {
+        margin: 0 2rem;
+    }
+    
+    .test-acordeon.abierto {
+        margin-bottom: 2rem;
+    }
 }

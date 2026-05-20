@@ -12,6 +12,7 @@ import { Chat } from './components/chat/chat';
 import { SobreNosotros } from './components/sobre-nosotros/sobre-nosotros';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback';
 import { AuthGuard } from './guards/auth.guard';
+import { Test } from './components/test/test';
 
 
 export const routes: Routes = [

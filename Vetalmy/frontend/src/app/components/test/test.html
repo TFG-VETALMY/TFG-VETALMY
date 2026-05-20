@@ -1,0 +1,44 @@
+<div class="test-wrapper">
+  
+  <!-- Estado de Preguntas -->
+  <ng-container *ngIf="!testFinished">
+    <p-card styleClass="test-card">
+      <div class="test-header">
+        <span class="progress-text">Pregunta {{ currentQuestionIndex + 1 }} de {{ questions.length }}</span>
+        <p-progressBar [value]="progress" [showValue]="false"></p-progressBar>
+      </div>
+      
+      <h3 class="question-title">{{ questions[currentQuestionIndex].question }}</h3>
+      
+      <div class="options-grid">
+        <p-button 
+          *ngFor="let option of questions[currentQuestionIndex].options"
+          [label]="option.text" 
+          styleClass="option-btn"
+          (onClick)="selectOption(option.animal)">
+        </p-button>
+      </div>
+    </p-card>
+  </ng-container>
+
+  <!-- Estado de Resultado Final -->
+  <ng-container *ngIf="testFinished && finalAnimal">
+  <p-card styleClass="test-card result-card">
+    
+    <div class="result-icon-container">
+      <i [class]="animalInfo[finalAnimal].icon + ' result-icon'"></i>
+    </div>
+    
+    <h1 class="result-title">{{ animalInfo[finalAnimal].name }}</h1>
+    <p class="result-desc">{{ animalInfo[finalAnimal].desc }}</p>
+    
+    <p-button 
+      label="Volver a intentar" 
+      icon="pi pi-refresh" 
+      (onClick)="resetTest()" 
+      styleClass="btn-reset">
+    </p-button>
+  </p-card>
+</ng-container>
+
+</div>
