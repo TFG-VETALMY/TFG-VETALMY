@@ -632,6 +632,7 @@
     border-right: none;
     border-bottom: 1px solid var(--beige);
     padding: 1rem;
+    align-items: center;
   }
   .sidebar-user {
     display: none; /* Hide huge user info to save space */
@@ -641,7 +642,7 @@
     flex-wrap: wrap;
     overflow-x: visible;
     gap: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0;
   }
   .sidebar-item {
     white-space: nowrap;
@@ -653,6 +654,9 @@
   }
   .sidebar-item i {
     display: none; /* hide icon on mobile */
+  }
+  .sidebar-item--danger {
+    margin-top: 0;
   }
   .sidebar-spacer, .sidebar-divider, .sidebar-section-label {
     display: none;

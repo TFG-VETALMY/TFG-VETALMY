@@ -44,8 +44,9 @@ export class App implements OnInit {
     if (this.socket) return;
 
     const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('user_id');
     this.socket = io(environment.wsUrl, {
-      auth: { token: token }
+      auth: { token: token, userId: userId }
     });
 
     this.socket.on('nuevo-mensaje', (mensaje) => {
@@ -56,6 +57,7 @@ export class App implements OnInit {
           const nombre = remitente ? remitente.nombre : 'Desconocido';
           const rol = remitente?.rol === 'veterinario' ? 'Veterinario' : 'Cliente';
 
+          this.messageService.clear();
           this.messageService.add({
             severity: 'info',
             summary: `Nuevo mensaje de: ${nombre} (${rol})`,

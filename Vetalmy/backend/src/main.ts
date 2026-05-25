@@ -16,7 +16,7 @@ async function bootstrap() {
     transform: true,
   }));
   app.enableCors({
-    origin: true,  // Acepta cualquier origen (ajustar a la URL del frontend en producción)
+    origin: true,
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   });

@@ -82,7 +82,7 @@ export class Chat implements OnInit, OnDestroy {
     this.userId = idStr ? parseInt(idStr, 10) : 0;
 
     this.socket = io(environment.wsUrl, {
-      auth: { token: token }
+      auth: { token: token, userId: this.userId }
     });
 
     this.socket.on('connect', () => {
@@ -291,7 +291,6 @@ export class Chat implements OnInit, OnDestroy {
           hour: '2-digit',
           minute: '2-digit'
         });
-        
         const textoMensaje = `📅 [ASISTENTE] ¡Se ha agendado una cita! \n🐾 Mascota: ${nombreMascota} \n🩺 Tipo: ${this.citaForm.tipo} \n⏰ Fecha y Hora: ${fechaFormateada} \n📝 Motivo: ${motivoFinal}`;
         
         const payloadMensaje = {

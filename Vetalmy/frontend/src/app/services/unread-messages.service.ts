@@ -25,7 +25,7 @@ export class UnreadMessagesService implements OnDestroy {
     // Evitamos crear múltiples sockets si ya está inicializado
     if (this.socket?.connected) return;
 
-    this.socket = io(environment.wsUrl, { auth: { token } });
+    this.socket = io(environment.wsUrl, { auth: { token, userId: this.userId } });
 
     this.socket.on('nuevo-mensaje', (mensaje: any) => {
       const chatId = mensaje.chatId ?? mensaje.chat?.id;

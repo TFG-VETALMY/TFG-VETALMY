@@ -7,13 +7,9 @@ export class CitasGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer()
     server: Server;
 
-    handleConnection(client: Socket) {
-        console.log(`Cliente conectado: ${client.id}`);
-    }
+    handleConnection(client: Socket) {}
 
-    handleDisconnect(client: Socket) {
-        console.log(`Cliente desconectado: ${client.id}`);
-    }
+    handleDisconnect(client: Socket) {}
 
     notificarNuevaCita(cita: any) {
         this.server.emit('nueva-cita', cita);

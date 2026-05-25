@@ -39,7 +39,7 @@
                     <p class="seccion-subtitulo">Gestiona tu información personal y de contacto.</p>
                 </div>
                 <button class="btn-editar" (click)="activarEdicion()" *ngIf="!editando && usuario">
-                    <i class="pi pi-pencil"></i> Editar perfil
+                    Editar perfil
                 </button>
             </div>
 
@@ -59,8 +59,8 @@
                     <span *ngIf="!userFoto">{{ userInicial }}</span>
                 </div>
                     <div class="perfil-foto-info">
-                        <span class="foto-label">Foto de perfil</span>
-                        <span class="foto-hint">Próximamente disponible</span>
+                        <span class="foto-label">{{ usuario.nombre }} {{ usuario.apellido1 || '' }} {{ usuario.apellido2 || '' }}</span>
+                        <span class="foto-hint">{{ usuario.rol === 'veterinario' ? 'Veterinario' : 'Cliente' }} en Vetalmy</span>
                     </div>
                 </div>
                 <div class="perfil-divider"></div>
@@ -106,8 +106,8 @@
                     <span *ngIf="!userFoto">{{ userInicial }}</span>
                 </div>
                     <div class="perfil-foto-info">
-                        <span class="foto-label">Foto de perfil</span>
-                        <span class="foto-hint">Próximamente disponible</span>
+                        <span class="foto-label">{{ form.nombre }} {{ form.apellido1 || '' }} {{ form.apellido2 || '' }}</span>
+                        <span class="foto-hint">{{ usuario.rol === 'veterinario' ? 'Veterinario' : 'Cliente' }} en Vetalmy</span>
                     </div>
                 </div>
                 <div class="perfil-divider"></div>
@@ -141,7 +141,6 @@
                         Cancelar
                     </button>
                     <button class="btn-guardar" (click)="guardarCambios()" [disabled]="guardando || !form.nombre || !form.email">
-                        <i class="pi" [class.pi-spin]="guardando" [class.pi-spinner]="guardando" [class.pi-check]="!guardando"></i>
                         {{ guardando ? 'Guardando...' : 'Guardar cambios' }}
                     </button>
                 </div>
@@ -216,7 +215,6 @@
                             Cancelar
                         </button>
                         <button class="btn-guardar" (click)="cambiarContrasenia()" [disabled]="passwordGuardando || !passwordForm.nueva || !passwordForm.confirmar">
-                            <i class="pi" [class.pi-spin]="passwordGuardando" [class.pi-spinner]="passwordGuardando" [class.pi-check]="!passwordGuardando"></i>
                             {{ passwordGuardando ? 'Cambiando...' : 'Cambiar contraseña' }}
                         </button>
                     </div>
@@ -270,9 +268,44 @@
                     </div>
                     
                     <div class="mascota-detalles" *ngIf="mascotaExpandida === m.id">
-                        <div class="mascota-grid-datos">
+                        <!-- Vista Cliente -->
+                        <div class="mascota-grid-datos" *ngIf="!esVeterinario">
                             <div><strong>Edad:</strong> {{ m.edad }} años</div>
                             <div><strong>Peso:</strong> {{ m.peso }} kg</div>
+                            <div *ngIf="m.raza"><strong>Raza:</strong> {{ m.raza }}</div>
+                        </div>
+
+                        <!-- Vista Veterinario (Editable) -->
+                        <div class="mascota-grid-editable" *ngIf="esVeterinario" style="background: #fdfbf7; border: 1px solid #f0ece3; border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
+                                <div>
+                                    <label style="font-size: 0.8rem; font-weight: bold; color: var(--marron-oscuro); display: block; margin-bottom: 0.3rem;">Especie</label>
+                                    <select [(ngModel)]="m.animal" class="campo-input" style="width: 100%; padding: 0.5rem; height: 38px;">
+                                        <option value="Perro">Perro</option>
+                                        <option value="Gato">Gato</option>
+                                        <option value="Ave">Ave</option>
+                                        <option value="Conejo">Conejo</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.8rem; font-weight: bold; color: var(--marron-oscuro); display: block; margin-bottom: 0.3rem;">Raza</label>
+                                    <input type="text" [(ngModel)]="m.raza" class="campo-input" style="width: 100%; padding: 0.5rem; height: 38px;" />
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.8rem; font-weight: bold; color: var(--marron-oscuro); display: block; margin-bottom: 0.3rem;">Edad (años)</label>
+                                    <input type="number" [(ngModel)]="m.edad" class="campo-input" style="width: 100%; padding: 0.5rem; height: 38px;" />
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.8rem; font-weight: bold; color: var(--marron-oscuro); display: block; margin-bottom: 0.3rem;">Peso (kg)</label>
+                                    <input type="number" step="0.1" [(ngModel)]="m.peso" class="campo-input" style="width: 100%; padding: 0.5rem; height: 38px;" />
+                                </div>
+                            </div>
+                            <div style="margin-top: 1rem; text-align: right;">
+                                <button class="btn-guardar" (click)="actualizarMascota(m)" style="display: inline-flex; align-items: center; justify-content: center;">
+                                    Guardar datos
+                                </button>
+                            </div>
                         </div>
                         
                         <!-- Alerta de próximas citas -->

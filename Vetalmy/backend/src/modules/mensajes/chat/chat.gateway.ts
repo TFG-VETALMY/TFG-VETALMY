@@ -11,7 +11,13 @@ export class ChatGateway {
   constructor(private readonly mensajesService: MensajesService) { }
 
   handleConnection(client: Socket) {
-    console.log('Cliente conectado:', client.id);
+    const userId = client.handshake.auth?.userId;
+    if (userId) {
+      client.join(`user_${userId}`);
+      console.log(`Cliente conectado: ${client.id}, sala: user_${userId}`);
+    } else {
+      console.log('Cliente conectado:', client.id);
+    }
   }
 
   handleDisconnect(client: Socket) {
@@ -21,7 +27,13 @@ export class ChatGateway {
   @SubscribeMessage('enviar-mensaje')
   async handleMessage(@MessageBody() createMensajeDto: CreateMensajeDto) {
     const mensajeGuardado = await this.mensajesService.create(createMensajeDto);
-    this.server.emit('nuevo-mensaje', mensajeGuardado);
+    
+    if (mensajeGuardado && mensajeGuardado.chat) {
+      this.server.to(`user_${mensajeGuardado.chat.veterinarioId}`).to(`user_${mensajeGuardado.chat.clienteId}`).emit('nuevo-mensaje', mensajeGuardado);
+    } else if (mensajeGuardado) {
+      this.server.emit('nuevo-mensaje', mensajeGuardado);
+    }
+    
     return mensajeGuardado;
   }
 }

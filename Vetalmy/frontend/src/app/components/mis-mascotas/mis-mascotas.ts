@@ -5,7 +5,7 @@ import { MenuItem, MessageService, ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { CommonModule, UpperCasePipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -91,11 +91,16 @@ export class MisMascotas implements OnInit {
   ];
 
   constructor(
+    private router: Router,
     private http: HttpClient,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private cdr: ChangeDetectorRef
   ) {}
+
+  irAPerfilMascota(id: number) {
+    this.router.navigate(['/mi-cuenta'], { queryParams: { tab: 'mascotas', mascotaId: id } });
+  }
 
   ngOnInit(): void {
     this.esVeterinario = localStorage.getItem('user_role') === 'veterinario';

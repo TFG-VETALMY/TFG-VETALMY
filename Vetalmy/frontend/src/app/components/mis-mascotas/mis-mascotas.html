@@ -64,8 +64,8 @@
 
                     <!-- Grid de mascotas -->
                     <div class="mascotas-grid-vet" *ngIf="c.mascotas.length > 0">
-                        <div class="mascota-card-vet" *ngFor="let m of c.mascotas">
-                            <div class="card-menu" (click)="menu.toggle($event)">
+                        <div class="mascota-card-vet" *ngFor="let m of c.mascotas" (click)="irAPerfilMascota(m.id)" style="cursor: pointer;">
+                            <div class="card-menu" (click)="menu.toggle($event); $event.stopPropagation()">
                                 <i class="pi pi-ellipsis-v"></i>
                             </div>
                             <p-menu #menu [model]="getMenuOpciones(m)" [popup]="true"></p-menu>
@@ -87,7 +87,7 @@
                     </div>
 
                     <!-- Añadir mascota a este cliente -->
-                    <button pButton label="+ Añadir mascota" icon="pi pi-plus" class="btn-add-vet"
+                    <button pButton label="+ Añadir mascota" class="btn-add-vet"
                         (click)="registrarNueva(c.usuario.id)">
                     </button>
 
@@ -143,11 +143,11 @@
                 </div>
 
                 <div class="card-acciones">
-                    <button pButton label="Ver perfil" icon="pi pi-eye" class="btn-perfil"
+                    <button pButton label="Ver perfil" class="btn-perfil"
                         [routerLink]="['/mi-cuenta']" [queryParams]="{tab: 'mascotas'}"></button>
-                    <button pButton label="Editar" icon="pi pi-pencil" class="btn-historial"
+                    <button pButton label="Editar" class="btn-historial"
                         (click)="abrirEdicion(mascota)"></button>
-                    <button pButton label="Eliminar" icon="pi pi-trash" class="btn-eliminar"
+                    <button pButton label="Eliminar" class="btn-eliminar"
                         (click)="confirmarEliminar(mascota)"></button>
                 </div>
             </div>

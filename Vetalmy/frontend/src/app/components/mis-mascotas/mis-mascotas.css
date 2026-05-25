@@ -661,6 +661,7 @@
 .form-field p-inputNumber,
 .form-field p-select {
   width: 100%;
+  box-sizing: border-box;
 }
 
 .form-row {
@@ -737,4 +738,8 @@
   .form-row {
     grid-template-columns: 1fr !important;
   }
+}
+
+:host ::ng-deep .dialog-mascota .p-dialog-content {
+  overflow-x: hidden;
 }

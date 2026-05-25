@@ -65,6 +65,9 @@ export class MiCuenta implements OnInit {
       if (params['tab']) {
         this.seccionActiva = params['tab'] as any;
       }
+      if (params['mascotaId']) {
+        this.mascotaExpandida = Number(params['mascotaId']);
+      }
     });
     const userId = localStorage.getItem('user_id');
     if (userId) {
@@ -82,6 +85,15 @@ export class MiCuenta implements OnInit {
           const esVet = localStorage.getItem('user_role') === 'veterinario';
           this.mascotas = esVet ? todas : todas.filter(m => m.usuarioId === Number(userId));
           this.mascotasOriginales = [...this.mascotas];
+
+          const mascotaIdParam = this.route.snapshot.queryParams['mascotaId'];
+          if (mascotaIdParam) {
+            const pet = this.mascotas.find(m => m.id == mascotaIdParam);
+            if (pet) {
+              this.busquedaMascotas = pet.nombre;
+              this.filtrarMascotas();
+            }
+          }
           
           this.http.get<any[]>('/citas').subscribe({
             next: (citas) => {
@@ -344,6 +356,23 @@ export class MiCuenta implements OnInit {
         this.recargarHistorialMascota(mascota);
       },
       error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al cambiar el estado de la enfermedad.' })
+    });
+  }
+
+  actualizarMascota(mascota: any) {
+    const payload = {
+      animal: mascota.animal,
+      raza: mascota.raza,
+      edad: mascota.edad,
+      peso: mascota.peso
+    };
+    this.http.patch(`/mascotas/${mascota.id}`, payload).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Actualizado', detail: 'Datos de la mascota actualizados correctamente.' });
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron actualizar los datos de la mascota.' });
+      }
     });
   }
 

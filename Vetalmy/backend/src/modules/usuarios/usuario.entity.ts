@@ -7,27 +7,21 @@ import { IsOptional } from "class-validator";
 export class Usuario {
     @PrimaryGeneratedColumn()
     id: number;
-
     @Column()
     nombre: string;
-    
     @Column({ nullable: true })
     @IsOptional()
     apellido1: string;
-
     @Column({ nullable: true })
     @IsOptional()
     apellido2: string;
-
     @Column()
     email: string;
-
     @Column({ name: 'contraseña' })
     contrasenia: string;
-
-   @Column({
-    type: 'text',
-    default: 'user'
+    @Column({
+        type: 'text',
+        default: 'user'
     })
     rol?: string;
 
